@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BbibbJobStreet - Cari Lowongan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .header .logo {
+                display: flex;
+                align-items: center;
+                color: #3498db;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+                .header .logo i {
+                    margin-right: 10px;
+                }
+
+            .header nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+
+                .header nav ul li a {
+                    color: #2c3e50;
+                    text-decoration: none;
+                    font-size: 16px;
+                    transition: color 0.3s ease;
+                }
+
+                    .header nav ul li a:hover {
+                        color: #3498db;
+                    }
+
+        /* Search Section */
+        .search-section {
+            margin: 100px 20px 20px;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .search-section h1 {
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+            .search-bar input {
+                padding: 10px;
+                border: 1px solid #e0e0e0;
+                border-radius: 5px;
+                width: 70%;
+                font-size: 16px;
+            }
+
+            .search-bar button {
+                padding: 10px 20px;
+                background-color: #3498db;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+                .search-bar button:hover {
+                    background-color: #2980b9;
+                }
+
+        /* Job Listings */
+        .job-listings {
+            margin: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .job-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .job-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .job-card h3 {
+                color: #3498db;
+                margin-bottom: 10px;
+            }
+
+            .job-card p {
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+
+            .job-card .details {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 15px;
+            }
+
+            .job-card .apply-btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #3498db;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+            }
+
+                .job-card .apply-btn:hover {
+                    background-color: #2980b9;
+                }
+
+        /* Footer */
+        .footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+            .footer p {
+                font-size: 14px;
+            }
+
+        /* Responsive Design */
+        @@media (max-width: 768px) {
+            .header nav ul
+
+        {
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .header nav ul.active {
+            display: flex;
+        }
+
+        .toggle-nav {
+            display: block;
+            font-size: 24px;
+            cursor: pointer;
+            color: #2c3e50;
+        }
+
+        .search-bar {
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .search-bar button {
+                width: 100%;
+                max-width: 200px;
+            }
+
+        }
+
+        /* Animasi Fade In */
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .search-section, .job-card, .footer {
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo"><i class="fas fa-briefcase"></i> BbibbJobStreet</div>
+        <nav>
+            <div class="toggle-nav"><i class="fas fa-bars"></i></div>
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="#"><i class="fas fa-search"></i> Cari Lowongan</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profil</a></li>
+                <li><a href="#"><i class="fas fa-bookmark"></i> Lowongan Tersimpan</a></li>
+                <li>
+                    @* <a asp-controller="LoginAndRegisterPage" asp-action="Logout"> *@
+                    @*     <i class="fas fa-sign-out-alt"></i> Keluar *@
+                    @* </a> *@
+
+                    @* LEBIH AMAN *@
+                    <form asp-controller="LoginAndRegisterPage" asp-action="Logout" method="post" style="display: inline;">
+                        <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    @RenderBody()
+
+    <div class="footer">
+        <p>&copy; 2025 BbibbJobStreet. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        // Toggle navigation for mobile
+        document.querySelector('.toggle-nav').addEventListener('click', () => {
+            document.querySelector('.header nav ul').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
