@@ -55,7 +55,7 @@ namespace BbibbJobStreetJwtToken.Helpers
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(expirationMinutes), // Expire dalam 2 menit
+                expires: DateTime.UtcNow.AddMinutes(expirationMinutes), // Expire dalam 5 menit
                 signingCredentials: credentials
             );
 

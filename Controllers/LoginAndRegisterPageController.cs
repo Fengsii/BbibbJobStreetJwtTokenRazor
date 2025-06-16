@@ -133,7 +133,7 @@ namespace BbibbJobStreetJwtToken.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTime.Now.AddMinutes(2) // Sesuaikan dengan expiry token JWT
+                    Expires = DateTime.Now.AddMinutes(5) // Sesuaikan dengan expiry token JWT
                     //Expires = DateTime.Now.AddHours(1) // Sesuaikan dengan expiry token
                 });
 
