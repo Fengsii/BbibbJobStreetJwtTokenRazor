@@ -1,0 +1,194 @@
+﻿
+@using BbibbJobStreetJwtToken.Models.DTO
+@model RegisterPerusahaanDTO
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pendaftaran Perusahaan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f5f6fa;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .register-box {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+            .register-box h2 {
+                text-align: center;
+                margin-bottom: 25px;
+                color: #2c3e50;
+            }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background-color: #1976D2;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+
+            button:hover {
+                background-color: #155a9c;
+            }
+
+        .text-center {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+            .form-row > div {
+                flex: 1;
+            }
+
+        .section-title {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-box">
+        <h2>Form Pendaftaran Perusahaan</h2>
+        <form asp-controller="LoginAndRegisterPage" asp-action="RegisterPerusahaan" method="post" enctype="multipart/form-data">
+            <!-- Informasi Dasar Perusahaan -->
+            <h3 class="section-title">Informasi Perusahaan</h3>
+
+            <div class="form-row">
+                <div>
+                    <label for="NamaPerusahaan">Nama Perusahaan*</label>
+                    <input type="text" asp-for="NamaPerusahaan" id="NamaPerusahaan" required />
+                    <span asp-validation-for="NamaPerusahaan" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="TanggalBerdiri">Tanggal Berdiri*</label>
+                    <input type="date" asp-for="TanggalBerdiri" id="TanggalBerdiri" required />
+                    <span asp-validation-for="TanggalBerdiri" class="text-danger"></span>
+                </div>
+            </div>
+
+            <label for="BidangUsaha">Bidang Usaha*</label>
+            <input type="text" asp-for="BidangUsaha" id="BidangUsaha" required />
+            <span asp-validation-for="BidangUsaha" class="text-danger"></span>
+
+            <!-- Logo Perusahaan -->
+            <label for="logoInput">Logo Perusahaan</label>
+            <input type="file" asp-for="LogoPath" id="logoInput" accept="image/*" />
+            <span asp-validation-for="LogoPath" class="text-danger"></span>
+
+            <!-- Informasi Kontak -->
+            <h3 class="section-title">Informasi Kontak</h3>
+
+            <div class="form-row">
+                <div>
+                    <label for="Email">Email*</label>
+                    <input type="email" asp-for="Email" id="Email" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="telepon">Telepon*</label>
+                    <input type="tel" asp-for="Telepon" id="telepon" required />
+                    <span asp-validation-for="Telepon" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Alamat Perusahaan -->
+            <h3 class="section-title">Alamat Perusahaan</h3>
+
+            <label for="Alamat">Alamat Lengkap*</label>
+            <input type="text" asp-for="Alamat" id="Alamat" required />
+            <span asp-validation-for="Alamat" class="text-danger"></span>
+
+            <div class="form-row">
+                <div>
+                    <label for="Kota">Kota*</label>
+                    <input type="text" asp-for="Kota" id="Kota" required />
+                    <span asp-validation-for="Kota" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="Provinsi">Provinsi*</label>
+                    <input type="text" asp-for="Provinsi" id="Provinsi" required />
+                    <span asp-validation-for="Provinsi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Akun -->
+            <h3 class="section-title">Informasi Akun</h3>
+
+            <label for="Password">Password*</label>
+            <input type="password" asp-for="Password" id="Password" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+            <input type="hidden" asp-for="Role" value="Perusahaan" />
+
+            <button type="submit">Daftarkan Perusahaan</button>
+
+            <div class="text-center">
+                Sudah punya akun? <a href="/LoginAndRegisterPage/LoginPerusahaan">Login di sini</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

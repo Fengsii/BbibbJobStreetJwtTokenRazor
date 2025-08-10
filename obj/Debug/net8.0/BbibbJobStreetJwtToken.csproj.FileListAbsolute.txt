@@ -18,13 +18,6 @@ C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\ne
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets\msbuild.BbibbJobStreetJwtToken.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets\msbuild.BbibbJobStreetJwtToken.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets\msbuild.build.BbibbJobStreetJwtToken.props
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.BbibbJobStreetJwtToken.props
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.BbibbJobStreetJwtToken.props
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJobStreetJwtToken.dll
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\refint\BbibbJobStreetJwtToken.dll
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJobStreetJwtToken.pdb
@@ -119,3 +112,10 @@ C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\ne
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJobStreetJwtToken.csproj.AssemblyReference.cache
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJob.2D122E9C.Up2Date
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJobStreetJwtToken.sourcelink.json
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

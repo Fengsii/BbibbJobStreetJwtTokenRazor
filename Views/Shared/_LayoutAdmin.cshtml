@@ -286,7 +286,12 @@
                 <li><a href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
                 <li><a href="#"><i class="fas fa-building"></i> Perusahaan</a></li>
                 <li><a href="#"><i class="fas fa-bell"></i> Notifikasi</a></li>
-                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                @* <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li> *@
+                <form asp-controller="LoginPage" asp-action="Logout" method="post" style="display: inline;">
+                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
+                    </button>
+                </form>
             </ul>
         </div>
 
@@ -294,7 +299,7 @@
         <div class="main-content">
             <div class="header">
                 <div class="toggle-btn"><i class="fas fa-bars"></i></div>
-                <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+                <h1><i class="fas fa-tachometer-alt"></i> Super Admin Dashboard</h1>
                 <div class="user-profile">
                     <img src="https://via.placeholder.com/40" alt="User Profile">
                     <span>Admin</span>

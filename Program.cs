@@ -1,6 +1,7 @@
 using BbibbJobStreetJwtToken.Helpers;
 using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models;
+using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,26 @@ if (string.IsNullOrEmpty(secretKey))
 
 
 
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//.AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = jwtSettings["Issuer"],
+//        ValidAudience = jwtSettings["Audience"],
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)),
+//        ClockSkew = TimeSpan.Zero // Tidak ada toleransi waktu
+//    };
+//});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,33 +70,52 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)),
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+        ValidAudience = builder.Configuration["JwtSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])),
         ClockSkew = TimeSpan.Zero // Tidak ada toleransi waktu
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            // Ambil token dari cookie bernama "jwt_token"
+            if (context.Request.Cookies.ContainsKey("jwt_token"))
+            {
+                context.Token = context.Request.Cookies["jwt_token"];
+            }
+            return Task.CompletedTask;
+        }
     };
 });
 
 
+
 // Registrasi Services
 builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IPerusahaan, PerusahaanService>();
+builder.Services.AddScoped<ILowonganPekerjaan, LowonganPekerjaanService>();
+builder.Services.AddScoped<IKategoriPekerjaan,  KategoriPekerjaanService>();
+builder.Services.AddScoped<ILamaran, LamaranService>();
+builder.Services.AddScoped<ILowonganTersimpan, LowonganTersimpanService>();
 builder.Services.AddScoped<JwtHelper>();
+builder.Services.AddScoped<IFileHelper, FileHelper>();
+builder.Services.AddScoped<IImageHelper, ImageHelper>();
+builder.Services.AddScoped<IEnkripsiPassword, EnkripsiPasswordHelper>();
 builder.Services.AddScoped<ILoginLayout, LoginLayoutService>();
 builder.Services.AddHttpContextAccessor(); // Untuk mengakses HttpContext
 
 
 
-
-
-
-
-
-
-
-
-
+// Tambahkan setelah AddControllersWithViews() dan sebelum UseRouting()
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -90,6 +130,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+// Dan sebelum UseAuthorization()
+app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -100,6 +144,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=LoginAndRegisterPage}/{action=Login}/{id?}");
+    pattern: "{controller=LoginPage}/{action=Index}/{id?}");
+//pattern: "{controller=LoginAndRegisterPage}/{action=RegisterUser}/{id?}");
 
 app.Run();

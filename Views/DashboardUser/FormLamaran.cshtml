@@ -1,0 +1,557 @@
+﻿@using BbibbJobStreetJwtToken.Models.DTO
+@model LamaranAddUpdateDTO
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Lamaran Pekerjaan</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<style>
+    /* Reset dan Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        color: #0a66c2;
+        font-size: 24px;
+        font-weight: bold;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+    /* Progress Bar */
+    .progress-container {
+        width: 100%;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        margin: 30px 0;
+        height: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 33%;
+        background-color: #0a66c2;
+        border-radius: 5px;
+        transition: width 0.4s ease;
+        animation: progressLoad 1.5s ease-in-out;
+    }
+
+    @@keyframes progressLoad {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 33%;
+        }
+    }
+
+    /* Job Info */
+    .job-info {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transform: translateY(20px);
+        opacity: 0;
+        animation: fadeInUp 0.5s 0.2s forwards;
+    }
+
+    .job-title {
+        font-size: 22px;
+        color: #0a66c2;
+        margin-bottom: 5px;
+    }
+
+    .company-name {
+        font-size: 16px;
+        color: #666;
+    }
+
+    /* Form Container */
+    .form-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 40px;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: fadeInUp 0.5s 0.4s forwards;
+    }
+
+    @@keyframes fadeInUp {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .form-title {
+        font-size: 24px;
+        color: #0a66c2;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+    }
+
+        .form-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #0a66c2;
+            margin: 10px auto 0;
+            border-radius: 3px;
+        }
+
+    /* Form Styles */
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #0a66c2;
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.2);
+            outline: none;
+        }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .file-upload {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .file-upload-label {
+        padding: 12px 20px;
+        background-color: #f0f5ff;
+        color: #0a66c2;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 1px dashed #0a66c2;
+        transition: all 0.3s ease;
+        text-align: center;
+        flex-grow: 1;
+    }
+
+        .file-upload-label:hover {
+            background-color: #e0ebff;
+        }
+
+    .file-name {
+        margin-left: 15px;
+        color: #666;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .checkbox-group input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+    }
+
+    .btn {
+        padding: 14px 30px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-primary {
+        background-color: #0a66c2;
+        color: white;
+        flex-grow: 1;
+        max-width: 200px;
+    }
+
+        .btn-primary:hover {
+            background-color: #004182;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+        }
+
+    .btn-secondary {
+        background-color: white;
+        color: #0a66c2;
+        border: 1px solid #0a66c2;
+    }
+
+        .btn-secondary:hover {
+            background-color: #f0f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn i {
+        margin-right: 8px;
+    }
+
+    /* Success Message */
+    .success-message {
+        display: none;
+        text-align: center;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        animation: fadeIn 0.5s ease;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .success-icon {
+        font-size: 60px;
+        color: #2ecc71;
+        margin-bottom: 20px;
+        animation: bounce 1s ease;
+    }
+
+    @@keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-20px);
+        }
+
+        60% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .success-title {
+        font-size: 28px;
+        color: #0a66c2;
+        margin-bottom: 15px;
+    }
+
+    .success-text {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .container {
+            padding: 0 15px;
+        }
+
+        .form-container {
+            padding: 20px;
+        }
+
+        .action-buttons {
+            flex-direction: column-reverse;
+            gap: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .file-upload {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .file-name {
+            margin-left: 0;
+            margin-top: 10px;
+            max-width: 100%;
+        }
+    }
+
+    /* Floating animation */
+    .floating {
+        animation: floating 3s ease-in-out infinite;
+    }
+
+    @@keyframes floating {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+</style>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    JobPortal
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+
+            <!-- Job Info -->
+            <div class="job-info">
+                <h2 class="job-title">Frontend Developer</h2>
+                <p class="company-name">Tech Solutions Indonesia</p>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container" id="applicationForm">
+                <h2 class="form-title">Formulir Lamaran</h2>
+                <form id="jobApplicationForm" asp-controller="DashboardUser" asp-action="FormLamaran" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="LowonganId" />
+
+                    <div>
+                        <label>Nama Lengkap</label>
+                        <input asp-for="Nama" class="form-control" required />
+                    </div>
+
+                    <div>
+                        <label>Email</label>
+                        <input asp-for="Email" type="email" class="form-control" required />
+                    </div>
+
+                    <div>
+                        <label>No HP</label>
+                        <input asp-for="NoHP" type="tel" class="form-control" required />
+                    </div>
+
+                    <div>
+                        <label>Pendidikan</label>
+                        <select asp-for="Pendidikan" class="form-control" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="S1">S1</option>
+                            <option value="D3">D3</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Gaji Saat Ini</label>
+                        <input asp-for="GajiSaatIni" type="number" class="form-control" />
+                    </div>
+
+                    <div>
+                        <label>Gaji Diharapkan</label>
+                        <input asp-for="GajiDiharapkan" type="number" class="form-control" />
+                    </div>
+
+                    <div>
+                        <label>Upload CV</label>
+                        <input asp-for="CV" type="file" accept=".pdf,.doc,.docx" class="form-control" />
+                    </div>
+
+                    @* <button type="submit" class="btn btn-primary">Kirim Lamaran</button> *@
+
+                    <div class="action-buttons">
+                        <a href="/DashboardUser/Index">
+                            <button type="button" class="btn btn-secondary" id="backBtn">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </button>
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Kirim Lamaran
+                        </button>
+                    </div>
+                </form>
+                
+
+               
+            </div>
+
+            <!-- Success Message (Hidden by default) -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon floating">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="success-title">Lamaran Terkirim!</h2>
+                <p class="success-text">Terima kasih telah melamar posisi Frontend Developer di Tech Solutions Indonesia. Kami akan menghubungi Anda melalui email atau telepon jika profil Anda sesuai dengan kebutuhan kami.</p>
+                <button class="btn btn-primary" id="homeBtn">
+                    <i class="fas fa-home"></i> Kembali ke Beranda
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Animasi dan interaktivitas form
+        document.addEventListener('DOMContentLoaded', function() {
+            // File upload handler
+            const fileInput = document.getElementById('resume');
+            const fileNameDisplay = document.getElementById('fileName');
+
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+
+                    // Validasi ukuran file
+                    if (this.files[0].size > 5 * 1024 * 1024) {
+                        alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                        this.value = '';
+                        fileNameDisplay.textContent = 'Belum ada file dipilih';
+                    }
+                } else {
+                    fileNameDisplay.textContent = 'Belum ada file dipilih';
+                }
+            });
+
+            // Form submission handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('jobApplicationForm');
+            const applicationForm = document.getElementById('applicationForm');
+            const successMessage = document.getElementById('successMessage');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Mencegah submit default
+
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+                submitBtn.disabled = true;
+
+                // Untuk demo, gunakan setTimeout
+                setTimeout(() => {
+                    applicationForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    document.querySelector('.progress-bar').style.width = '100%';
+
+                    // Untuk submit sebenarnya, uncomment ini:
+                    // this.submit();
+                }, 2000);
+            });
+        });
+
+            // Tombol kembali
+            document.getElementById('backBtn').addEventListener('click', function() {
+                // Animasi sebelum kembali
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kembali...';
+                setTimeout(() => {
+                    window.history.back();
+                }, 500);
+            });
+
+            // Tombol beranda
+            document.getElementById('homeBtn').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

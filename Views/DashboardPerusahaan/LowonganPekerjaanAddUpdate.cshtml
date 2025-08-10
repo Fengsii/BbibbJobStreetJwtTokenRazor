@@ -1,0 +1,77 @@
+﻿
+
+@using BbibbJobStreetJwtToken.Models.DB
+@model LowonganPekerjaan
+
+@{
+    Layout = "_LayoutPerusahaan";
+   
+}
+
+<div class="page active" id="lowongan-form">
+    <div class="form-container">
+        <h3><i class="fas fa-suitcase"></i> @ViewBag.Title</h3>
+
+        <form asp-controller="DashboardPerusahaan" asp-action="LowonganPekerjaanAddUpdate" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Judul">Judul Lowongan</label>
+                <input asp-for="Judul" class="form-control" placeholder="Contoh: Dibutuhkan Frontend Developer">
+                <span asp-validation-for="Judul" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Posisi">Posisi</label>
+                <input asp-for="Posisi" class="form-control" placeholder="Contoh: Frontend Developer" required>
+                <span asp-validation-for="Posisi" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PerusahaanId">Perusahaan</label>
+                <select asp-for="PerusahaanId" asp-items="ViewBag.Perusahaan" class="form-control" required>
+                    <option value="">-- Pilih Perusahaan --</option>
+                </select>
+                <span asp-validation-for="PerusahaanId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KategoriId">Kategori</label>
+                <select asp-for="KategoriId" asp-items="ViewBag.Kategori" class="form-control" required>
+                    <option value="">-- Pilih Kategori --</option>
+                </select>
+                <span asp-validation-for="KategoriId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Deskripsi">Deskripsi Pekerjaan</label>
+                <textarea asp-for="Deskripsi" class="form-control" rows="5" required></textarea>
+                <span asp-validation-for="Deskripsi" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TanggalDibuat">Tanggal Dibuka</label>
+                <input asp-for="TanggalDibuat" type="date" class="form-control" required>
+                <span asp-validation-for="TanggalDibuat" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="status">Status</label>
+                <select asp-for="status" class="form-control" required>
+                    <option value="Active">Aktif</option>
+                    <option value="Closed">Ditutup</option>
+                </select>
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+                <a href="@Url.Action("LowonganPekerjaan", "DashboardPerusahaan")" class="action-btn secondary">
+                    <i class="fas fa-times"></i> Batal
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

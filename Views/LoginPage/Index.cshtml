@@ -1,0 +1,170 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Peran - Portal Pekerjaan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #1E90FF;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            color: #000000;
+            width: 300px;
+            padding: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(30, 144, 255, 0.5);
+            }
+
+            .card i {
+                font-size: 3.5rem;
+                color: #1E90FF;
+                margin-bottom: 20px;
+                animation: iconPulse 2s infinite;
+            }
+
+            .card h2 {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+
+            .card p {
+                font-size: 1rem;
+                color: #333333;
+            }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1E90FF;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn:hover {
+                background-color: #0066CC;
+            }
+
+        @@keyframes fadeIn {
+            0%
+
+        {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        @@keyframes iconPulse {
+            0%
+
+        {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+
+        }
+
+        @@media (max-width: 600px) {
+            h1
+
+        {
+            font-size: 2rem;
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pilih Peran Anda</h1>
+        <div class="card-container">
+            <div class="card">
+                <i class="fas fa-user-tie"></i>
+                <h2>Pelamar</h2>
+                <p>Cari pekerjaan impian Anda dan bangun karier yang sukses!</p>
+                <a href="/LoginAndRegisterPage/LoginUser" class="btn">Pilih sebagai Pelamar</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-building"></i>
+                <h2>Perusahaan</h2>
+                <p>Temukan talenta terbaik untuk mengembangkan bisnis Anda!</p>
+                <a href="/LoginAndRegisterPage/LoginPerusahaan" class="btn">Pilih sebagai Perusahaan</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

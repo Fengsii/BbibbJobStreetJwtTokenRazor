@@ -1,11 +1,13 @@
 ﻿using BbibbJobStreetJwtToken.Helpers;
+using BbibbJobStreetJwtToken.Interfaces;
+using BbibbJobStreetJwtToken.Models;
 using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Models.DTO;
-using BbibbJobStreetJwtToken.Models;
-using System.Text;
-using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
-using BbibbJobStreetJwtToken.Interfaces;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
+using static BbibbJobStreetJwtToken.Models.GeneralStatus;
 
 
 namespace BbibbJobStreetJwtToken.Services
@@ -14,18 +16,21 @@ namespace BbibbJobStreetJwtToken.Services
     {
         private readonly ApplicationContext _context;
         private readonly JwtHelper _jwtHelper;
+        private readonly IEnkripsiPassword _enkripsiPassword;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(ApplicationContext context, JwtHelper jwtHelper)
+        public UserService(ApplicationContext context, JwtHelper jwtHelper, IEnkripsiPassword enkripsiPassword, ILogger<UserService> logger)
         {
             _context = context;
             _jwtHelper = jwtHelper;
+            _enkripsiPassword = enkripsiPassword;
+            _logger = logger;
         }
 
-        public async Task<string?> LoginAsync(LoginDTO loginDTO)
+        public async Task<string?> LoginAsync(LoginUserDTO loginDTO)
         {
             try
             {
-                // Mencari user berdasarkan username
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Username == loginDTO.Username);
 
@@ -33,11 +38,10 @@ namespace BbibbJobStreetJwtToken.Services
                     return null; // User tidak ditemukan
 
                 // Verifikasi password
-                if (!VerifyPassword(loginDTO.Password, user.PasswordHash))
+                if (!_enkripsiPassword.VerifyPassword(loginDTO.Password, user.PasswordHash))
                     return null; // Password salah
 
-                // Generate JWT Token
-                var token = _jwtHelper.GenerateToken(user.Username, user.Email, user.Id);
+                var token = _jwtHelper.GenerateToken(user.Username, user.Email, user.Id, user.Role);
                 return token;
             }
             catch (Exception ex)
@@ -47,7 +51,7 @@ namespace BbibbJobStreetJwtToken.Services
             }
         }
 
-        public async Task<bool> RegisterAsync(RegisterDTO registerDTO)
+        public async Task<bool> RegisterAsync(RegisterUserDTO registerDTO)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -57,16 +61,18 @@ namespace BbibbJobStreetJwtToken.Services
                     return false;
 
                 // Hash password
-                var passwordHash = HashPassword(registerDTO.Password);
+                var passwordHash = _enkripsiPassword.HashPassword(registerDTO.Password);
 
-                // Buat user baru
                 var user = new User
                 {
                     Username = registerDTO.Username,
                     Email = registerDTO.Email,
                     PasswordHash = passwordHash,
+                    ProfileImage = "",
+                    CoverImage = "",
                     Role = "User",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    Status = GeneralStatus.GeneralStatusData.Active
                 };
 
                 _context.Users.Add(user);
@@ -83,13 +89,14 @@ namespace BbibbJobStreetJwtToken.Services
             }
         }
 
+
         public async Task<bool> UserExistsAsync(string username, string email)
         {
             return await _context.Users
                 .AnyAsync(u => u.Username == username || u.Email == email);
         }
 
-        public async Task<UserDTO?> GetUserByIdAsync(int userId)
+        public async Task<UserUpdateDTO?> GetUserByIdAsync(int userId)
         {
             try
             {
@@ -101,7 +108,7 @@ namespace BbibbJobStreetJwtToken.Services
 
                 // Konversi dari User entity ke UserModel (DTO)
                 // PENTING: Tidak mengirim PasswordHash ke client!
-                return new UserDTO
+                return new UserUpdateDTO
                 {
                     Id = userEntity.Id,
                     Username = userEntity.Username,
@@ -117,21 +124,6 @@ namespace BbibbJobStreetJwtToken.Services
             }
         }
 
-      
 
-        // Method untuk hash password menggunakan SHA256 (sederhana untuk contoh)
-        // Untuk production, gunakan BCrypt atau Argon2
-
-        private string HashPassword(string password)
-        {
-            return BCrypt.Net.BCrypt.HashPassword(password); 
-        }
-
-        private bool VerifyPassword(string password, string hashedPassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(password, hashedPassword); 
-        }
-
-       
     }
 }

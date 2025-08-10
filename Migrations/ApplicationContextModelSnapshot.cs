@@ -22,6 +22,302 @@ namespace BbibbJobStreetJwtToken.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.KategoriPekerjaan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Deskripsi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NamaKategori")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KategoriPekerjaans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.Lamaran", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CV")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("GajiDiharapkan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GajiSaatIni")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LowonganId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nama")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("NoHP")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Pendidikan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TanggalDilamar")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LowonganId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Lamarans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LamaranTersimpan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CatatanHR")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("LamaranId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PenggunaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("TanggalTersimpan")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LamaranId")
+                        .IsUnique();
+
+                    b.HasIndex("PenggunaId");
+
+                    b.ToTable("LamaranTersimpans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Deskripsi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Judul")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("KategoriId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PerusahaanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Posisi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("TanggalDibuat")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KategoriId");
+
+                    b.HasIndex("PerusahaanId");
+
+                    b.ToTable("LowonganPekerjaans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganTersimpan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LowonganId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PenggunaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TanggalDisimpan")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LowonganId");
+
+                    b.HasIndex("PenggunaId");
+
+                    b.ToTable("LowonganTersimpans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.Perusahaan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Alamat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("BidangUsaha")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Kota")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LogoPath")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NamaPerusahaan")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Provinsi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TanggalBerdiri")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Telepon")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Perusahaans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.ProfileUserDetails", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("GambarPengalamanKerja")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Keahlian")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Minat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Pendidikan")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PengalamanKerja")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Sertifikat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Tentang")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ProfileUsers");
+                });
+
             modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.User", b =>
                 {
                     b.Property<int>("Id")
@@ -30,6 +326,10 @@ namespace BbibbJobStreetJwtToken.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CoverImage")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -37,13 +337,23 @@ namespace BbibbJobStreetJwtToken.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime?>("LastUpdatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProfileImage")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -57,12 +367,137 @@ namespace BbibbJobStreetJwtToken.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 6, 15, 20, 49, 19, 948, DateTimeKind.Local).AddTicks(4250),
+                            CoverImage = "",
+                            CreatedAt = new DateTime(2025, 8, 9, 17, 50, 37, 772, DateTimeKind.Local).AddTicks(9426),
                             Email = "admin@example.com",
-                            PasswordHash = "$2a$11$Uxr26Qg5gVsPbNVhCsukzejaVd0meBRyONn6JaSe3stWFbGXNQ6cW",
+                            PasswordHash = "$2a$11$r/bKHFTiqn2h3BxUssh6MuySxfxm3wqOqQMZ0vuYMRpFHcKIa2cYK",
+                            ProfileImage = "",
                             Role = "Admin",
+                            Status = 0,
                             Username = "admin"
                         });
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.Lamaran", b =>
+                {
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", "Lowongan")
+                        .WithMany("Lamarans")
+                        .HasForeignKey("LowonganId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.User", "user")
+                        .WithMany("Lamarans")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lowongan");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LamaranTersimpan", b =>
+                {
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.Lamaran", "Lamaran")
+                        .WithOne("LamaranTersimpan")
+                        .HasForeignKey("BbibbJobStreetJwtToken.Models.DB.LamaranTersimpan", "LamaranId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.User", "User")
+                        .WithMany("RiwayatLamaran")
+                        .HasForeignKey("PenggunaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lamaran");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", b =>
+                {
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.KategoriPekerjaan", "Kategori")
+                        .WithMany("Lowongans")
+                        .HasForeignKey("KategoriId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.Perusahaan", "Perusahaan")
+                        .WithMany("Lowongans")
+                        .HasForeignKey("PerusahaanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kategori");
+
+                    b.Navigation("Perusahaan");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganTersimpan", b =>
+                {
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", "Lowongan")
+                        .WithMany("LowonganTersimpans")
+                        .HasForeignKey("LowonganId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.User", "User")
+                        .WithMany("lowonganTersimpans")
+                        .HasForeignKey("PenggunaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lowongan");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.ProfileUserDetails", b =>
+                {
+                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.User", "User")
+                        .WithOne("ProfileUserDetails")
+                        .HasForeignKey("BbibbJobStreetJwtToken.Models.DB.ProfileUserDetails", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.KategoriPekerjaan", b =>
+                {
+                    b.Navigation("Lowongans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.Lamaran", b =>
+                {
+                    b.Navigation("LamaranTersimpan")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", b =>
+                {
+                    b.Navigation("Lamarans");
+
+                    b.Navigation("LowonganTersimpans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.Perusahaan", b =>
+                {
+                    b.Navigation("Lowongans");
+                });
+
+            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.User", b =>
+                {
+                    b.Navigation("Lamarans");
+
+                    b.Navigation("ProfileUserDetails")
+                        .IsRequired();
+
+                    b.Navigation("RiwayatLamaran");
+
+                    b.Navigation("lowonganTersimpans");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,69 @@
+﻿
+@using BbibbJobStreetJwtToken.Models.DTO
+@model List<LowonganPekerjaanViewDTO>
+
+@{
+    Layout = "_LayoutPerusahaan";
+}
+
+<div class="page active" id="lowongan">
+    <div class="table-container">
+        <h3><i class="fas fa-suitcase"></i> Daftar Lowongan</h3>
+        <a href="/DashboardPerusahaan/LowonganPekerjaanAddUpdate">
+            <button class="action-btn" id="btn-tambah-lowongan"><i class="fas fa-plus"></i> Tambah Lowongan</button>
+       </a>
+        <table>
+            <thead>
+                <tr>
+
+                    <th>Id</th>
+                    <th>Logo</th>
+                    <th>Judul</th>
+                    <th>Perusahaan</th>
+                    <th>Posisi</th>
+                    <th>Deskripsi</th>
+                    <th>Kategori</th>
+                    <th>Tanggal Dibuat</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lowongan in Model)
+                {
+                    <tr>
+                        <td>@lowongan.Id</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(lowongan.Logo))
+                            {
+                                <img src="@lowongan.Logo" alt="Logo Perusahaan" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="logo-placeholder">
+                                    <i class="fas fa-building" style="font-size: 20px; color: #3498db;"></i>
+                                </div>
+                            }
+                        </td>
+                        <td>@lowongan.Judul</td>
+                        <td>@lowongan.NamaPerusahaan</td>
+                        <td>@lowongan.Posisi</td>
+                        <td>@lowongan.Deskripsi</td>
+                        <td>@lowongan.NamaKategori</td>
+                        <td>@lowongan.TanggalDibuat.ToString("dd MMM yyyy")</td>
+                        <td>@lowongan.status</td>
+                        <td>
+                            <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lowongan.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
+                            <form method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@lowongan.Id" />
+                                <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');"><i class="bi bi-trash"></i> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

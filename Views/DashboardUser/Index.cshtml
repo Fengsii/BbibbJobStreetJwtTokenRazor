@@ -1,41 +1,65 @@
-﻿@{
-    Layout = "_LayoutUser"; // Pakai template
+﻿@using BbibbJobStreetJwtToken.Models.DTO
+@model List<LowonganPekerjaanViewDTO>
+
+@{
+    Layout = "_LayoutUser";
 }
 
-<div class="search-section">
-    <h1>Cari Pekerjaan Impian Anda</h1>
-    <div class="search-bar">
-        <input type="text" placeholder="Cari berdasarkan posisi, perusahaan, atau lokasi">
-        <button><i class="fas fa-search"></i> Cari</button>
-    </div>
-</div>
+<section id="home-section">
+    <h2 class="section-title">Recommended for you</h2>
 
-<div class="job-listings">
-    <div class="job-card">
-        <h3>Frontend Developer</h3>
-        <p>TechCorp</p>
-        <div class="details">
-            <p><i class="fas fa-map-marker-alt"></i> Jakarta</p>
-            <p><i class="fas fa-dollar-sign"></i> Rp 10-15 Juta</p>
-        </div>
-        <a href="#" class="apply-btn"><i class="fas fa-paper-plane"></i> Lamar Sekarang</a>
+    <div class="job-cards">
+        @foreach (var data in Model)
+        {
+            <div class="job-card">
+                <div class="job-card-header">
+                    @* <a href="@Url.Action("DetailLowongan", "DashboardUser", new { id = data.Id })">
+                        
+                    </a> *@
+                    <img src="@data.Logo" alt="Logo Perusahaan" class="company-logo">
+
+                    <div class="job-info">
+                        <h3 class="job-title">@data.Posisi</h3>
+                        <p class="company-name">@data.NamaPerusahaan</p>
+                        <p class="job-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Jakarta, Indonesia (Remote)
+                        </p>
+                    </div>
+
+                    <form method="post" action="@Url.Action("LowonganTersimpan", "DashboardUser")" class="quick-apply-btn">
+                        <input type="hidden" name="lowonganId" value="@data.Id" />
+                        <button type="submit" class="job-save-btn" onclick="toggleSave(this)">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                    </form>
+
+
+                    
+                </div>
+
+                <div class="job-card-body">
+                    <p class="job-description">@data.Deskripsi</p>
+                    <p class="job-posted">Posted 2 days ago</p>
+                </div>
+
+                <div class="job-card-footer">
+                    <span class="job-type">@data.NamaKategori</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("FormLamaran", "DashboardUser", new { lowonganId = data.Id })" class="quick-apply-btn">
+                            Quick Apply
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "LoginPage")" class="quick-apply-btn">
+                            Login to Apply
+                        </a>
+                    }
+                   
+                </div>
+            </div>
+        }
     </div>
-    <div class="job-card">
-        <h3>Marketing Manager</h3>
-        <p>BrandInc</p>
-        <div class="details">
-            <p><i class="fas fa-map-marker-alt"></i> Bandung</p>
-            <p><i class="fas fa-dollar-sign"></i> Rp 12-18 Juta</p>
-        </div>
-        <a href="#" class="apply-btn"><i class="fas fa-paper-plane"></i> Lamar Sekarang</a>
-    </div>
-    <div class="job-card">
-        <h3>Data Analyst</h3>
-        <p>DataCo</p>
-        <div class="details">
-            <p><i class="fas fa-map-marker-alt"></i> Surabaya</p>
-            <p><i class="fas fa-dollar-sign"></i> Rp 8-12 Juta</p>
-        </div>
-        <a href="#" class="apply-btn"><i class="fas fa-paper-plane"></i> Lamar Sekarang</a>
-    </div>
-</div>
+</section>

@@ -4,9 +4,9 @@ namespace BbibbJobStreetJwtToken.Interfaces
 {
     public interface IUser
     {
-        Task<string?> LoginAsync(LoginDTO loginDTO);
-        Task<bool> RegisterAsync(RegisterDTO registerDTO);
+        Task<string?> LoginAsync(LoginUserDTO loginDTO);
+        Task<bool> RegisterAsync(RegisterUserDTO registerDTO);
         Task<bool> UserExistsAsync(string username, string email);
-        Task<UserDTO?> GetUserByIdAsync(int userId);
+        Task<UserUpdateDTO?> GetUserByIdAsync(int userId);
     }
 }

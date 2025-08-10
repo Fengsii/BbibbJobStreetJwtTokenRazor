@@ -1,0 +1,358 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Lowongan - LinkedIn-style</title>
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #0a66c2;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 30px 0;
+        }
+
+        .job-detail-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        @@keyframes fadeInUp {
+            to
+
+        {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .job-title {
+            font-size: 28px;
+            color: #0a66c2;
+            margin-bottom: 5px;
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 1px solid #eee;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            color: #666;
+        }
+
+            .meta-item i {
+                margin-right: 8px;
+                color: #0a66c2;
+            }
+
+        .job-description {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #0a66c2;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e6e6e6;
+        }
+
+        .job-requirements ul, .job-benefits ul {
+            list-style-position: inside;
+            margin-bottom: 25px;
+        }
+
+        .job-requirements li, .job-benefits li {
+            margin-bottom: 8px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: #0a66c2;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #004182;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(10, 102, 194, 0.3);
+            }
+
+        .btn-secondary {
+            background-color: white;
+            color: #0a66c2;
+            border: 1px solid #0a66c2;
+        }
+
+            .btn-secondary:hover {
+                background-color: #e6f0f9;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Footer */
+        .footer {
+            background-color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .job-header
+
+        {
+            flex-direction: column;
+        }
+
+        .job-title {
+            font-size: 24px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        }
+
+        /* Animasi untuk tombol lamar */
+        @@keyframes pulse {
+            0%
+
+        {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+
+        }
+
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">LinkedIn-style Jobs</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="job-detail-card">
+                <div class="job-header">
+                    <div>
+                        <h1 class="job-title">Frontend Developer</h1>
+                        <div class="company-info">
+                            <img src="https://via.placeholder.com/60" alt="Company Logo" class="company-logo">
+                            <div>
+                                <div class="company-name">Tech Solutions Indonesia</div>
+                                <div>Jakarta Selatan • WFO/Hybrid</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <i>📅</i> Diposting 3 hari lalu
+                        </div>
+                        <div class="meta-item">
+                            <i>👥</i> 50 pelamar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="job-description">
+                    <h2 class="section-title">Deskripsi Pekerjaan</h2>
+                    <p>
+                        Kami mencari Frontend Developer yang kreatif dan berpengalaman untuk bergabung dengan tim pengembangan produk kami. Anda akan bertanggung jawab untuk mengembangkan antarmuka pengguna yang menarik dan responsif menggunakan teknologi modern.
+                    </p>
+                </div>
+
+                <div class="job-requirements">
+                    <h2 class="section-title">Persyaratan</h2>
+                    <ul>
+                        <li>Pengalaman 2+ tahun sebagai Frontend Developer</li>
+                        <li>Mahir dalam HTML, CSS, dan JavaScript/TypeScript</li>
+                        <li>Pengalaman dengan framework modern (React, Vue, atau Angular)</li>
+                        <li>Memahami konsep responsive design dan cross-browser compatibility</li>
+                        <li>Pengalaman dengan version control (Git)</li>
+                        <li>Kemampuan komunikasi yang baik dalam tim</li>
+                    </ul>
+                </div>
+
+                <div class="job-benefits">
+                    <h2 class="section-title">Keuntungan</h2>
+                    <ul>
+                        <li>Gaji kompetitif + bonus kinerja</li>
+                        <li>Asuransi kesehatan komprehensif</li>
+                        <li>Fleksibilitas kerja (WFO/Hybrid)</li>
+                        <li>Program pelatihan dan pengembangan karir</li>
+                        <li>Lingkungan kerja yang dinamis dan kolaboratif</li>
+                    </ul>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary btn-pulse" id="applyBtn">Lamar Cepat</button>
+                    <button class="btn btn-secondary" id="backBtn">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2023 LinkedIn-style Jobs. Seluruh hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animasi untuk tombol lamar
+        document.getElementById('applyBtn').addEventListener('click', function() {
+            this.innerHTML = 'Mengirim Lamaran...';
+            this.style.backgroundColor = '#004182';
+
+            // Simulasi proses lamaran
+            setTimeout(() => {
+                this.innerHTML = 'Lamaran Terkirim! ✓';
+                this.style.backgroundColor = '#2e7d32'; // Hijau untuk sukses
+                this.classList.remove('btn-pulse');
+
+                // Tampilkan notifikasi
+                alert('Lamaran Anda berhasil dikirim! Perusahaan akan menghubungi Anda jika profil Anda sesuai.');
+            }, 1500);
+        });
+
+        // Tombol kembali
+        document.getElementById('backBtn').addEventListener('click', function() {
+            // Animasi sebelum kembali
+            this.innerHTML = 'Kembali...';
+            setTimeout(() => {
+                window.location.href = 'daftar-lowongan.html'; // Ganti dengan URL yang sesuai
+            }, 500);
+        });
+    </script>
+</body>
+</html>

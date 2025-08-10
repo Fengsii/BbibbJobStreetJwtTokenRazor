@@ -24,8 +24,44 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardPerusahaan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkUGVydXNhaGFhblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardPerusahaan/KategoriPekerjaan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkUGVydXNhaGFhblxLYXRlZ29yaVBla2VyamFhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardPerusahaan/KategoriPekerjaanAddUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkUGVydXNhaGFhblxLYXRlZ29yaVBla2VyamFhbkFkZFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardPerusahaan/LowonganPekerjaan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkUGVydXNhaGFhblxMb3dvbmdhblBla2VyamFhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardPerusahaan/LowonganPekerjaanAddUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkUGVydXNhaGFhblxMb3dvbmdhblBla2VyamFhbkFkZFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardUser/DetailLowongan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkVXNlclxEZXRhaWxMb3dvbmdhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardUser/FormLamaran.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkVXNlclxGb3JtTGFtYXJhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardUser/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkVXNlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardUser/LowonganTersimpan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkVXNlclxMb3dvbmdhblRlcnNpbXBhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/DashboardUser/UserProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkVXNlclxVc2VyUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/Home/Index.cshtml]
@@ -36,12 +72,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginAndRegisterPage/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5BbmRSZWdpc3RlclBhZ2VcTG9naW4uY3NodG1s
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginAndRegisterPage/LoginPerusahaan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5BbmRSZWdpc3RlclBhZ2VcTG9naW5QZXJ1c2FoYWFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginAndRegisterPage/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5BbmRSZWdpc3RlclBhZ2VcUmVnaXN0ZXIuY3NodG1s
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginAndRegisterPage/LoginUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5BbmRSZWdpc3RlclBhZ2VcTG9naW5Vc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginAndRegisterPage/RegisterPerusahaan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5BbmRSZWdpc3RlclBhZ2VcUmVnaXN0ZXJQZXJ1c2FoYWFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginAndRegisterPage/RegisterUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5BbmRSZWdpc3RlclBhZ2VcUmVnaXN0ZXJVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/LoginPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5QYWdlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/Shared/Error.cshtml]
@@ -54,6 +102,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/Shared/_LayoutAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/Shared/_LayoutPerusahaan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRQZXJ1c2FoYWFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/DELL 7390/Documents/CSharp Lanjutan/BbibbJobStreetJwtToken/Views/Shared/_LayoutUser.cshtml]

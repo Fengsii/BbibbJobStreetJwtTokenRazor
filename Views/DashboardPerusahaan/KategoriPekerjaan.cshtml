@@ -1,0 +1,46 @@
+﻿@using BbibbJobStreetJwtToken.Models.DTO
+@model List<KategoriPekerjaanDTO>
+@{
+
+    Layout = "_LayoutPerusahaan"; // Pakai template
+}
+
+
+<div class="page active" id="kategori">
+    <div class="table-container">
+        <h3><i class="fas fa-file-alt"></i> Kategori Pekerjaan</h3>
+        <a href="/DashboardPerusahaan/KategoriPekerjaanAddUpdate">
+            <button class="action-btn"><i class="fas fa-plus"></i> Tambah Kategori</button>
+        </a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nama Kategori</th>
+                    <th>Deskripsi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample data for demonstration -->
+                @foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@data.Id</td>
+                        <td class="text-truncate">@data.NamaKategori</td>
+                        <td class="text-truncate">@data.Deskripsi</td>
+                        <td>
+                            <a href="@Url.Action("KategoriPekerjaanAddUpdate", "DashboardPerusahaan", new { id = data.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
+                            <form method="post" action="@Url.Action("DeleteKategoriPekerjaan", "DashboardPerusahaan")" style="display:inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@data.Id" />
+                                <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');"><i class="bi bi-trash"></i> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

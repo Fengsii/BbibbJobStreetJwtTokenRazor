@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "_LayoutPerusahaan"; // Pakai template
+}
+
+<div class="page active" id="dashboard">
+    <button class="action-btn"><i class="fas fa-plus"></i> Tambah Lowongan</button>
+
+    <div class="card-container">
+        <div class="card">
+            <i class="fas fa-suitcase"></i>
+            <h3>Total Lowongan</h3>
+            <p>25</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-users"></i>
+            <h3>Pelamar Aktif</h3>
+            <p>120</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-file-alt"></i>
+            <h3>Lamaran Baru</h3>
+            <p>15</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Statistik Bulanan</h3>
+            <p>80%</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h3><i class="fas fa-list"></i> Lowongan Terbaru</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Posisi</th>
+                    <th>Perusahaan</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Frontend Developer</td>
+                    <td>TechCorp</td>
+                    <td>2025-06-10</td>
+                    <td><span class="status active">Aktif</span></td>
+                </tr>
+                <tr>
+                    <td>Marketing Manager</td>
+                    <td>BrandInc</td>
+                    <td>2025-06-08</td>
+                    <td><span class="status active">Aktif</span></td>
+                </tr>
+                <tr>
+                    <td>Data Analyst</td>
+                    <td>DataCo</td>
+                    <td>2025-06-05</td>
+                    <td><span class="status closed">Ditutup</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-placeholder">
+            <i class="fas fa-chart-bar"></i>
+            Grafik Aktivitas Bulanan (Placeholder)
+        </div>
+    </div>
+</div>

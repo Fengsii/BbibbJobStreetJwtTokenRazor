@@ -1,0 +1,34 @@
+﻿@using BbibbJobStreetJwtToken.Models.DTO
+@model List<LowonganTersimpanViewDTO>
+
+@{
+    Layout = "_LayoutUser";
+}
+
+<section id="saved-jobs-section" class="hidden-section">
+    <h2 class="section-title">Saved Jobs</h2>
+   
+
+    <div class="page active">
+
+        @foreach (var data in Model)
+        {
+            <div class="saved-job-item">
+                <div class="saved-job-info">
+                    <h3 class="saved-job-title">@data.Posisi</h3>
+                    <p class="saved-job-company">@data.Deskripsi</p>
+                    <h3 class="saved-job-title">@data.TanggalDibuat</h3>
+                </div>
+                <div class="saved-job-actions">
+                    <button class="saved-job-action-btn" title="Apply">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <button class="saved-job-action-btn" title="Remove">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        }
+       
+    </div>
+</section>

@@ -23,6 +23,10 @@ namespace BbibbJobStreetJwtToken.Services
             {
                 return "~/Views/Shared/_LayoutUser.cshtml";
             }
+            else if(user.IsInRole("company"))
+            {
+                return "~/Views/Shared/_LayoutPerusahaan.cshtml";
+            }
 
             return "~/Views/Shared/_Layout.cshtml";
         }
