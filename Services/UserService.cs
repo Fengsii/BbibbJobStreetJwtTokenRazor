@@ -71,6 +71,7 @@ namespace BbibbJobStreetJwtToken.Services
                     ProfileImage = "",
                     CoverImage = "",
                     Role = "User",
+                    Posisi = registerDTO.Posisi,
                     CreatedAt = DateTime.Now,
                     Status = GeneralStatus.GeneralStatusData.Active
                 };

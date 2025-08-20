@@ -21,10 +21,13 @@ namespace BbibbJobStreetJwtToken.Services
         public List<LowonganTersimpanViewDTO> GetListLowonganTersimpan()
         {
             var userId = GetCurrentUserId();
-            var data = _context.LowonganTersimpans.Include(y => y.Lowongan).Where(x => x.PenggunaId == userId)
+            var data = _context.LowonganTersimpans.Include(y => y.Lowongan).ThenInclude(p => p.Perusahaan).Where(x => x.PenggunaId == userId)
                         .Select(x => new LowonganTersimpanViewDTO
                         {
                             Id = x.Id,
+                            LowonganId = x.LowonganId,
+                            Logo = "/upload/" + Path.GetFileName(x.Lowongan.Perusahaan.LogoPath),
+                            NamaPerusahaan = x.Lowongan.Perusahaan.NamaPerusahaan,
                             Posisi = x.Lowongan.Posisi,
                             Deskripsi = x.Lowongan.Deskripsi,
                             TanggalDibuat = x.Lowongan.TanggalDibuat,

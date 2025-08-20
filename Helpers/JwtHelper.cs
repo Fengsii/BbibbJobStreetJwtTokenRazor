@@ -37,6 +37,8 @@ namespace BbibbJobStreetJwtToken.Helpers
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Role, role),
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // Token ID unik
                 new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };

@@ -44,14 +44,6 @@ namespace BbibbJobStreetJwtToken.Controllers
             try
             {
 
-                if (!ModelState.IsValid)
-                {
-                    var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors));
-                    Console.WriteLine($"Validasi gagal: {errors}");
-                    TempData["Error"] = "Data tidak valid";
-                    return View(model);
-                }
-
                 Console.WriteLine("Memeriksa keberadaan user...");
                 var userExists = await _userService.UserExistsAsync(model.Username, model.Email);
                 if (userExists)
@@ -159,15 +151,7 @@ namespace BbibbJobStreetJwtToken.Controllers
         {
             try
             {
-                // Cek validasi model
-                if (!ModelState.IsValid)
-                {
-                    // Tampilkan error validasi
-                    var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors));
-                    TempData["Error"] = "Error validasi: " + errors;
-                    return View(model);
-                }
-
+           
                 // Cek apakah perusahaan sudah ada
                 if (await _perusahaan.PerusahaanExistsAsync(model.NamaPerusahaan, model.Email))
                 {
@@ -223,9 +207,9 @@ namespace BbibbJobStreetJwtToken.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTime.Now.AddSeconds(10)
+                    //Expires = DateTime.Now.AddSeconds(10)
                     //Expires = DateTime.Now.AddMinutes(5) // Sesuaikan dengan expiry token JWT
-                    //Expires = DateTime.Now.AddHours(1) // Sesuaikan dengan expiry token
+                    Expires = DateTime.Now.AddHours(1) // Sesuaikan dengan expiry token
                 });
 
                 Response.Cookies.Append("user_role", user.Role, new CookieOptions

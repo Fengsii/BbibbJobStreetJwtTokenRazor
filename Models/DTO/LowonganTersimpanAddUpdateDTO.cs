@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int PenggunaId { get; set; }
-        public int LowonganId { get; set; }
+        //public int LowonganId { get; set; }
     }
 }

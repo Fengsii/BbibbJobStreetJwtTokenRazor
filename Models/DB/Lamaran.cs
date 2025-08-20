@@ -17,10 +17,10 @@ namespace BbibbJobStreetJwtToken.Models.DB
         public string CV { get; set; }
         public DataStatusLamaran Status { get; set; }
         public DateTime TanggalDilamar { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         public User user { get; set; }
         public LowonganPekerjaan Lowongan { get; set; }
-        public LamaranTersimpan LamaranTersimpan { get; set; }
 
     }
 }

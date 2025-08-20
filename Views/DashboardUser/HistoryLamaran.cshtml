@@ -1,0 +1,139 @@
+﻿@using BbibbJobStreetJwtToken.Models.DTO
+@model List<HistoryLamaranDTO>
+
+@{
+    Layout = "_LayoutUser";
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    /* Status Badge */
+    .application-status {
+        display: inline-block;
+        padding: 10px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 15px;
+        text-transform: capitalize;
+    }
+
+    /* Variasi status */
+    .status-diproses {
+        background: #e6f4ea;
+        color: #2e7d32;
+    }
+
+    .status-ditolak {
+        background: #fdecea;
+        color: #c62828;
+    }
+
+    .status-diterima {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+
+    /* Delete Button */
+    .delete-form {
+        margin-left: 15px;
+    }
+
+    .delete-btn {
+        background: none;
+        border: none;
+        color: #d9534f;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+
+        .delete-btn:hover {
+            background: #f8d7da;
+            color: #c9302c;
+        }
+
+</style>
+
+
+<section id="history-section">
+    <h2 class="section-title">Application History</h2>
+
+    @foreach (var data in Model)
+    {
+        <div class="application-history">
+            <div class="application-item">
+                <div class="application-header">
+                    <img src="@Url.Content(data.Logo)" alt="Company" class="application-company-logo">
+                    <div class="application-info">
+                        <h3 class="application-job-title">@data.Posisi</h3>
+                        <p class="application-company-name">@data.Deskripsi</p>
+                    </div>
+                    <span class="application-date">@data.TanggalDilamar</span>
+
+                    <span class="application-status status-@data.Status">@data.Status</span>
+
+                    <form id="deleteForm" method="post" action="@Url.Action("DeleteHistoryLamaran", "DashboardUser")" class="delete-form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@data.Id" />
+                        <button type="submit" class="delete-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    }
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("#deleteForm").forEach(function (form) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault(); // cegah submit langsung
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data ini hanya akan hilang dari daftar Anda!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form
+                        fetch(form.action, {
+                            method: form.method,
+                            body: new FormData(form)
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: 'Data berhasil dihapus.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    // Reload page atau hapus element dari DOM
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire('Gagal', 'Terjadi kesalahan saat menghapus.', 'error');
+                            }
+                        })
+                        .catch(() => {
+                            Swal.fire('Error', 'Tidak dapat menghubungi server.', 'error');
+                        });
+                    }
+                });
+            });
+        });
+    });
+</script>
+

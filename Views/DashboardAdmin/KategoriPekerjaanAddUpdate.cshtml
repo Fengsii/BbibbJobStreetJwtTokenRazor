@@ -1,0 +1,48 @@
+﻿@using BbibbJobStreetJwtToken.Models.DB
+@model KategoriPekerjaan
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Tambah Kategori Pekerjaan";
+}
+
+<div class="page active" id="kategori-form">
+    <div class="form-container">
+        <h3><i class="fas fa-plus-circle"></i> Tambah Kategori Pekerjaan Baru</h3>
+
+        <form asp-controller="DashboardAdmin" asp-action="KategoriPekerjaanAddUpdate" method="post">
+            <!-- Hidden field untuk ID (untuk update) -->
+            <div class="form-group" hidden>
+                <label for="Id">ID</label>
+                <input type="text" class="form-control" id="Id" asp-for="Id">
+            </div>
+
+            <!-- Nama Kategori -->
+            <div class="form-group">
+                <label for="NamaKategori">Nama Kategori</label>
+                <input type="text" class="form-control" id="NamaKategori" asp-for="NamaKategori"
+                       placeholder="Masukkan nama kategori (contoh: IT, Marketing, Desain)">
+                <span asp-validation-for="NamaKategori" class="text-danger"></span>
+            </div>
+
+            <!-- Deskripsi -->
+            <div class="form-group">
+                <label for="Deskripsi">Deskripsi</label>
+                <textarea class="form-control" id="Deskripsi" asp-for="Deskripsi"
+                          placeholder="Masukkan deskripsi kategori" rows="4"></textarea>
+                <span asp-validation-for="Deskripsi" class="text-danger"></span>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <a href="@Url.Action("KategoriPekerjaan", "DashboardAdmin")" class="action-btn secondary">
+                    <i class="fas fa-times"></i> Batal
+                </a>
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

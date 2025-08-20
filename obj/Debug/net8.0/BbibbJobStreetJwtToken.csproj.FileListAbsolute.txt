@@ -119,3 +119,7 @@ C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\ne
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\JetBrains.Annotations.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\X.PagedList.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJobStreetJwtToken.MvcApplicationPartsAssemblyInfo.cs

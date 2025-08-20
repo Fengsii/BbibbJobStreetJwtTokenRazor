@@ -65,6 +65,9 @@ namespace BbibbJobStreetJwtToken.Migrations
                     b.Property<int>("GajiSaatIni")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("LowonganId")
                         .HasColumnType("int");
 
@@ -96,41 +99,6 @@ namespace BbibbJobStreetJwtToken.Migrations
                     b.ToTable("Lamarans");
                 });
 
-            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LamaranTersimpan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CatatanHR")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("LamaranId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PenggunaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("TanggalTersimpan")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LamaranId")
-                        .IsUnique();
-
-                    b.HasIndex("PenggunaId");
-
-                    b.ToTable("LamaranTersimpans");
-                });
-
             modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", b =>
                 {
                     b.Property<int>("Id")
@@ -139,9 +107,16 @@ namespace BbibbJobStreetJwtToken.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Alamat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Deskripsi")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Judul")
                         .IsRequired()
@@ -344,6 +319,10 @@ namespace BbibbJobStreetJwtToken.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Posisi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("ProfileImage")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -368,9 +347,10 @@ namespace BbibbJobStreetJwtToken.Migrations
                         {
                             Id = 1,
                             CoverImage = "",
-                            CreatedAt = new DateTime(2025, 8, 9, 17, 50, 37, 772, DateTimeKind.Local).AddTicks(9426),
+                            CreatedAt = new DateTime(2025, 8, 18, 11, 38, 56, 39, DateTimeKind.Local).AddTicks(4404),
                             Email = "admin@example.com",
-                            PasswordHash = "$2a$11$r/bKHFTiqn2h3BxUssh6MuySxfxm3wqOqQMZ0vuYMRpFHcKIa2cYK",
+                            PasswordHash = "$2a$11$vsMUim2N.3rBz3F/dntf0OdETDd4teRjDjfmCHryDRsezEwvfVjDC",
+                            Posisi = "Administrator",
                             ProfileImage = "",
                             Role = "Admin",
                             Status = 0,
@@ -395,25 +375,6 @@ namespace BbibbJobStreetJwtToken.Migrations
                     b.Navigation("Lowongan");
 
                     b.Navigation("user");
-                });
-
-            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LamaranTersimpan", b =>
-                {
-                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.Lamaran", "Lamaran")
-                        .WithOne("LamaranTersimpan")
-                        .HasForeignKey("BbibbJobStreetJwtToken.Models.DB.LamaranTersimpan", "LamaranId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BbibbJobStreetJwtToken.Models.DB.User", "User")
-                        .WithMany("RiwayatLamaran")
-                        .HasForeignKey("PenggunaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lamaran");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", b =>
@@ -470,12 +431,6 @@ namespace BbibbJobStreetJwtToken.Migrations
                     b.Navigation("Lowongans");
                 });
 
-            modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.Lamaran", b =>
-                {
-                    b.Navigation("LamaranTersimpan")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BbibbJobStreetJwtToken.Models.DB.LowonganPekerjaan", b =>
                 {
                     b.Navigation("Lamarans");
@@ -494,8 +449,6 @@ namespace BbibbJobStreetJwtToken.Migrations
 
                     b.Navigation("ProfileUserDetails")
                         .IsRequired();
-
-                    b.Navigation("RiwayatLamaran");
 
                     b.Navigation("lowonganTersimpans");
                 });

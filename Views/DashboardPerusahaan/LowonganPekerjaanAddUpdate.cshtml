@@ -28,11 +28,9 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="PerusahaanId">Perusahaan</label>
-                <select asp-for="PerusahaanId" asp-items="ViewBag.Perusahaan" class="form-control" required>
-                    <option value="">-- Pilih Perusahaan --</option>
-                </select>
-                <span asp-validation-for="PerusahaanId" class="text-danger"></span>
+                <label asp-for="Alamat">Alamat</label>
+                <input asp-for="Alamat" class="form-control" placeholder="Contoh: Bandung, Indonesia" required>
+                <span asp-validation-for="Alamat" class="text-danger"></span>
             </div>
 
             <div class="form-group">

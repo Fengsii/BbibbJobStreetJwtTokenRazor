@@ -3,18 +3,18 @@ using BbibbJobStreetJwtToken.Models;
 using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Models.DTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BbibbJobStreetJwtToken.Services
 {
     public class KategoriPekerjaanService : IKategoriPekerjaan
     {
         private readonly ApplicationContext _context;
-
         public KategoriPekerjaanService(ApplicationContext context)
         {
             _context = context;
         }
-
         public List<KategoriPekerjaanDTO> GetListKategoriPekerjaan()
         {
             var data = _context.KategoriPekerjaans.Select(x => new KategoriPekerjaanDTO

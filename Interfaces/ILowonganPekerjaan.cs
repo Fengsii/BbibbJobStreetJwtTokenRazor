@@ -11,6 +11,9 @@ namespace BbibbJobStreetJwtToken.Interfaces
         public bool AddLowonganPekerjaan(LowonganPekerjaanAddUpdateDTO request);
         public bool UpdateLowonganPekerjaan(LowonganPekerjaanAddUpdateDTO lowonganPekerjaanAddUpdateDTO);
         public bool DeleteLowonganPekerjaan(int id);
-        public List<SelectListItem> LowonganPekerjaan();
+        public List<LowonganPekerjaanViewDTO> SearchLowonganPekerjaan(string keyword);
+        public List<LowonganPekerjaanViewDTO> GetListLowonganPekerjaanForUser();
+        public List<NotificationsDTO> GetNotificationsForUser(int userId);
+        public bool DeleteNotifications(int id);
     }
 }

@@ -9,6 +9,7 @@ namespace BbibbJobStreetJwtToken.Models.DB
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; }
+        public string Posisi { get; set; }
         public string ProfileImage {  get; set; }
         public string CoverImage { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -18,6 +19,5 @@ namespace BbibbJobStreetJwtToken.Models.DB
         public ProfileUserDetails ProfileUserDetails { get; set; }
         public ICollection<Lamaran> Lamarans { get; set; } = new List<Lamaran>();
         public ICollection<LowonganTersimpan> lowonganTersimpans { get; set; } = new List<LowonganTersimpan>();
-        public ICollection<LamaranTersimpan> RiwayatLamaran { get; set; } = new List<LamaranTersimpan>();
     }
 }

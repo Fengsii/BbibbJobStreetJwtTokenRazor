@@ -1212,35 +1212,35 @@
             </a>
 
             <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search for jobs, companies, or keywords">
+                <form asp-action="Index" method="get">
+                    <i class="fas fa-search"></i>
+                    <input type="text" name="search" placeholder="Search for jobs, companies, or keywords"
+                           value="@Context.Request.Query["search"]">
+                    <button type="submit" style="display: none;"></button> <!-- Hidden submit button -->
+                </form>
             </div>
 
             <ul class="nav-links">
                 <li>
-                    <a href="#" class="active" onclick="showSection('home')">
+                    <a href="/DashboardUser/Index" class="active" onclick="showSection('home')">
                         <i class="fas fa-home"></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" onclick="showSection('notifications')">
+                    <a href="/DashboardUser/Notifications" onclick="showSection('notifications')">
                         <i class="fas fa-bell"></i>
                         <span>Notifications</span>
                     </a>
                 </li>
                 <li>
-                    @* <a href="@Url.Action("LowonganTersimpan", "DashboardUser")" class="quick-apply-btn" onclick="showSection('saved-jobs')">
-                        <i class="fas fa-bookmark"></i>
-                        <span>Saved</span>
-                    </a> *@
                     <a href="/DashboardUser/LowonganTersimpan" onclick="showSection('saved-jobs')">
                         <i class="fas fa-bookmark"></i>
                         <span>Saved</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" onclick="showSection('history')">
+                    <a href="/DashboardUser/HistoryLamaran" onclick="showSection('history')">
                         <i class="fas fa-history"></i>
                         <span>History</span>
                     </a>
@@ -1276,11 +1276,11 @@
                 <aside class="sidebar">
                     <div class="sidebar-section">
                         <h3 class="sidebar-title">Menu</h3>
-                        <a href="#" class="sidebar-link active" onclick="showSection('home')">
+                        <a href="/DashboardUser/Index" class="sidebar-link active" onclick="showSection('home')">
                             <i class="fas fa-home"></i>
                             <span>Home</span>
                         </a>
-                        <a href="#" class="sidebar-link" onclick="showSection('notifications')">
+                        <a href="/DashboardUser/Notifications" class="sidebar-link" onclick="showSection('notifications')">
                             <i class="fas fa-bell"></i>
                             <span>Notifications</span>
                         </a>
@@ -1288,7 +1288,7 @@
                             <i class="fas fa-bookmark"></i>
                             <span>Saved Jobs</span>
                         </a>
-                        <a href="#" class="sidebar-link" onclick="showSection('history')">
+                        <a href="/DashboardUser/HistoryLamaran" class="sidebar-link" onclick="showSection('history')">
                             <i class="fas fa-history"></i>
                             <span>Application History</span>
                         </a>
@@ -1332,139 +1332,13 @@
                     <!-- Home Section (Default) -->
                     @RenderBody()
                     <!-- Notifications Section (Hidden by default) -->
-                    <section id="notifications-section" class="hidden-section">
-                        <h2 class="section-title">Notifications</h2>
-
-                        <div class="notification-card">
-                            <div class="notification-icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h3 class="notification-title">New job matches your profile: Frontend Developer at Google</h3>
-                                <p class="notification-time">10 minutes ago</p>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-bookmark"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="notification-card">
-                            <div class="notification-icon">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h3 class="notification-title">Your application for Backend Engineer at Tokopedia has been viewed</h3>
-                                <p class="notification-time">2 hours ago</p>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-bookmark"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="notification-card">
-                            <div class="notification-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h3 class="notification-title">15 new connections are waiting for your response</h3>
-                                <p class="notification-time">1 day ago</p>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-bookmark"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="notification-card">
-                            <div class="notification-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h3 class="notification-title">Message from John Doe at Microsoft about UX Designer position</h3>
-                                <p class="notification-time">2 days ago</p>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button class="notification-action-btn">
-                                    <i class="fas fa-bookmark"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </section>
+                    
 
                     <!-- Saved Jobs Section (Hidden by default) -->
                    
 
                     <!-- Application History Section (Hidden by default) -->
-                    <section id="history-section" class="hidden-section">
-                        <h2 class="section-title">Application History</h2>
-
-                        <div class="application-history">
-                            <div class="application-item">
-                                <div class="application-header">
-                                    <img src="https://logo.clearbit.com/google.com" alt="Google" class="application-company-logo">
-                                    <div class="application-info">
-                                        <h3 class="application-job-title">Frontend Developer</h3>
-                                        <p class="application-company-name">Google</p>
-                                    </div>
-                                    <span class="application-date">Applied: 2 days ago</span>
-                                    <span class="application-status status-reviewed">Under Review</span>
-                                </div>
-                            </div>
-
-                            <div class="application-item">
-                                <div class="application-header">
-                                    <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" class="application-company-logo">
-                                    <div class="application-info">
-                                        <h3 class="application-job-title">UX Designer</h3>
-                                        <p class="application-company-name">Microsoft</p>
-                                    </div>
-                                    <span class="application-date">Applied: 1 week ago</span>
-                                    <span class="application-status status-pending">Pending</span>
-                                </div>
-                            </div>
-
-                            <div class="application-item">
-                                <div class="application-header">
-                                    <img src="https://logo.clearbit.com/amazon.com" alt="Amazon" class="application-company-logo">
-                                    <div class="application-info">
-                                        <h3 class="application-job-title">Cloud Architect</h3>
-                                        <p class="application-company-name">Amazon Web Services</p>
-                                    </div>
-                                    <span class="application-date">Applied: 2 weeks ago</span>
-                                    <span class="application-status status-rejected">Rejected</span>
-                                </div>
-                            </div>
-
-                            <div class="application-item">
-                                <div class="application-header">
-                                    <img src="https://logo.clearbit.com/facebook.com" alt="Facebook" class="application-company-logo">
-                                    <div class="application-info">
-                                        <h3 class="application-job-title">Product Manager</h3>
-                                        <p class="application-company-name">Meta</p>
-                                    </div>
-                                    <span class="application-date">Applied: 1 month ago</span>
-                                    <span class="application-status status-accepted">Accepted</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    
 
                     <!-- Profile Section (Hidden by default) -->
                     <section id="profile-section" class="hidden-section">
@@ -1545,6 +1419,29 @@
     </footer>
 
     <script>
+
+
+              // Handle form submission on input change with debounce
+        const searchInput = document.querySelector('.search-bar input');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                this.form.submit();
+            }, 500); // Submit setelah 500ms tidak ada input
+        });
+
+        // Submit form when pressing Enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.form.submit();
+            }
+        });
+
+
+
         // Function to toggle between sections
         function showSection(sectionId) {
             // Hide all sections

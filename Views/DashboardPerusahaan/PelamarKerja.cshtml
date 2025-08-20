@@ -1,0 +1,78 @@
+﻿
+
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<BbibbJobStreetJwtToken.Models.DTO.LamaranViewDTO>
+
+@{
+    Layout = "_LayoutPerusahaan";
+}
+
+<div class="page active" id="lamaran">
+    <div class="table-container">
+        <h3><i class="fas fa-suitcase"></i> Daftar Pelamar</h3>
+
+        <form method="get" asp-action="PelamarKerja" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Cari nama, email, atau no HP..." />
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </div>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>No HP</th>
+                    <th>Pendidikan</th>
+                    <th>CV</th>
+                    <th>Tanggal Dilamar</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lamaran in Model)
+                {
+                    <tr>
+                        <td>@lamaran.Nama</td>
+                        <td>@lamaran.Email</td>
+                        <td>@lamaran.NoHP</td>
+                        <td>@lamaran.Pendidikan</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(lamaran.CV))
+                            {
+                                <a href="@Url.Action("DownloadCv", "DashboardPerusahaan", new { lamaranId = lamaran.Id })"
+                                   target="_blank" class="btn btn-sm btn-primary">
+                                    Download CV
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Tidak ada CV</span>
+                            }
+                        </td>
+                        <td>@lamaran.TanggalDilamar.ToString("dd MMM yyyy")</td>
+                        <td>@lamaran.Status</td>
+                        <td>
+                            <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lamaran.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
+                            <form method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@lamaran.Id" />
+                                <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');"><i class="bi bi-trash"></i> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center">
+            @Html.PagedListPager(Model, page => Url.Action("PelamarKerja", new { page, searchTerm = ViewBag.SearchTerm }))
+        </div>
+    </div>
+</div>
+
+
+
+

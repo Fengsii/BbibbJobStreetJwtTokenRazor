@@ -1,6 +1,7 @@
 ﻿using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models.DB;
 using Microsoft.EntityFrameworkCore;
+using static BbibbJobStreetJwtToken.Models.GeneralStatus;
 
 namespace BbibbJobStreetJwtToken.Models
 {
@@ -17,7 +18,6 @@ namespace BbibbJobStreetJwtToken.Models
         public virtual DbSet<KategoriPekerjaan> KategoriPekerjaans { get; set; }
         public virtual DbSet<LowonganPekerjaan> LowonganPekerjaans { get; set; }
         public virtual DbSet<Lamaran> Lamarans { get; set; }
-        public virtual DbSet<LamaranTersimpan> LamaranTersimpans { get; set; }
         public virtual DbSet<LowonganTersimpan> LowonganTersimpans { get; set; }
         public virtual DbSet<Perusahaan> Perusahaans { get; set; }
 
@@ -30,12 +30,13 @@ namespace BbibbJobStreetJwtToken.Models
                     Id = 1,
                     Username = "admin",
                     Email = "admin@example.com",
-                    PasswordHash =_enkripsiPassword.HashPassword("admin123"), // Buat method HashPassword
+                    PasswordHash = _enkripsiPassword.HashPassword("admin123"), // Buat method HashPassword
                     CoverImage = "",
-                    ProfileImage ="",
+                    ProfileImage = "",
                     Role = "Admin",
+                    Posisi = "Administrator",
                     CreatedAt = DateTime.Now,
-                    Status = GeneralStatus.GeneralStatusData.Active
+                    Status = GeneralStatusData.Active
                 }
             );
 
@@ -54,12 +55,6 @@ namespace BbibbJobStreetJwtToken.Models
             // Relasi User dengan LowonganTersimpan (One-to-Many)
             modelBuilder.Entity<User>()
                 .HasMany(u => u.lowonganTersimpans)
-                .WithOne(lt => lt.User)
-                .HasForeignKey(lt => lt.PenggunaId);
-
-            // Relasi User dengan LamaranTersimpan (One-to-Many)
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.RiwayatLamaran)
                 .WithOne(lt => lt.User)
                 .HasForeignKey(lt => lt.PenggunaId);
 
@@ -87,21 +82,10 @@ namespace BbibbJobStreetJwtToken.Models
                 .WithOne(lt => lt.Lowongan)
                 .HasForeignKey(lt => lt.LowonganId);
 
-            // Relasi Lamaran dengan LamaranTersimpan (One-to-One)
-            modelBuilder.Entity<Lamaran>()
-                .HasOne(l => l.LamaranTersimpan)
-                .WithOne(lt => lt.Lamaran)
-                .HasForeignKey<LamaranTersimpan>(lt => lt.LamaranId);
-
 
             base.OnModelCreating(modelBuilder);
         }
 
-        //private string HashPassword(string password)
-        //{
-        //    // Implementasi hashing password (gunakan BCrypt atau metode secure lainnya)
-        //    return BCrypt.Net.BCrypt.HashPassword(password);
-        //}
-
+      
     }
 }

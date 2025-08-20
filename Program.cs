@@ -38,27 +38,6 @@ if (string.IsNullOrEmpty(secretKey))
 }
 
 
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtSettings["Issuer"],
-//        ValidAudience = jwtSettings["Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)),
-//        ClockSkew = TimeSpan.Zero // Tidak ada toleransi waktu
-//    };
-//});
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -100,6 +79,7 @@ builder.Services.AddScoped<ILowonganPekerjaan, LowonganPekerjaanService>();
 builder.Services.AddScoped<IKategoriPekerjaan,  KategoriPekerjaanService>();
 builder.Services.AddScoped<ILamaran, LamaranService>();
 builder.Services.AddScoped<ILowonganTersimpan, LowonganTersimpanService>();
+builder.Services.AddScoped<IHistoryLamaran, HistoryLamaranService>();
 builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddScoped<IFileHelper, FileHelper>();
 builder.Services.AddScoped<IImageHelper, ImageHelper>();
@@ -107,15 +87,6 @@ builder.Services.AddScoped<IEnkripsiPassword, EnkripsiPasswordHelper>();
 builder.Services.AddScoped<ILoginLayout, LoginLayoutService>();
 builder.Services.AddHttpContextAccessor(); // Untuk mengakses HttpContext
 
-
-
-// Tambahkan setelah AddControllersWithViews() dan sebelum UseRouting()
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -131,8 +102,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-// Dan sebelum UseAuthorization()
-app.UseSession();
+//// Dan sebelum UseAuthorization()
+//app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

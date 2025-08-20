@@ -5,6 +5,50 @@
     Layout = "_LayoutUser";
 }
 
+
+<style>
+    .job-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .job-save-btn {
+        background: none; /* transparan */
+        border: none; /* tanpa border */
+        cursor: pointer;
+        font-size: 20px; /* ukuran icon */
+        color: #555; /* warna default */
+        transition: color 0.3s ease;
+    }
+
+        .job-save-btn:hover {
+            color: #007bff; /* warna saat hover */
+        }
+
+        .job-save-btn.saved i {
+            color: #007bff; /* kalau sudah disimpan */
+            font-weight: bold;
+        }
+
+    .quick-apply-btn {
+        background: #007bff;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.3s;
+    }
+
+        .quick-apply-btn:hover {
+            background: #0056b3;
+        }
+
+</style>
+
+
 <section id="home-section">
     <h2 class="section-title">Recommended for you</h2>
 
@@ -13,9 +57,6 @@
         {
             <div class="job-card">
                 <div class="job-card-header">
-                    @* <a href="@Url.Action("DetailLowongan", "DashboardUser", new { id = data.Id })">
-                        
-                    </a> *@
                     <img src="@data.Logo" alt="Logo Perusahaan" class="company-logo">
 
                     <div class="job-info">
@@ -23,11 +64,11 @@
                         <p class="company-name">@data.NamaPerusahaan</p>
                         <p class="job-location">
                             <i class="fas fa-map-marker-alt"></i>
-                            Jakarta, Indonesia (Remote)
+                            @data.Alamat (@data.NamaKategori)
                         </p>
                     </div>
 
-                    <form method="post" action="@Url.Action("LowonganTersimpan", "DashboardUser")" class="quick-apply-btn">
+                    <form method="post" action="@Url.Action("LowonganTersimpan", "DashboardUser")">
                         <input type="hidden" name="lowonganId" value="@data.Id" />
                         <button type="submit" class="job-save-btn" onclick="toggleSave(this)">
                             <i class="far fa-bookmark"></i>
@@ -40,7 +81,7 @@
 
                 <div class="job-card-body">
                     <p class="job-description">@data.Deskripsi</p>
-                    <p class="job-posted">Posted 2 days ago</p>
+                    <p class="job-posted">Posted @data.TimeAgo</p>
                 </div>
 
                 <div class="job-card-footer">
@@ -63,3 +104,7 @@
         }
     </div>
 </section>
+
+@* <script>
+  
+</script> *@

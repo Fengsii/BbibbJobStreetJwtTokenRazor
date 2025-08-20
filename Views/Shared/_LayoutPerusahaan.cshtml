@@ -497,11 +497,8 @@
             <ul>
                 <li><a href="/DashboardPerusahaan/Index" class="nav-link active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="/DashboardPerusahaan/LowonganPekerjaan" class="nav-link" data-page="lowongan"><i class="fas fa-suitcase"></i> Lowongan</a></li>
-                <li><a href="#" class="nav-link" data-page="pelamar"><i class="fas fa-users"></i> Pelamar</a></li>
-                <li><a href="/DashboardPerusahaan/KategoriPekerjaan" class="nav-link" data-page="kategori"><i class="fas fa-file-alt"></i> Kategori</a></li>
+                <li><a href="/DashboardPerusahaan/PelamarKerja" class="nav-link" data-page="pelamar"><i class="fas fa-users"></i> Pelamar</a></li>
                 <li><a href="#" class="nav-link" data-page="pengaturan"><i class="fas fa-cog"></i> Pengaturan</a></li>
-                <li><a href="#" class="nav-link" data-page="perusahaan"><i class="fas fa-building"></i> Perusahaan</a></li>
-                <li><a href="#" class="nav-link" data-page="notifikasi"><i class="fas fa-bell"></i> Notifikasi</a></li>
                 <li>
                     <form asp-controller="LoginPage" asp-action="Logout" method="post" style="display: inline;">
                         <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; width: 100%; text-align: left; padding: 12px; font-size: 18px; display: flex; align-items: center;">
@@ -583,7 +580,7 @@
            
 
             <!-- Pengaturan Page -->
-            @* <div class="page" id="pengaturan">
+            <div class="page" id="pengaturan">
                 <div class="form-container">
                     <h3><i class="fas fa-cog"></i> Pengaturan Akun</h3>
                     <form>
@@ -646,54 +643,6 @@
                 </div>
             </div>
 
-            <!-- Notifikasi Page -->
-            <div class="page" id="notifikasi">
-                <h3><i class="fas fa-bell"></i> Notifikasi</h3>
-
-                <div class="notification-item unread">
-                    <div class="notification-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="notification-content">
-                        <h4>Lamaran Baru Diterima</h4>
-                        <p>Anda menerima lamaran baru untuk posisi Frontend Developer dari John Doe</p>
-                        <div class="notification-time">10 menit yang lalu</div>
-                    </div>
-                </div>
-
-                <div class="notification-item unread">
-                    <div class="notification-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="notification-content">
-                        <h4>Lowongan Dipublikasi</h4>
-                        <p>Lowongan untuk posisi UI/UX Designer telah berhasil dipublikasi</p>
-                        <div class="notification-time">1 jam yang lalu</div>
-                    </div>
-                </div>
-
-                <div class="notification-item">
-                    <div class="notification-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="notification-content">
-                        <h4>Pengingat: Wawancara</h4>
-                        <p>Anda memiliki jadwal wawancara dengan Jane Smith hari ini pukul 14:00</p>
-                        <div class="notification-time">Kemarin, 16:30</div>
-                    </div>
-                </div>
-
-                <div class="notification-item">
-                    <div class="notification-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="notification-content">
-                        <h4>Lowongan Akan Berakhir</h4>
-                        <p>Lowongan untuk Backend Engineer akan berakhir dalam 2 hari</p>
-                        <div class="notification-time">2 hari yang lalu</div>
-                    </div>
-                </div>
-            </div> *@
         </div>
     </div>
 

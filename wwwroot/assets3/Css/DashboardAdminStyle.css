@@ -1,0 +1,128 @@
+﻿/* Enhanced Sidebar Navigation Hover Effects */
+.sidebar-nav .nav-item .nav-link.collapsed {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover {
+        background: var(--accent-hover);
+        color: var(--primary);
+        transform: translateX(8px);
+        box-shadow: 0 4px 8px rgba(25, 118, 210, 0.15);
+    }
+
+        .sidebar-nav .nav-item .nav-link.collapsed:hover i {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+    .sidebar-nav .nav-item .nav-link.collapsed::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: var(--primary);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.3s ease-out;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover::before {
+        transform: scaleY(1);
+        transform-origin: top;
+    }
+
+    /* Specific icon animations */
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-tags { /* Category */
+        animation: iconWobble 0.6s ease;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-rulers { /* ProductSize */
+        animation: iconBounce 0.5s ease;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-people { /* User */
+        animation: iconPulse 0.7s ease;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-cart-check { /* Order */
+        animation: iconShake 0.5s ease;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-credit-card { /* Payment */
+        animation: iconFlip 0.6s ease;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-wallet2 { /* User Saldo */
+        animation: iconWobble 0.5s ease;
+    }
+
+    .sidebar-nav .nav-item .nav-link.collapsed:hover .bi-box-arrow-right { /* LogOut */
+        animation: iconPulse 0.6s ease;
+    }
+
+/* Keyframe animations */
+@keyframes iconWobble {
+    0%, 100% {
+        transform: rotate(0deg) scale(1.1);
+    }
+
+    25% {
+        transform: rotate(-5deg) scale(1.15);
+    }
+
+    75% {
+        transform: rotate(5deg) scale(1.15);
+    }
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateY(0) scale(1.1);
+    }
+
+    50% {
+        transform: translateY(-5px) scale(1.15);
+    }
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes iconShake {
+    0%, 100% {
+        transform: translateX(0) scale(1.1);
+    }
+
+    25% {
+        transform: translateX(-3px) scale(1.15);
+    }
+
+    75% {
+        transform: translateX(3px) scale(1.15);
+    }
+}
+
+@keyframes iconFlip {
+    0% {
+        transform: scale(1.1) rotateY(0);
+    }
+
+    50% {
+        transform: scale(1.2) rotateY(180deg);
+    }
+
+    100% {
+        transform: scale(1.1) rotateY(360deg);
+    }
+}

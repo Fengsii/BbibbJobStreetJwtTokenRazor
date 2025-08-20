@@ -5,6 +5,7 @@ using BbibbJobStreetJwtToken.Models.DTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using X.PagedList;
 using static BbibbJobStreetJwtToken.Models.StatusLamaran;
 
 namespace BbibbJobStreetJwtToken.Services
@@ -21,26 +22,57 @@ namespace BbibbJobStreetJwtToken.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public List<LamaranViewDTO> GetListLamaran()
+        ///==================== UNTUK PERUSAHAAN ================\\\
+        private int GetCurrentPerusahaanId()
         {
-            var data = _context.Lamarans.Select(x => new LamaranViewDTO
+            var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return int.TryParse(userIdClaim, out var userId) ? userId : 0;
+        }
+        
+        public IPagedList<LamaranViewDTO> GetListLamaran(int page, int pageSize, string searchTerm = "")
+        {
+            var perusahaanId = GetCurrentPerusahaanId();
+            if (perusahaanId == 0)
+                return new List<LamaranViewDTO>().ToPagedList(page, pageSize);
+
+            
+           
+
+
+            var query = _context.Lamarans
+                .Include(u => u.user)
+                .Include(l => l.Lowongan)
+                .ThenInclude(p => p.Perusahaan)
+                .Where(x => x.Lowongan.PerusahaanId == perusahaanId)
+                .OrderByDescending(x => x.TanggalDilamar)
+                .Select(x => new LamaranViewDTO
+                {
+                    Id = x.Id,
+                    UserId = x.UserId,
+                    LowonganId = x.LowonganId,
+                    Nama = x.Nama,
+                    Email = x.Email,
+                    NoHP = x.NoHP,
+                    Pendidikan = x.Pendidikan,
+                    GajiSaatIni = x.GajiSaatIni,
+                    GajiDiharapkan = x.GajiDiharapkan,
+                    CV = x.CV,
+                    Status = x.Status,
+                    TanggalDilamar = x.TanggalDilamar,
+                });
+
+
+            // Tambahkan filter pencarian
+
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                Id = x.Id,
-                UserId = x.UserId,
-                LowonganId = x.LowonganId,
-                Nama = x.Nama,
-                Email = x.Email,
-                NoHP = x.NoHP,
-                Pendidikan = x.Pendidikan,
-                GajiSaatIni = x.GajiSaatIni,
-                GajiDiharapkan = x.GajiDiharapkan,
-                CV = x.CV,
-                Status = x.Status,
-                TanggalDilamar = x.TanggalDilamar,
+                query = query.Where(x =>
+                    x.Nama.Contains(searchTerm) ||
+                    x.Email.Contains(searchTerm) ||
+                    x.NoHP.ToString().Contains(searchTerm));
+            }
 
-            }).ToList();
-            return data;
-
+            return query.ToPagedList(page, pageSize);
         }
 
         public Lamaran GetLamaranById(int id)
@@ -55,7 +87,7 @@ namespace BbibbJobStreetJwtToken.Services
         }
 
 
-
+        ///==================== UNTUK USER ================\\\
         private int GetCurrentUserId()
         {
             var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -67,12 +99,6 @@ namespace BbibbJobStreetJwtToken.Services
             int userId = GetCurrentUserId();
             if (userId == 0)
                 throw new UnauthorizedAccessException("User belum login.");
-
-            //bool sudahMelamar = await _context.Lamarans
-            //    .AnyAsync(l => l.UserId == userId && l.LowonganId == lowonganId);
-
-            //if (sudahMelamar)
-            //    throw new InvalidOperationException("Anda sudah melamar lowongan ini sebelumnya.");
 
             string fileName = null;
             if (dto.CV != null)
