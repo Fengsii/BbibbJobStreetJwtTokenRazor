@@ -35,10 +35,6 @@ namespace BbibbJobStreetJwtToken.Services
             if (perusahaanId == 0)
                 return new List<LamaranViewDTO>().ToPagedList(page, pageSize);
 
-            
-           
-
-
             var query = _context.Lamarans
                 .Include(u => u.user)
                 .Include(l => l.Lowongan)
@@ -69,7 +65,7 @@ namespace BbibbJobStreetJwtToken.Services
                 query = query.Where(x =>
                     x.Nama.Contains(searchTerm) ||
                     x.Email.Contains(searchTerm) ||
-                    x.NoHP.ToString().Contains(searchTerm));
+                    x.NoHP.Contains(searchTerm));
             }
 
             return query.ToPagedList(page, pageSize);
@@ -77,7 +73,10 @@ namespace BbibbJobStreetJwtToken.Services
 
         public Lamaran GetLamaranById(int id)
         {
-            var data = _context.Lamarans.FirstOrDefault();
+            var perusahaanId = GetCurrentPerusahaanId();
+            var data = _context.Lamarans.Include(l => l.Lowongan)
+                .ThenInclude(p => p.Perusahaan)
+                .Where(x => x.Lowongan.PerusahaanId == perusahaanId).FirstOrDefault();
             if (data == null)
             {
                 return new Lamaran();
@@ -85,6 +84,26 @@ namespace BbibbJobStreetJwtToken.Services
 
             return data;
         }
+
+        public bool UpdateLamaran(LamaranAddUpdateDTO lamaranAddUpdateDTO)
+        {
+            var perusahaanId = GetCurrentPerusahaanId();
+            var data = _context.Lamarans.Include(l => l.Lowongan)
+                .ThenInclude(p => p.Perusahaan)
+                .Where(x => x.Lowongan.PerusahaanId == perusahaanId).FirstOrDefault(x => x.Id == lamaranAddUpdateDTO.Id);
+            if (data == null)
+            {
+                return false;
+            }
+
+
+            data.Status = lamaranAddUpdateDTO.Status;
+
+            _context.Lamarans.Update(data);
+            _context.SaveChanges();
+            return true;
+        }
+
 
 
         ///==================== UNTUK USER ================\\\
@@ -124,6 +143,8 @@ namespace BbibbJobStreetJwtToken.Services
             return true;
         }
 
+        ///=================================================\\\
+
         public async Task<byte[]> DownloadCvAsync(int lamaranId)
         {
             var lamaran = await _context.Lamarans.FirstOrDefaultAsync(l => l.Id == lamaranId);
@@ -134,25 +155,13 @@ namespace BbibbJobStreetJwtToken.Services
         }
 
 
-        public bool UpdateLamaran(LamaranAddUpdateDTO lamaranAddUpdateDTO)
-        {
-            var data = _context.Lamarans.FirstOrDefault(x => x.Id == lamaranAddUpdateDTO.Id);
-            if (data == null)
-            {
-                return false;
-            }
-
-
-            data.Status = lamaranAddUpdateDTO.Status;
-
-            _context.Lamarans.Update(data);
-            _context.SaveChanges();
-            return true;
-        }
-
+      
         public bool DeleteLamaran(int id)
         {
-            var data = _context.Lamarans.FirstOrDefault(x => x.Id == id);
+            var perusahaanId = GetCurrentPerusahaanId();
+            var data = _context.Lamarans.Include(l => l.Lowongan)
+                .ThenInclude(p => p.Perusahaan)
+                .Where(x => x.Lowongan.PerusahaanId == perusahaanId).FirstOrDefault(x => x.Id == id);
 
             if (data == null)
             {

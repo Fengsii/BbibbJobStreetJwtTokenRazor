@@ -10,7 +10,7 @@ namespace BbibbJobStreetJwtToken.Models.DB
         public int LowonganId { get; set; }
         public string Nama { get; set; }
         public string Email { get; set; }
-        public int NoHP { get; set; }
+        public string NoHP { get; set; }
         public DataStatusPendidikan Pendidikan { get; set; }
         public int GajiSaatIni { get; set; }
         public int GajiDiharapkan { get; set; }

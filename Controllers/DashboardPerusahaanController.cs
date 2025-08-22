@@ -15,9 +15,14 @@ namespace BbibbJobStreetJwtToken.Controllers
         private readonly ILowonganPekerjaan _lowonganPekerjaan;
         private readonly IPerusahaan _perusahaan;
         private readonly ILamaran _lamaran;
+        private readonly ICompanyDashboard _companyDashboard;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationContext _context;
-        public DashboardPerusahaanController(IKategoriPekerjaan kategoriPekerjaan, ILowonganPekerjaan lowonganPekerjaan, IPerusahaan perusahaan, IHttpContextAccessor contextAccessor, ApplicationContext context, ILamaran lamaran)
+        public DashboardPerusahaanController(IKategoriPekerjaan kategoriPekerjaan, 
+            ILowonganPekerjaan lowonganPekerjaan, 
+            IPerusahaan perusahaan, 
+            IHttpContextAccessor contextAccessor, ApplicationContext context, 
+            ILamaran lamaran, ICompanyDashboard companyDashboard)
         {
             _kategoriPekerjaan = kategoriPekerjaan;
             _lowonganPekerjaan = lowonganPekerjaan;
@@ -25,18 +30,29 @@ namespace BbibbJobStreetJwtToken.Controllers
             _httpContextAccessor = contextAccessor;
             _context = context;
             _lamaran = lamaran;
-        }
-        public IActionResult Index()
-        {
-            return View();
+            _companyDashboard = companyDashboard;
         }
 
-        //==== UNTUK LOWONGAN PEKERJAAN ====\\
-        public IActionResult LowonganPekerjaan()
+        ///=============== UNTUK DASHBOARD ==================\\\
+        public IActionResult Index()
         {
-            var data = _lowonganPekerjaan.GetListLowonganPekerjaan();
+            var data = _companyDashboard.GetDashboardData();
             return View(data);
         }
+
+        ///=============== UNTUK LOWONGAN PEKERJAAN ==============\\\
+        public IActionResult LowonganPekerjaan(int? page, string searchTerm = "")
+        {
+            int pageNumber = page ?? 1;
+            int pageSize = 5;
+
+            var data = _lowonganPekerjaan.GetListLowonganPekerjaan(pageNumber, pageSize, searchTerm);
+
+            ViewBag.SearchTerm = searchTerm;
+            return View(data);
+        }
+
+
 
         public IActionResult LowonganPekerjaanAddUpdate(int id)
         {
@@ -107,6 +123,51 @@ namespace BbibbJobStreetJwtToken.Controllers
             return View(data);
         }
 
+        //HttpGet khusus buat nampilin form edit
+        [HttpGet]
+        public IActionResult UpdateStatusPelamar(int id)
+        {
+            var lamaran = _lamaran.GetLamaranById(id);
+            if (lamaran == null)
+            {
+                return NotFound();
+            }
+
+            var dto = new LamaranAddUpdateDTO
+            {
+                Id = lamaran.Id,
+                Nama = lamaran.Nama,
+                Email = lamaran.Email,
+                NoHP = lamaran.NoHP,
+                Pendidikan = lamaran.Pendidikan,
+                Status = lamaran.Status
+            };
+
+            return View(dto);
+        }
+
+
+        [HttpPost]
+        public IActionResult UpdateStatusPelamar(LamaranAddUpdateDTO dto)
+        {
+            var data = _lamaran.UpdateLamaran(dto);
+            if (data)
+            {
+                return RedirectToAction(nameof(PelamarKerja));
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteLamaran(int id)
+        {
+            var data = _lamaran.DeleteLamaran(id);
+            if (data)
+            {
+                return RedirectToAction("LowonganPekerjaan");
+            }
+            return BadRequest("Gagal menghapus supplier.");
+        }
 
 
         [HttpGet]

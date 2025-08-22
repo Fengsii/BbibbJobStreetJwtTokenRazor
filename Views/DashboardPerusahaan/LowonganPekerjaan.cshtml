@@ -1,21 +1,263 @@
 ﻿
-@using BbibbJobStreetJwtToken.Models.DTO
-@model List<LowonganPekerjaanViewDTO>
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<BbibbJobStreetJwtToken.Models.DTO.LowonganPekerjaanViewDTO>
 
 @{
     Layout = "_LayoutPerusahaan";
 }
 
+<style>
+    /* General table container styling */
+    .table-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+        /* Heading styling */
+        .table-container h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+        table thead {
+            background: #007bff;
+            color: #fff;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background 0.3s ease;
+        }
+
+        table th {
+            font-weight: bold;
+        }
+
+        table tbody tr:hover {
+            background: #f1f9ff;
+            transform: scale(1.01);
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+    /* Logo styling */
+    .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f9ff;
+        border-radius: 50%;
+    }
+
+    /* Button styling */
+    .action-btn, .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        background: #007bff;
+        color: #fff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        min-width: 80px;
+        text-align: center;
+    }
+
+        .action-btn i, .btn i {
+            margin-right: 5px;
+        }
+
+        .action-btn:hover, .btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Input group styling */
+    .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        padding: 10px;
+        border: 1px solid #007bff;
+        border-radius: 4px;
+        flex-grow: 1;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+    /* Pagination styling */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+        .pagination a, .pagination span {
+            padding: 8px 14px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            color: #007bff;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+            font-size: 14px;
+        }
+
+            .pagination a:hover {
+                background: #007bff;
+                color: #fff;
+            }
+
+        .pagination .current {
+            background: #007bff;
+            color: #fff;
+            border: 1px solid #007bff;
+            cursor: default;
+        }
+
+        .pagination .disabled, .pagination .ellipsis {
+            display: none;
+        }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .table-container
+
+    {
+        padding: 10px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+        table thead {
+            display: none;
+        }
+
+        table tbody tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table tbody td {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: none;
+        }
+
+            table tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #007bff;
+                flex: 1;
+            }
+
+            table tbody td:not(:last-child) {
+                border-bottom: 1px solid #eee;
+            }
+
+    .action-btn, .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .logo-placeholder, img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    }
+
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .table-container
+
+    {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .action-btn, .btn {
+        padding: 6px 12px;
+        font-size: 14px;
+        min-width: 70px;
+    }
+
+    .logo-placeholder, img {
+        width: 35px;
+        height: 35px;
+    }
+
+    }
+
+    @@media (min-width: 1025px) {
+        table th, table td
+
+    {
+        font-size: 16px;
+    }
+
+    }
+</style>
+
 <div class="page active" id="lowongan">
     <div class="table-container">
         <h3><i class="fas fa-suitcase"></i> Daftar Lowongan</h3>
+        <form method="get" asp-action="LowonganPekerjaan">
+            <div class="input-group">
+                <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Cari judul, posisi, atau alamat..." />
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </div>
+        </form>
         <a href="/DashboardPerusahaan/LowonganPekerjaanAddUpdate">
             <button class="action-btn" id="btn-tambah-lowongan"><i class="fas fa-plus"></i> Tambah Lowongan</button>
-       </a>
+        </a>
         <table>
             <thead>
                 <tr>
-
                     <th>Id</th>
                     <th>Logo</th>
                     <th>Judul</th>
@@ -33,8 +275,8 @@
                 @foreach (var lowongan in Model)
                 {
                     <tr>
-                        <td>@lowongan.Id</td>
-                        <td>
+                        <td data-label="Id">@lowongan.Id</td>
+                        <td data-label="Logo">
                             @if (!string.IsNullOrEmpty(lowongan.Logo))
                             {
                                 <img src="@lowongan.Logo" alt="Logo Perusahaan" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
@@ -46,15 +288,15 @@
                                 </div>
                             }
                         </td>
-                        <td>@lowongan.Judul</td>
-                        <td>@lowongan.NamaPerusahaan</td>
-                        <td>@lowongan.Posisi</td>
-                        <td>@lowongan.Alamat</td>
-                        <td>@lowongan.Deskripsi</td>
-                        <td>@lowongan.NamaKategori</td>
-                        <td>@lowongan.TanggalDibuat.ToString("dd MMM yyyy")</td>
-                        <td>@lowongan.status</td>
-                        <td>
+                        <td data-label="Judul">@lowongan.Judul</td>
+                        <td data-label="Perusahaan">@lowongan.NamaPerusahaan</td>
+                        <td data-label="Posisi">@lowongan.Posisi</td>
+                        <td data-label="Alamat">@lowongan.Alamat</td>
+                        <td data-label="Deskripsi">@lowongan.Deskripsi</td>
+                        <td data-label="Kategori">@lowongan.NamaKategori</td>
+                        <td data-label="Tanggal Dibuat">@lowongan.TanggalDibuat.ToString("dd MMM yyyy")</td>
+                        <td data-label="Status">@lowongan.status</td>
+                        <td data-label="Aksi">
                             <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lowongan.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
                             <form method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
                                 @Html.AntiForgeryToken()
@@ -66,6 +308,9 @@
                 }
             </tbody>
         </table>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center">
+            @Html.PagedListPager(Model, page => Url.Action("LowonganPekerjaan", new { page, searchTerm = ViewBag.SearchTerm }))
+        </div>
     </div>
 </div>
-

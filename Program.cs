@@ -80,6 +80,7 @@ builder.Services.AddScoped<IKategoriPekerjaan,  KategoriPekerjaanService>();
 builder.Services.AddScoped<ILamaran, LamaranService>();
 builder.Services.AddScoped<ILowonganTersimpan, LowonganTersimpanService>();
 builder.Services.AddScoped<IHistoryLamaran, HistoryLamaranService>();
+builder.Services.AddScoped<ICompanyDashboard,  CompanyDashboardService>();
 builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddScoped<IFileHelper, FileHelper>();
 builder.Services.AddScoped<IImageHelper, ImageHelper>();

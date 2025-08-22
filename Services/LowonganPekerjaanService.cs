@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using X.PagedList;
 using static BbibbJobStreetJwtToken.Models.GeneralStatus;
 
 namespace BbibbJobStreetJwtToken.Services
@@ -25,11 +26,11 @@ namespace BbibbJobStreetJwtToken.Services
             var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             return int.TryParse(userIdClaim, out var userId) ? userId : 0;
         }
-
-        public List<LowonganPekerjaanViewDTO> GetListLowonganPekerjaan()
+        public IPagedList<LowonganPekerjaanViewDTO> GetListLowonganPekerjaan(int page, int pageSize, string searchTerm = "")
         {
             var perusahaanId = GetCurrentPerusahaanId();
-            var data = _context.LowonganPekerjaans
+
+            var query = _context.LowonganPekerjaans
                 .Include(y => y.Kategori)
                 .Include(y => y.Perusahaan)
                 .Where(x => x.status != StatusLowongan.StatusLowonganPekerjaan.Delete &&
@@ -46,10 +47,22 @@ namespace BbibbJobStreetJwtToken.Services
                     NamaPerusahaan = x.Perusahaan.NamaPerusahaan,
                     TanggalDibuat = x.TanggalDibuat,
                     status = x.status,
-                }).ToList();
-            return data;
+                });
 
+            // tambahin searching
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(x =>
+                    x.Judul.Contains(searchTerm) ||
+                    x.Posisi.Contains(searchTerm) ||
+                    x.Alamat.Contains(searchTerm));
+            }
+
+            // return dengan pagination
+            return query.OrderByDescending(x => x.TanggalDibuat)
+                        .ToPagedList(page, pageSize);
         }
+
 
         public List<LowonganPekerjaanViewDTO> GetListLowonganPekerjaanForUser()
         {

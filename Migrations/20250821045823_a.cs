@@ -187,7 +187,8 @@ namespace BbibbJobStreetJwtToken.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NoHP = table.Column<int>(type: "int", nullable: false),
+                    NoHP = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Pendidikan = table.Column<int>(type: "int", nullable: false),
                     GajiSaatIni = table.Column<int>(type: "int", nullable: false),
                     GajiDiharapkan = table.Column<int>(type: "int", nullable: false),
@@ -246,7 +247,7 @@ namespace BbibbJobStreetJwtToken.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CoverImage", "CreatedAt", "Email", "LastUpdatedAt", "PasswordHash", "Posisi", "ProfileImage", "Role", "Status", "Username" },
-                values: new object[] { 1, "", new DateTime(2025, 8, 18, 11, 38, 56, 39, DateTimeKind.Local).AddTicks(4404), "admin@example.com", null, "$2a$11$vsMUim2N.3rBz3F/dntf0OdETDd4teRjDjfmCHryDRsezEwvfVjDC", "Administrator", "", "Admin", 0, "admin" });
+                values: new object[] { 1, "", new DateTime(2025, 8, 21, 11, 58, 22, 993, DateTimeKind.Local).AddTicks(3895), "admin@example.com", null, "$2a$11$pH3d4IMhR9lXoAFvsxgyqeFGaerW5M4z4GQYiaEoASVqb7l26.Ylu", "Administrator", "", "Admin", 0, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lamarans_LowonganId",

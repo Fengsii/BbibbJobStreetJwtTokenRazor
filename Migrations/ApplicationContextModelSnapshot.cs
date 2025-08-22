@@ -75,8 +75,9 @@ namespace BbibbJobStreetJwtToken.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("NoHP")
-                        .HasColumnType("int");
+                    b.Property<string>("NoHP")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Pendidikan")
                         .HasColumnType("int");
@@ -347,9 +348,9 @@ namespace BbibbJobStreetJwtToken.Migrations
                         {
                             Id = 1,
                             CoverImage = "",
-                            CreatedAt = new DateTime(2025, 8, 18, 11, 38, 56, 39, DateTimeKind.Local).AddTicks(4404),
+                            CreatedAt = new DateTime(2025, 8, 21, 11, 58, 22, 993, DateTimeKind.Local).AddTicks(3895),
                             Email = "admin@example.com",
-                            PasswordHash = "$2a$11$vsMUim2N.3rBz3F/dntf0OdETDd4teRjDjfmCHryDRsezEwvfVjDC",
+                            PasswordHash = "$2a$11$pH3d4IMhR9lXoAFvsxgyqeFGaerW5M4z4GQYiaEoASVqb7l26.Ylu",
                             Posisi = "Administrator",
                             ProfileImage = "",
                             Role = "Admin",

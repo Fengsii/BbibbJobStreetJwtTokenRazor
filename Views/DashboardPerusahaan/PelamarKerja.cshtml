@@ -1,11 +1,217 @@
 ﻿
-
 @using X.PagedList.Mvc.Core
 @model X.PagedList.IPagedList<BbibbJobStreetJwtToken.Models.DTO.LamaranViewDTO>
 
 @{
     Layout = "_LayoutPerusahaan";
 }
+
+<style>
+    /* General table container styling */
+    .table-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    /* Table styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+        .table thead {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background 0.3s ease;
+        }
+
+        .table th {
+            font-weight: bold;
+        }
+
+        .table tbody tr:hover {
+            background: #f1f9ff;
+            transform: scale(1.01);
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+    /* Button styling */
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        min-width: 80px; /* Ensure consistent button size */
+        text-align: center;
+    }
+
+    .btn-primary, .btn-update, .btn-delete {
+        background: #007bff;
+        color: #fff;
+    }
+
+    .btn:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Input group styling */
+    .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        padding: 10px;
+        border: 1px solid #007bff;
+        border-radius: 4px;
+        flex-grow: 1;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+    /* Pagination styling */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+        .pagination a, .pagination span {
+            padding: 8px 14px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            color: #007bff;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+            font-size: 14px;
+        }
+
+            .pagination a:hover {
+                background: #007bff;
+                color: #fff;
+            }
+
+        .pagination .current {
+            background: #007bff;
+            color: #fff;
+            border: 1px solid #007bff;
+            cursor: default;
+        }
+
+        /* Hide ellipsis or unnecessary pagination elements */
+        .pagination .disabled, .pagination .ellipsis {
+            display: none;
+        }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .table-container
+
+    {
+        padding: 10px;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+
+        .table thead {
+            display: none;
+        }
+
+        .table tbody tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .table tbody td {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: none;
+        }
+
+            .table tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #007bff;
+                flex: 1;
+            }
+
+            .table tbody td:not(:last-child) {
+                border-bottom: 1px solid #eee;
+            }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    }
+
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .table-container
+
+    {
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 14px;
+        min-width: 70px;
+    }
+
+    }
+
+    @@media (min-width: 1025px) {
+        .table th, .table td
+
+    {
+        font-size: 16px;
+    }
+
+    }
+</style>
 
 <div class="page active" id="lamaran">
     <div class="table-container">
@@ -35,11 +241,11 @@
                 @foreach (var lamaran in Model)
                 {
                     <tr>
-                        <td>@lamaran.Nama</td>
-                        <td>@lamaran.Email</td>
-                        <td>@lamaran.NoHP</td>
-                        <td>@lamaran.Pendidikan</td>
-                        <td>
+                        <td data-label="Nama">@lamaran.Nama</td>
+                        <td data-label="Email">@lamaran.Email</td>
+                        <td data-label="No HP">@lamaran.NoHP</td>
+                        <td data-label="Pendidikan">@lamaran.Pendidikan</td>
+                        <td data-label="CV">
                             @if (!string.IsNullOrEmpty(lamaran.CV))
                             {
                                 <a href="@Url.Action("DownloadCv", "DashboardPerusahaan", new { lamaranId = lamaran.Id })"
@@ -52,11 +258,11 @@
                                 <span class="text-muted">Tidak ada CV</span>
                             }
                         </td>
-                        <td>@lamaran.TanggalDilamar.ToString("dd MMM yyyy")</td>
-                        <td>@lamaran.Status</td>
-                        <td>
-                            <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lamaran.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
-                            <form method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
+                        <td data-label="Tanggal Dilamar">@lamaran.TanggalDilamar.ToString("dd MMM yyyy")</td>
+                        <td data-label="Status">@lamaran.Status</td>
+                        <td data-label="Aksi">
+                            <a href="@Url.Action("UpdateStatusPelamar", "DashboardPerusahaan", new { id = lamaran.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
+                            <form method="post" action="@Url.Action("DeleteLamaran", "DashboardPerusahaan")" style="display:inline">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@lamaran.Id" />
                                 <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');"><i class="bi bi-trash"></i> Delete</button>
@@ -72,7 +278,3 @@
         </div>
     </div>
 </div>
-
-
-
-

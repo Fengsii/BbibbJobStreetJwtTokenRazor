@@ -1,0 +1,213 @@
+﻿@model BbibbJobStreetJwtToken.Models.DTO.LamaranAddUpdateDTO
+
+
+@{
+    Layout = "_LayoutPerusahaan";
+    ViewData["Title"] = "Update Data Pelamar";
+}
+
+<style>
+    /* Form container styling */
+    .form-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+    }
+
+        /* Heading styling */
+        .form-container h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+    /* Form group styling */
+    .form-group {
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .form-group input:focus,
+            .form-group select:focus,
+            .form-group input[type="file"]:focus {
+                outline: none;
+                border-color: #0056b3;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+    /* Button styling */
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-right: 10px;
+    }
+
+    .btn-submit {
+        background: #0056b3;
+        color: #fff;
+    }
+
+    .btn-cancel {
+        background: #0056b3;
+        color: #fff;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Form animation */
+    .form-group input,
+    .form-group select,
+    .form-group input[type="file"] {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .form-container
+
+    {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group input[type="file"] {
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    }
+
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .form-container
+
+    {
+        max-width: 600px;
+        padding: 15px;
+    }
+
+    .form-group label,
+    .form-group input,
+    .form-group select,
+    .form-group input[type="file"] {
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+    }
+
+    }
+
+    @@media (min-width: 1025px) {
+        .form-group label, .form-group input, .form-group select, .form-group input[type="file"]
+
+    {
+        font-size: 16px;
+    }
+
+    }
+</style>
+
+<div class="page active" id="update-lamaran">
+    <div class="form-container">
+        <h3><i class="fas fa-pencil-alt"></i> Update Data Pelamar</h3>
+
+        <form method="post" asp-action="UpdateStatusPelamar" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="form-group">
+                <label asp-for="Nama">Nama</label>
+                <input asp-for="Nama" class="form-control" placeholder="Masukkan nama pelamar" readonly />
+                <span asp-validation-for="Nama" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Masukkan email" readonly />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NoHP">No HP</label>
+                <input asp-for="NoHP" class="form-control" placeholder="Masukkan nomor HP" readonly />
+                <span asp-validation-for="NoHP" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Pendidikan">Pendidikan</label>
+                <input asp-for="Pendidikan" class="form-control" placeholder="Masukkan pendidikan terakhir" readonly />
+                <span asp-validation-for="Pendidikan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status">Status</label>
+                <select asp-for="Status" class="form-control" required>
+                    <option value="">Pilih Status</option>
+                    <option value="Diproses">Diproses</option>
+                    <option value="Diterima">Diterima</option>
+                    <option value="Ditolak">Ditolak</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-submit">Simpan</button>
+                <a href="@Url.Action("PelamarKerja", "DashboardPerusahaan")" class="btn btn-cancel">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
