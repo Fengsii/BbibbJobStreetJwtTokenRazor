@@ -33,6 +33,59 @@ namespace BbibbJobStreetJwtToken.Controllers
             _companyDashboard = companyDashboard;
         }
 
+        ///=============== UNTUK COMPANY PROFILE ==================\\\
+        //public IActionResult CompanyProfile(int id)
+        //{
+        //    var data = _perusahaan.GetCompanyById(id);
+        //    return View(data);
+        //}
+        //public IActionResult CompanyProfile()
+        //{
+        //    var data = _perusahaan.GetListCompany();
+        //    return View(data);
+        //}
+
+        public IActionResult CompanyProfile()
+        {
+            var data = _perusahaan.GetCurrentCompany();
+            return View(data);
+        }
+
+        ///=============== UNTUK COMPANY PROFILE SETTING ==================\\\
+        ///=============== UNTUK COMPANY PROFILE SETTING ==================\\
+        [HttpGet] // Tambahkan ini
+        public IActionResult CompanyProfileSetting()
+        {
+            var currentCompany = _perusahaan.GetCurrentCompany();
+
+            // Convert ke RegisterPerusahaanDTO untuk form edit
+            var dto = new RegisterPerusahaanDTO
+            {
+                PerusahaanId = currentCompany.PerusahaanId,
+                NamaPerusahaan = currentCompany.NamaPerusahaan,
+                Email = currentCompany.Email,
+                Telepon = currentCompany.Telepon,
+                Alamat = currentCompany.Alamat,
+                Kota = currentCompany.Kota,
+                Provinsi = currentCompany.Provinsi,
+                BidangUsaha = currentCompany.BidangUsaha,
+                TanggalBerdiri = currentCompany.TanggalBerdiri
+            };
+
+            return View(dto);
+        }
+
+        [HttpPost]
+        public IActionResult CompanyProfileSetting(RegisterPerusahaanDTO dto)
+        {
+            var data = _perusahaan.UpdateCompany(dto);
+            if (data)
+            {
+                return RedirectToAction(nameof(CompanyProfile)); // Redirect ke profile, bukan setting
+            }
+            return View(dto);
+        }
+
         ///=============== UNTUK DASHBOARD ==================\\\
         public IActionResult Index()
         {

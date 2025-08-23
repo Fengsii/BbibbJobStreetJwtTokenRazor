@@ -1,472 +1,10 @@
-﻿@* @{
-    Layout = "_LayoutPerusahaan"; // Pakai template
-}
-
-<div class="page active" id="dashboard">
-    <button class="action-btn"><i class="fas fa-plus"></i> Tambah Lowongan</button>
-
-    <div class="card-container">
-        <div class="card">
-            <i class="fas fa-suitcase"></i>
-            <h3>Total Lowongan</h3>
-            <p>25</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-users"></i>
-            <h3>Pelamar Aktif</h3>
-            <p>120</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-file-alt"></i>
-            <h3>Lamaran Baru</h3>
-            <p>15</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-chart-line"></i>
-            <h3>Statistik Bulanan</h3>
-            <p>80%</p>
-        </div>
-    </div>
-
-    <div class="table-container">
-        <h3><i class="fas fa-list"></i> Lowongan Terbaru</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Posisi</th>
-                    <th>Perusahaan</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Frontend Developer</td>
-                    <td>TechCorp</td>
-                    <td>2025-06-10</td>
-                    <td><span class="status active">Aktif</span></td>
-                </tr>
-                <tr>
-                    <td>Marketing Manager</td>
-                    <td>BrandInc</td>
-                    <td>2025-06-08</td>
-                    <td><span class="status active">Aktif</span></td>
-                </tr>
-                <tr>
-                    <td>Data Analyst</td>
-                    <td>DataCo</td>
-                    <td>2025-06-05</td>
-                    <td><span class="status closed">Ditutup</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="chart-container">
-        <div class="chart-placeholder">
-            <i class="fas fa-chart-bar"></i>
-            Grafik Aktivitas Bulanan (Placeholder)
-        </div>
-    </div>
-</div> *@
-
-
-
-
-@* @{
-    Layout = "_LayoutPerusahaan"; // Pakai template
-}
-
-<style>
-    /* General dashboard styling */
-    .page#dashboard {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        background: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-    }
-
-    /* Action button styling */
-    .action-btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        background: #007bff;
-        color: #fff;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-        margin-bottom: 20px;
-    }
-
-        .action-btn:hover {
-            background: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-    /* Card container styling */
-    .card-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-
-    .card {
-        background: #f1f9ff;
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .card i {
-            font-size: 32px;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-    /* Table container styling */
-    .table-container {
-        margin-bottom: 30px;
-    }
-
-        .table-container h3 {
-            color: #007bff;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-        table thead {
-            background: #007bff;
-            color: #fff;
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table tbody tr:hover {
-            background: #f1f9ff;
-            transform: scale(1.01);
-            transition: transform 0.2s ease, background 0.3s ease;
-        }
-
-    .status {
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-    }
-
-        .status.active {
-            background: #28a745;
-            color: #fff;
-        }
-
-        .status.closed {
-            background: #dc3545;
-            color: #fff;
-        }
-
-    /* Chart container styling */
-    .chart-container {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .chart-placeholder {
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #f1f9ff;
-        border-radius: 8px;
-        animation: fadeIn 1s ease-in-out;
-    }
-
-    /* Simple bar chart using CSS */
-    .bar-chart {
-        width: 100%;
-        height: 250px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-around;
-        border-bottom: 2px solid #ddd;
-        position: relative;
-    }
-
-    .bar {
-        width: 40px;
-        background: #007bff;
-        transition: height 0.5s ease;
-        position: relative;
-    }
-
-        .bar:hover {
-            background: #0056b3;
-        }
-
-    .bar-label {
-        position: absolute;
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 12px;
-        color: #333;
-    }
-
-    .bar-value {
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 12px;
-        color: #007bff;
-    }
-
-    @@keyframes fadeIn {
-        from
-
-    {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    }
-
-    /* Responsive design */
-    @@media (max-width: 768px) {
-        .card-container
-
-    {
-        grid-template-columns: 1fr;
-    }
-
-    .action-btn {
-        width: 100%;
-    }
-
-    .table-container {
-        overflow-x: auto;
-    }
-
-    table {
-        display: block;
-    }
-
-        table thead {
-            display: none;
-        }
-
-        table tbody tr {
-            display: block;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-        }
-
-        table tbody td {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-
-            table tbody td:last-child {
-                border-bottom: none;
-            }
-
-    .bar-chart {
-        height: 200px;
-    }
-
-    .bar {
-        width: 30px;
-    }
-
-    }
-
-    @@media (min-width: 769px) and (max-width: 1024px) {
-        .card-container
-
-    {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .bar {
-        width: 35px;
-    }
-
-    }
-
-    @@media (min-width: 1025px) {
-        .card-container
-
-    {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    }
-</style>
-
-<div class="page active" id="dashboard">
-
-    <div class="card-container">
-        <div class="card">
-            <i class="fas fa-suitcase"></i>
-            <h3>Total Lowongan</h3>
-            <p>25</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-users"></i>
-            <h3>Pelamar Aktif</h3>
-            <p>120</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-file-alt"></i>
-            <h3>Lamaran Baru</h3>
-            <p>15</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-chart-line"></i>
-            <h3>Statistik Bulanan</h3>
-            <p>80%</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-briefcase"></i>
-            <h3>Lowongan Terbaru</h3>
-            <p>5</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-calendar-day"></i>
-            <h3>Lamaran Hari Ini</h3>
-            <p>3</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-calendar-week"></i>
-            <h3>Lamaran Minggu Ini</h3>
-            <p>20</p>
-        </div>
-    </div>
-
-    <div class="table-container">
-        <h3><i class="fas fa-list"></i> Lowongan Terbaru</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Posisi</th>
-                    <th>Perusahaan</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Frontend Developer</td>
-                    <td>TechCorp</td>
-                    <td>2025-06-10</td>
-                    <td><span class="status active">Aktif</span></td>
-                </tr>
-                <tr>
-                    <td>Marketing Manager</td>
-                    <td>BrandInc</td>
-                    <td>2025-06-08</td>
-                    <td><span class="status active">Aktif</span></td>
-                </tr>
-                <tr>
-                    <td>Data Analyst</td>
-                    <td>DataCo</td>
-                    <td>2025-06-05</td>
-                    <td><span class="status closed">Ditutup</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="chart-container">
-        <h3><i class="fas fa-chart-bar"></i> Grafik Aktivitas Lamaran Bulanan</h3>
-        <div class="bar-chart">
-            <div class="bar" style="height: 100px;">
-                <span class="bar-value">5</span>
-                <span class="bar-label">Jan</span>
-            </div>
-            <div class="bar" style="height: 150px;">
-                <span class="bar-value">8</span>
-                <span class="bar-label">Feb</span>
-            </div>
-            <div class="bar" style="height: 200px;">
-                <span class="bar-value">12</span>
-                <span class="bar-label">Mar</span>
-            </div>
-            <div class="bar" style="height: 180px;">
-                <span class="bar-value">10</span>
-                <span class="bar-label">Apr</span>
-            </div>
-            <div class="bar" style="height: 220px;">
-                <span class="bar-value">15</span>
-                <span class="bar-label">May</span>
-            </div>
-            <div class="bar" style="height: 250px;">
-                <span class="bar-value">20</span>
-                <span class="bar-label">Jun</span>
-            </div>
-        </div>
-    </div>
-</div> *@
-
-
-
-
-
-
-
-
-@model BbibbJobStreetJwtToken.Models.DTO.CompanyDashboard
+﻿@model BbibbJobStreetJwtToken.Models.DTO.CompanyDashboardDTO
 @{
-    Layout = "_LayoutPerusahaan"; // Pakai template
+    Layout = "_LayoutPerusahaan";
 }
 
 <style>
+
     /* General dashboard styling */
     .page#dashboard {
         max-width: 1200px;
@@ -579,236 +117,322 @@
                 transform: scale(1.01);
             }
 
-    .status {
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        display: inline-block;
-        transition: transform 0.2s ease;
-    }
-
-        .status:hover {
-            transform: scale(1.1);
-        }
-
-        .status.active {
-            background: #28a745;
-            color: #fff;
-        }
-
-        .status.closed {
-            background: #dc3545;
-            color: #fff;
-        }
-
-    /* Chart container styling */
-    .chart-container {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-        .chart-container h3 {
-            color: #007bff;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-    /* Simple bar chart using CSS */
-    .bar-chart {
-        width: 100%;
-        height: 250px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-around;
-        border-bottom: 2px solid #ddd;
-        position: relative;
-    }
-
-    .bar {
-        width: 40px;
-        background: #007bff;
-        transition: height 0.5s ease, transform 0.2s ease;
-        position: relative;
-    }
-
-        .bar:hover {
-            background: #0056b3;
-            transform: translateY(-5px);
-        }
-
-    .bar-label {
-        position: absolute;
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 12px;
-        color: #333;
-    }
-
-    .bar-value {
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 12px;
-        color: #007bff;
-    }
-
+   
+    
     /* Animation keyframes */
     @@keyframes fadeIn {
-        from
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-    {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     @@keyframes bounce {
-        from
+        from {
+            transform: translateY(0);
+        }
 
-    {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-4px);
-    }
-
+        to {
+            transform: translateY(-4px);
+        }
     }
 
     @@keyframes pulse {
-        0%
+        0% {
+            transform: scale(1);
+        }
 
-    {
-        transform: scale(1);
-    }
+        50% {
+            transform: scale(1.02);
+        }
 
-    50% {
-        transform: scale(1.02);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-
+        100% {
+            transform: scale(1);
+        }
     }
 
     @@keyframes iconWiggle {
-        0%
+        0% {
+            transform: rotate(0deg);
+        }
 
-    {
-        transform: rotate(0deg);
+        25% {
+            transform: rotate(5deg);
+        }
+
+        75% {
+            transform: rotate(-5deg);
+        }
+
+        100% {
+            transform: rotate(0deg);
+        }
     }
 
-    25% {
-        transform: rotate(5deg);
+
+
+    /* ... (kode CSS sebelumnya tetap) ... */
+
+    /* Perbaikan styling untuk chart container */
+    .chart-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+        border: 1px solid #eaeaea;
     }
 
-    75% {
-        transform: rotate(-5deg);
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
     }
 
-    100% {
-        transform: rotate(0deg);
+    .chart-container h3 {
+        color: #2c3e50;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.25rem;
+        font-weight: 600;
     }
 
+        .chart-container h3 i {
+            color: #3498db;
+        }
+
+    .chart-legend {
+        display: flex;
+        gap: 15px;
+        font-size: 13px;
     }
 
-    /* Responsive design */
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .legend-color {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+    }
+
+    /* Perbaikan styling untuk bar chart */
+    .chart-wrapper {
+        display: flex;
+        height: 320px;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .y-axis {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        padding-right: 12px;
+        font-size: 12px;
+        color: #7f8c8d;
+        border-right: 1px solid #e0e0e0;
+        min-width: 30px;
+    }
+
+        .y-axis span {
+            padding: 2px 0;
+        }
+
+    .chart-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .bars-container {
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        gap: 20px;
+        padding: 0 5px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .bar-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        justify-content: flex-end;
+        position: relative;
+    }
+
+    .bar {
+        width: 50px;
+        background: linear-gradient(to top, #3498db, #2980b9);
+        border-radius: 5px 5px 0 0;
+        transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+    }
+
+        .bar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(to top, #3498db, #2573a7);
+        }
+
+    .bar-value {
+        position: absolute;
+        top: -28px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        font-weight: bold;
+        color: #2c3e50;
+        background: #ecf0f1;
+        padding: 3px 8px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .bar:hover .bar-value {
+        opacity: 1;
+    }
+
+    .bar-label {
+        margin-top: 12px;
+        font-size: 12px;
+        text-align: center;
+        color: #7f8c8d;
+        font-weight: 500;
+        max-width: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .x-axis {
+        display: flex;
+        justify-content: space-around;
+        padding-top: 15px;
+        font-size: 12px;
+        color: #7f8c8d;
+        font-weight: 500;
+    }
+
+    .grid-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+
+    .grid-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        border-top: 1px dashed #e0e0e0;
+    }
+
+    /* Responsive design untuk chart */
     @@media (max-width: 768px) {
-        .card-container
+        .chart-wrapper {
+            height: 250px;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-    {
-        grid-template-columns: 1fr;
-    }
+        .y-axis {
+            flex-direction: row;
+            justify-content: space-between;
+            border-right: none;
+            border-bottom: 1px solid #e0e0e0;
+            padding-right: 0;
+            padding-bottom: 8px;
+            min-width: auto;
+        }
 
-    .action-btn {
-        width: 100%;
-    }
+        .bars-container {
+            gap: 12px;
+        }
 
-    .table-container {
-        overflow-x: auto;
-    }
+        .bar {
+            width: 30px;
+        }
 
-    table {
-        display: block;
-    }
+        .bar-label {
+            font-size: 10px;
+            max-width: 40px;
+        }
 
-        table thead {
+        .chart-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .x-axis {
             display: none;
         }
+    }
 
-        table tbody tr {
-            display: block;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
+    /* Animasi untuk bar chart */
+    @@keyframes growHeight {
+        from {
+            height: 0;
+            opacity: 0.5;
         }
 
-        table tbody td {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
+        to {
+            opacity: 1;
         }
-
-            table tbody td:last-child {
-                border-bottom: none;
-            }
-
-            table tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #007bff;
-                flex: 1;
-            }
-
-    .bar-chart {
-        height: 200px;
     }
 
     .bar {
-        width: 30px;
+        animation: growHeight 1s ease-out;
     }
 
+    /* Tooltip styling */
+    .bar-tooltip {
+        position: absolute;
+        background: rgba(44, 62, 80, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 100;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
 
-    @@media (min-width: 769px) and (max-width: 1024px) {
-        .card-container
-
-    {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .bar {
-        width: 35px;
-    }
-
-    }
-
-    @@media (min-width: 1025px) {
-        .card-container
-
-    {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
+    .bar-wrapper:hover .bar-tooltip {
+        opacity: 1;
     }
 </style>
 
 <div class="page active" id="dashboard">
+    <!-- Bagian card-container dan table-container tetap sama -->
     <div class="card-container">
         <div class="card">
             <i class="fas fa-suitcase"></i>
@@ -864,54 +488,77 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-label="Posisi">Frontend Developer</td>
-                    <td data-label="Perusahaan">TechCorp</td>
-                    <td data-label="Tanggal">2025-06-10</td>
-                    <td data-label="Status"><span class="status active">Aktif</span></td>
-                </tr>
-                <tr>
-                    <td data-label="Posisi">Marketing Manager</td>
-                    <td data-label="Perusahaan">BrandInc</td>
-                    <td data-label="Tanggal">2025-06-08</td>
-                    <td data-label="Status"><span class="status active">Aktif</span></td>
-                </tr>
-                <tr>
-                    <td data-label="Posisi">Data Analyst</td>
-                    <td data-label="Perusahaan">DataCo</td>
-                    <td data-label="Tanggal">2025-06-05</td>
-                    <td data-label="Status"><span class="status closed">Ditutup</span></td>
-                </tr>
+                @foreach (var lowongan in Model.DaftarLowonganTerbaru)
+                {
+                    <tr>
+                        <td data-label="Posisi">@lowongan.Posisi</td>
+                        <td data-label="Perusahaan">@lowongan.NamaPerusahaan</td>
+                        <td data-label="Tanggal">@lowongan.TanggalDibuat.ToString("yyyy-MM-dd")</td>
+                        <td data-label="Status">
+                            <span class="status">
+                                @lowongan.status
+                            </span>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
 
+    <!-- Bagian chart yang diperbaiki -->
     <div class="chart-container">
-        <h3><i class="fas fa-chart-bar"></i> Grafik Aktivitas Lamaran Bulanan</h3>
-        <div class="bar-chart">
-            <div class="bar" style="height: 100px;">
-                <span class="bar-value">5</span>
-                <span class="bar-label">Jan</span>
+        <div class="chart-header">
+            <h3><i class="fas fa-chart-bar"></i> Grafik Aktivitas Lamaran Bulanan</h3>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(to top, #3498db, #2980b9);"></div>
+                    <span>Jumlah Lamaran</span>
+                </div>
             </div>
-            <div class="bar" style="height: 150px;">
-                <span class="bar-value">8</span>
-                <span class="bar-label">Feb</span>
+        </div>
+
+        <div class="chart-wrapper">
+            <div class="y-axis">
+                @{
+                    // Menghitung nilai maksimum untuk skala Y
+                    int maxValue = Model.GrafikLamaran.Any() ? Model.GrafikLamaran.Max(g => g.Jumlah) : 0;
+                    int step = maxValue > 0 ? (int)Math.Ceiling(maxValue / 5.0) : 1;
+                    if (step == 0) step = 1;
+
+                    for (int i = 5; i >= 0; i--)
+                    {
+                        <span>@(i* step)</span>
+                    }
+                }
             </div>
-            <div class="bar" style="height: 200px;">
-                <span class="bar-value">12</span>
-                <span class="bar-label">Mar</span>
-            </div>
-            <div class="bar" style="height: 180px;">
-                <span class="bar-value">10</span>
-                <span class="bar-label">Apr</span>
-            </div>
-            <div class="bar" style="height: 220px;">
-                <span class="bar-value">15</span>
-                <span class="bar-label">May</span>
-            </div>
-            <div class="bar" style="height: 250px;">
-                <span class="bar-value">20</span>
-                <span class="bar-label">Jun</span>
+
+            <div class="chart-content">
+                <!-- Grid lines -->
+                <div class="grid-lines">
+                    @for (int i = 0; i <= 5; i++)
+                    {
+                        <div class="grid-line" style="top: @(i * 20)%;"></div>
+                    }
+                </div>
+
+                <div class="bars-container">
+                    @foreach (var item in Model.GrafikLamaran)
+                    {
+                        int maxVal = Model.GrafikLamaran.Any() ? Model.GrafikLamaran.Max(g => g.Jumlah) : 1;
+                        if (maxVal == 0) { maxVal = 1; }
+
+                        // Menghitung tinggi bar sebagai persentase dari nilai maksimum
+                        int percentage = (int)Math.Round((double)item.Jumlah / maxVal * 100);
+
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: @percentage%;">
+                                <span class="bar-value">@item.Jumlah</span>
+                                <div class="bar-tooltip">@item.Tanggal: @item.Jumlah lamaran</div>
+                            </div>
+                            <div class="bar-label">@item.Tanggal</div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,84 @@
+﻿@model BbibbJobStreetJwtToken.Models.DTO.CompanyViewDTO
+
+
+
+@{
+    Layout = "_LayoutPerusahaan";
+}
+
+ <!-- Profile View Page -->
+<div class="page active" id="profile-view">
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="@Model.LogoPath" alt="Logo Perusahaan" class="profile-logo">
+            <div class="profile-info">
+                <h2>@Model.NamaPerusahaan</h2>
+                @* <p><i class="fas fa-globe"></i> https://bbibbjobs.com</p> *@
+                <span class="profile-status status-active"><i class="fas fa-check-circle"></i>@Model.Status</span>
+            </div>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail-card">
+                <h3><i class="fas fa-info-circle"></i> Informasi Umum</h3>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-signature"></i> Nama</span>
+                    <span class="value">@Model.NamaPerusahaan</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-envelope"></i> Email</span>
+                    <span class="value">@Model.Email</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-phone"></i> Telepon</span>
+                    <span class="value">+62 @Model.Telepon</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-briefcase"></i> Bidang Usaha</span>
+                    <span class="value">@Model.BidangUsaha</span>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <h3><i class="fas fa-map-marker-alt"></i> Alamat</h3>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-road"></i> Jalan</span>
+                    <span class="value">@Model.Alamat</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-city"></i> Kota</span>
+                    <span class="value">@Model.Kota</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-map"></i> Provinsi</span>
+                    <span class="value">@Model.Provinsi</span>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <h3><i class="fas fa-calendar-alt"></i> Informasi Lainnya</h3>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-rocket"></i> Tanggal Berdiri</span>
+                    <span class="value">@Model.TanggalBerdiri.ToString("yyyy-MM-dd")</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-user-tag"></i> Role</span>
+                    <span class="value">@Model.Role</span>
+                </div>
+                @* <div class="detail-item">
+                    <span class="label"><i class="fas fa-clock"></i> Akun Dibuat Pada</span>
+                    <span class="value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-sync"></i> Diperbarui Pada</span>
+                    <span class="value">25 Oktober 2023</span>
+                </div> *@
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/DashboardPerusahaan/CompanyProfileSetting" class="btn btn-primary" id="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profil</a>
+            <a href="/DashboardPerusahaan/Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+        </div>
+    </div>
+</div>

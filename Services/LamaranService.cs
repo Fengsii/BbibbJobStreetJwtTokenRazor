@@ -71,12 +71,15 @@ namespace BbibbJobStreetJwtToken.Services
             return query.ToPagedList(page, pageSize);
         }
 
+       
         public Lamaran GetLamaranById(int id)
         {
             var perusahaanId = GetCurrentPerusahaanId();
             var data = _context.Lamarans.Include(l => l.Lowongan)
                 .ThenInclude(p => p.Perusahaan)
-                .Where(x => x.Lowongan.PerusahaanId == perusahaanId).FirstOrDefault();
+                .Where(x => x.Lowongan.PerusahaanId == perusahaanId && x.Id == id)
+                .FirstOrDefault();
+
             if (data == null)
             {
                 return new Lamaran();
@@ -84,6 +87,7 @@ namespace BbibbJobStreetJwtToken.Services
 
             return data;
         }
+
 
         public bool UpdateLamaran(LamaranAddUpdateDTO lamaranAddUpdateDTO)
         {
@@ -103,7 +107,6 @@ namespace BbibbJobStreetJwtToken.Services
             _context.SaveChanges();
             return true;
         }
-
 
 
         ///==================== UNTUK USER ================\\\
@@ -154,8 +157,6 @@ namespace BbibbJobStreetJwtToken.Services
             return await _fileHelper.DownloadFileAsync(lamaran.CV, "uploads/pdf");
         }
 
-
-      
         public bool DeleteLamaran(int id)
         {
             var perusahaanId = GetCurrentPerusahaanId();

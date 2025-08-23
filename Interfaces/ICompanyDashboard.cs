@@ -4,6 +4,6 @@ namespace BbibbJobStreetJwtToken.Interfaces
 {
     public interface ICompanyDashboard
     {
-        public CompanyDashboard GetDashboardData();
+        public CompanyDashboardDTO GetDashboardData();
     }
 }

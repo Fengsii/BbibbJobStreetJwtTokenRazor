@@ -1,0 +1,73 @@
+﻿@model BbibbJobStreetJwtToken.Models.DTO.RegisterPerusahaanDTO
+
+
+@{
+    Layout = "_LayoutPerusahaan";
+}
+
+
+<!-- Profile Edit Page -->
+<div class="page active" id="profile-edit">
+    <div class="form-container">
+        <h3><i class="fas fa-edit"></i> Edit Profil Perusahaan</h3>
+        <form id="profile-form" method="post" asp-action="CompanyProfileSetting" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label asp-for="NamaPerusahaan" for="NamaPerusahaan"><i class="fas fa-signature"></i> Nama Perusahaan</label>
+                    <input asp-for="NamaPerusahaan" type="text" id="NamaPerusahaan" name="NamaPerusahaan" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" for="Email"><i class="fas fa-envelope"></i> Email</label>
+                    <input asp-for="Email" type="email" id="Email" name="Email"  required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" for="Email"><i class="fas fa-envelope"></i> Password</label>
+                    <input asp-for="Password" type="password" id="Password" name="Password" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telepon" for="Telepon"><i class="fas fa-phone"></i> Telepon</label>
+                    <input asp-for="Telepon" type="tel" id="Telepon" name="Telepon" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BidangUsaha" for="BidangUsaha"><i class="fas fa-briefcase"></i> Bidang Usaha</label>
+                    <input asp-for="BidangUsaha" type="text" id="BidangUsaha" name="BidangUsaha" value="Teknologi Informasi" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Alamat" for="Alamat"><i class="fas fa-road"></i> Alamat</label>
+                    <input asp-for="Alamat" type="text" id="Alamat" name="Alamat" value="Jl. Sudirman No. 123" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Kota" for="Kota"><i class="fas fa-city"></i> Kota</label>
+                    <input asp-for="Kota" type="text" id="Kota" name="Kota" value="Jakarta Selatan" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Provinsi" for="Provinsi"><i class="fas fa-map"></i> Provinsi</label>
+                    <select asp-for="Provinsi" id="Provinsi" name="Provinsi" required>
+                        <option value="DKI Jakarta" selected>DKI Jakarta</option>
+                        <option value="Jawa Barat">Jawa Barat</option>
+                        <option value="Jawa Tengah">Jawa Tengah</option>
+                        <option value="Jawa Timur">Jawa Timur</option>
+                        <option value="Banten">Banten</option>
+                        <option value="Bali">Bali</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TanggalBerdiri" for="TanggalBerdiri"><i class="fas fa-rocket"></i> Tanggal Berdiri</label>
+                    <input asp-for="TanggalBerdiri" type="date" id="TanggalBerdiri" name="TanggalBerdiri" value="2010-01-15" required>
+                </div>
+                <div class="form-group">
+                    <label for="logoInput">Logo Perusahaan</label>
+                    <input type="file" asp-for="LogoPath" id="logoInput" accept="image/*" />
+                    <span asp-validation-for="LogoPath" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="@Url.Action("CompanyProfileSetting", "DashboardPerusahaan")" class="btn btn-cancel">
+                    <button type="button" class="btn btn-secondary" id="cancel-edit-btn"><i class="fas fa-times"></i> Batal</button>
+                </a>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
