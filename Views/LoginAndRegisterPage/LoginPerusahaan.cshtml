@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
+@* <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -142,5 +142,410 @@
             }
         });
     </script>
+</body>
+</html> *@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Perusahaan - CareerConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --light: #ffffff;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --company-accent: #0e7490; /* Warna biru yang lebih cocok untuk perusahaan */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--light);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .company-login-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .company-header {
+            background: var(--company-accent);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+            .company-header h1 {
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .company-header h1 i {
+                    margin-right: 12px;
+                    font-size: 1.6rem;
+                }
+
+            .company-header p {
+                font-size: 1rem;
+                opacity: 0.9;
+            }
+
+        .company-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .company-form-container {
+            padding: 30px;
+        }
+
+        .company-notice {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+            .company-notice i {
+                color: #10b981;
+                margin-right: 10px;
+                font-size: 1.1rem;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+            .input-with-icon input {
+                width: 100%;
+                padding: 14px 14px 14px 45px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: all 0.3s;
+            }
+
+                .input-with-icon input:focus {
+                    outline: none;
+                    border-color: var(--company-accent);
+                    box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.2);
+                }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .show-password-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--company-accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+            .btn-login:hover {
+                background-color: #0c635c;
+            }
+
+        .company-features {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+            .company-features h3 {
+                font-size: 1rem;
+                color: var(--dark);
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+            }
+
+                .company-features h3 i {
+                    margin-right: 10px;
+                    color: var(--company-accent);
+                }
+
+        .feature-list {
+            list-style: none;
+        }
+
+            .feature-list li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                font-size: 0.9rem;
+                color: var(--gray);
+            }
+
+                .feature-list li i {
+                    color: var(--company-accent);
+                    margin-right: 10px;
+                    font-size: 0.8rem;
+                }
+
+        .secure-notice {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .secure-notice i {
+                color: #22c55e;
+                margin-right: 8px;
+            }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+            .register-link a {
+                color: var(--company-accent);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+                .register-link a:hover {
+                    text-decoration: underline;
+                }
+
+        @@media (max-width: 576px) {
+            body
+
+        {
+            padding: 15px;
+            background-image: none;
+        }
+
+        .company-login-container {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-header {
+            padding: 20px;
+        }
+
+        .company-form-container {
+            padding: 25px 20px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="company-login-container">
+        <div class="company-header">
+            <span class="company-badge">Perusahaan</span>
+            <h1><i class="fas fa-building"></i> Portal Perusahaan</h1>
+            <p>Kelola lowongan dan rekrutmen karyawan</p>
+        </div>
+
+        <div class="company-form-container">
+            <div class="company-notice">
+                <i class="fas fa-info-circle"></i>
+                <div>Masuk untuk mengelola lowongan kerja dan proses rekrutmen perusahaan Anda.</div>
+            </div>
+
+            <form asp-controller="LoginAndRegisterPage" id="loginForm" asp-action="LoginPerusahaan" method="post">
+                <div class="form-group">
+                    <label for="email">Nama Perusahaan</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fas fa-user-shield"></i></span>
+                        <input type="text" asp-for="NamaPerusahaan" id="NamaPerusahaan" name="NamaPerusahaan" placeholder="Masukkan nama perusahaan" required />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Kata Sandi</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fas fa-lock"></i></span>
+                        <input type="password" asp-for="Password" id="password" name="Password" placeholder="Masukkan kata sandi" required />
+                         <span class="error-message" asp-validation-for="Password"></span>
+                        <span class="show-password-icon" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">Masuk Ke Akun Perusahaan</button>
+            </form>
+
+            <div class="register-link">
+                Belum memiliki akun? <a href="/LoginAndRegisterPage/RegisterPerusahaan">Daftar sebagai perusahaan</a>
+            </div>
+            <div class="register-link">
+                <a href="/LoginAndRegisterPage/ForgotPasswordForCompany">Lupa password?</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Fungsi toggle password
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.querySelector('.show-password-icon i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+
+         document.addEventListener("DOMContentLoaded", function () {
+             const form = document.getElementById('loginForm');
+
+             form.addEventListener('submit', function (e) {
+                 e.preventDefault();
+
+                 // Tampilkan konfirmasi
+                 Swal.fire({
+                     title: 'Login?',
+                     text: "Apakah Anda yakin ingin login?",
+                     icon: 'question',
+                     showCancelButton: true,
+                     confirmButtonColor: '#0a66c2',
+                     cancelButtonColor: '#6c757d',
+                     confirmButtonText: 'Ya, login',
+                     cancelButtonText: 'Batal'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                         // Submit form
+                         form.submit();
+                     }
+                 });
+             });
+
+             // Tampilkan popup success jika ada pesan dari controller
+             @if (TempData["SuccessMessage"] != null)
+             {
+                                     <text>
+                                     Swal.fire({
+                                         title: 'Berhasil!',
+                                         text: '@TempData["SuccessMessage"]',
+                                         icon: 'success',
+                                         confirmButtonColor: '#0a66c2'
+                                     });
+                                     </text>
+             }
+
+             // Tampilkan popup error jika ada pesan dari controller
+             @if (TempData["ErrorMessage"] != null)
+             {
+                                     <text>
+                                     Swal.fire({
+                                         title: 'Gagal!',
+                                         text: '@TempData["ErrorMessage"]',
+                                         icon: 'error',
+                                         confirmButtonColor: '#d33'
+                                     });
+                                     </text>
+             }
+         });
+    </script>
+    
 </body>
 </html>

@@ -213,6 +213,12 @@ namespace BbibbJobStreetJwtToken.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("OtpCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("OtpExpiredAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -316,6 +322,12 @@ namespace BbibbJobStreetJwtToken.Migrations
                     b.Property<DateTime?>("LastUpdatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("OtpCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("OtpExpiredAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -348,9 +360,9 @@ namespace BbibbJobStreetJwtToken.Migrations
                         {
                             Id = 1,
                             CoverImage = "",
-                            CreatedAt = new DateTime(2025, 8, 21, 11, 58, 22, 993, DateTimeKind.Local).AddTicks(3895),
+                            CreatedAt = new DateTime(2025, 9, 1, 10, 55, 29, 612, DateTimeKind.Local).AddTicks(4524),
                             Email = "admin@example.com",
-                            PasswordHash = "$2a$11$pH3d4IMhR9lXoAFvsxgyqeFGaerW5M4z4GQYiaEoASVqb7l26.Ylu",
+                            PasswordHash = "$2a$11$.h4Xf216sGUEea4E3Iw8zuhfrO6zk3yUTfB0M6J.duSTTAx/kUWQe",
                             Posisi = "Administrator",
                             ProfileImage = "",
                             Role = "Admin",

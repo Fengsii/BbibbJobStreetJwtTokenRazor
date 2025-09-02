@@ -34,17 +34,7 @@ namespace BbibbJobStreetJwtToken.Controllers
         }
 
         ///=============== UNTUK COMPANY PROFILE ==================\\\
-        //public IActionResult CompanyProfile(int id)
-        //{
-        //    var data = _perusahaan.GetCompanyById(id);
-        //    return View(data);
-        //}
-        //public IActionResult CompanyProfile()
-        //{
-        //    var data = _perusahaan.GetListCompany();
-        //    return View(data);
-        //}
-
+  
         public IActionResult CompanyProfile()
         {
             var data = _perusahaan.GetCurrentCompany();
@@ -52,7 +42,7 @@ namespace BbibbJobStreetJwtToken.Controllers
         }
 
         ///=============== UNTUK COMPANY PROFILE SETTING ==================\\\
-        ///=============== UNTUK COMPANY PROFILE SETTING ==================\\
+ 
         [HttpGet] // Tambahkan ini
         public IActionResult CompanyProfileSetting()
         {
@@ -81,10 +71,11 @@ namespace BbibbJobStreetJwtToken.Controllers
             var data = _perusahaan.UpdateCompany(dto);
             if (data)
             {
-                return RedirectToAction(nameof(CompanyProfile)); // Redirect ke profile, bukan setting
+                return RedirectToAction(nameof(CompanyProfile));
             }
             return View(dto);
         }
+
 
         ///=============== UNTUK DASHBOARD ==================\\\
         public IActionResult Index()
@@ -158,7 +149,7 @@ namespace BbibbJobStreetJwtToken.Controllers
             {
                 return RedirectToAction("LowonganPekerjaan");
             }
-            return BadRequest("Gagal menghapus supplier.");
+            return BadRequest("Gagal menghapus lowongan.");
         }
 
 
@@ -217,7 +208,7 @@ namespace BbibbJobStreetJwtToken.Controllers
             var data = _lamaran.DeleteLamaran(id);
             if (data)
             {
-                return RedirectToAction("LowonganPekerjaan");
+                return RedirectToAction("PelamarKerja");
             }
             return BadRequest("Gagal menghapus supplier.");
         }

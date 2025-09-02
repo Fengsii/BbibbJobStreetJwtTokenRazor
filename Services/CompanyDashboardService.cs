@@ -72,20 +72,8 @@ namespace BbibbJobStreetJwtToken.Services
                     PerusahaanId = perusahaanId,
                     NamaPerusahaan = x.Perusahaan.NamaPerusahaan,
                     TanggalDibuat = x.TanggalDibuat,
-                    status = x.status,
+                    status = x.status,  
                 }).ToList();
-
-            // ambil data lamaran 7 hari terakhir
-            //var grafikLamaran = lamarans
-            //    .Where(l => l.TanggalDilamar >= DateTime.Today.AddDays(-6))
-            //    .GroupBy(l => l.TanggalDilamar.Date)
-            //    .Select(g => new LamaranChartDTO
-            //    {
-            //        Tanggal = g.Key.ToString("dd MMM"),
-            //        Jumlah = g.Count()
-            //    }).OrderBy(x => x.Tanggal).ToList();
-
-            
            
             // -------- Grafik Harian (7 hari terakhir) --------
 

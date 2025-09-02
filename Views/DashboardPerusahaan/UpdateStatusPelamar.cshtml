@@ -165,7 +165,7 @@
     <div class="form-container">
         <h3><i class="fas fa-pencil-alt"></i> Update Data Pelamar</h3>
 
-        <form method="post" asp-action="UpdateStatusPelamar" enctype="multipart/form-data">
+        <form id="status-form" method="post" asp-action="UpdateStatusPelamar" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <input type="hidden" name="Id" value="@Model.Id" />
 
@@ -211,3 +211,56 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('status-form');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Tampilkan konfirmasi
+            Swal.fire({
+                title: 'Update Status?',
+                text: "Apakah Anda yakin ingin status lamaran ini?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0a66c2',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Update',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form
+                    form.submit();
+                }
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                                <text>
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: '@TempData["SuccessMessage"]',
+                                    icon: 'success',
+                                    confirmButtonColor: '#0a66c2'
+                                });
+                                </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                                <text>
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: '@TempData["ErrorMessage"]',
+                                    icon: 'error',
+                                    confirmButtonColor: '#d33'
+                                });
+                                </text>
+        }
+    });
+</script>

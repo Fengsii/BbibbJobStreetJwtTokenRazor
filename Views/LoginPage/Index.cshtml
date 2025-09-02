@@ -1,7 +1,6 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,139 +9,391 @@
     <title>Pilih Peran - Portal Pekerjaan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        /* Variabel CSS untuk konsistensi tema */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --card-pelamar: #3b82f6;
+            --card-perusahaan: #6366f1;
+            --card-admin: #8b5cf6;
+            --transition: all 0.3s ease;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #000000;
-            color: #FFFFFF;
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
         }
+
+            /* Background cover dengan gambar profesional */
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.95)), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1800&q=80');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                z-index: -2;
+            }
+
+            /* Efek pola geometrik subtle di atas gambar */
+            body::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.03) 0%, transparent 15%), radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.03) 0%, transparent 15%), linear-gradient(45deg, transparent 49%, rgba(37, 99, 235, 0.02) 50%, transparent 51%);
+                background-size: 100% 100%, 100% 100%, 30px 30px;
+                z-index: -1;
+            }
 
         .container {
+            max-width: 1200px;
+            width: 100%;
             text-align: center;
-            padding: 40px;
-            max-width: 800px;
-            width: 90%;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        h1 {
-            font-size: 3rem;
-            color: #1E90FF;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
-            animation: fadeIn 1s ease-in-out;
+        .logo {
+            margin-bottom: 30px;
         }
+
+            .logo h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: var(--primary);
+                margin-bottom: 15px;
+                letter-spacing: -0.5px;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .logo p {
+                color: var(--secondary);
+                font-size: 1.2rem;
+                max-width: 700px;
+                margin: 0 auto 50px;
+                line-height: 1.6;
+                position: relative;
+                padding: 0 20px;
+            }
+
+                .logo p::before, .logo p::after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    height: 1px;
+                    width: 30px;
+                    background: var(--primary);
+                    opacity: 0.3;
+                }
+
+                .logo p::before {
+                    left: 0;
+                }
+
+                .logo p::after {
+                    right: 0;
+                }
 
         .card-container {
             display: flex;
-            justify-content: space-around;
-            gap: 20px;
+            justify-content: center;
+            gap: 30px;
             flex-wrap: wrap;
+            margin-top: 30px;
         }
 
         .card {
-            background-color: #FFFFFF;
-            color: #000000;
-            width: 300px;
-            padding: 30px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            width: 320px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            animation: cardAppear 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+            .card:nth-child(1) {
+                animation-delay: 0.2s;
+                border-top: 4px solid var(--card-pelamar);
+            }
+
+            .card:nth-child(2) {
+                animation-delay: 0.4s;
+                border-top: 4px solid var(--card-perusahaan);
+            }
+
+            .card:nth-child(3) {
+                animation-delay: 0.6s;
+                border-top: 4px solid var(--card-admin);
+            }
+
+            .card:hover {
+                transform: translateY(-12px) rotateX(5deg);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            }
+
+        .card-icon {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
-            .card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 10px 20px rgba(30, 144, 255, 0.5);
-            }
+        .card:nth-child(1) .card-icon {
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+        }
 
-            .card i {
-                font-size: 3.5rem;
-                color: #1E90FF;
-                margin-bottom: 20px;
-                animation: iconPulse 2s infinite;
-            }
+        .card:nth-child(2) .card-icon {
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+        }
 
-            .card h2 {
-                font-size: 1.8rem;
-                margin-bottom: 10px;
-            }
+        .card:nth-child(3) .card-icon {
+            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+        }
 
-            .card p {
-                font-size: 1rem;
-                color: #333333;
-            }
+        .card-icon i {
+            font-size: 4rem;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .card:nth-child(1) .card-icon i {
+            color: var(--card-pelamar);
+        }
+
+        .card:nth-child(2) .card-icon i {
+            color: var(--card-perusahaan);
+        }
+
+        .card:nth-child(3) .card-icon i {
+            color: var(--card-admin);
+        }
+
+        .card:hover .card-icon i {
+            transform: scale(1.2);
+        }
+
+        .card-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--secondary);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
 
         .btn {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #1E90FF;
-            color: #FFFFFF;
+            padding: 14px 30px;
+            background-color: var(--primary);
+            color: white;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
         }
 
-            .btn:hover {
-                background-color: #0066CC;
-            }
+        .card:nth-child(1) .btn {
+            background-color: var(--card-pelamar);
+        }
 
+        .card:nth-child(2) .btn {
+            background-color: var(--card-perusahaan);
+        }
+
+        .card:nth-child(3) .btn {
+            background-color: var(--card-admin);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        /* Animations */
         @@keyframes fadeIn {
-            0%
+            from
 
         {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(20px);
         }
 
-        100% {
+        to {
             opacity: 1;
             transform: translateY(0);
         }
 
         }
 
-        @@keyframes iconPulse {
+        @@keyframes cardAppear {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(30px) rotateY(10deg);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateY(0);
+        }
+
+        }
+
+        @@keyframes ripple {
             0%
 
         {
-            transform: scale(1);
+            transform: scale(0, 0);
+            opacity: 0.8;
         }
 
-        50% {
-            transform: scale(1.2);
+        20% {
+            transform: scale(25, 25);
+            opacity: 0.6;
         }
 
         100% {
-            transform: scale(1);
+            transform: scale(50, 50);
+            opacity: 0;
         }
 
         }
 
-        @@media (max-width: 600px) {
-            h1
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @@media (max-width: 1000px) {
+            .card-container
 
         {
-            font-size: 2rem;
+            gap: 25px;
+        }
+
+        .card {
+            width: 300px;
+        }
+
+        }
+
+        @@media (max-width: 900px) {
+            .card-container
+
+        {
+            gap: 20px;
+        }
+
+        .card {
+            width: 280px;
+        }
+
+        }
+
+        @@media (max-width: 768px) {
+            .card-container
+
+        {
+            flex-direction: column;
+            align-items: center;
         }
 
         .card {
             width: 100%;
-            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+        }
+
+        .logo p {
+            font-size: 1.1rem;
+        }
+
+        body::before {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.96)), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80');
         }
 
         }
@@ -150,21 +401,66 @@
 </head>
 <body>
     <div class="container">
-        <h1>Pilih Peran Anda</h1>
+        <div class="logo">
+            <h1>CareerConnect</h1>
+            <p>Pilih peran Anda untuk mengakses platform kami dan temukan pengalaman terbaik sesuai kebutuhan Anda</p>
+        </div>
+
         <div class="card-container">
             <div class="card">
-                <i class="fas fa-user-tie"></i>
-                <h2>Pelamar</h2>
-                <p>Cari pekerjaan impian Anda dan bangun karier yang sukses!</p>
-                <a href="/LoginAndRegisterPage/LoginUser" class="btn">Pilih sebagai Pelamar</a>
+                <div class="card-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Pelamar</h2>
+                    <p>Temukan pekerjaan impian Anda, kelola profil profesional, dan bangun jaringan karier yang sukses dengan akses ke lowongan terbaru.</p>
+                    <a href="/LoginAndRegisterPage/LoginUser" class="btn">Masuk sebagai Pelamar</a>
+                </div>
             </div>
+
             <div class="card">
-                <i class="fas fa-building"></i>
-                <h2>Perusahaan</h2>
-                <p>Temukan talenta terbaik untuk mengembangkan bisnis Anda!</p>
-                <a href="/LoginAndRegisterPage/LoginPerusahaan" class="btn">Pilih sebagai Perusahaan</a>
+                <div class="card-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Perusahaan</h2>
+                    <p>Rekrut talenta terbaik, kelola lowongan pekerjaan, dan tingkatkan visibilitas merek perusahaan Anda di pasar talenta.</p>
+                    <a href="/LoginAndRegisterPage/LoginPerusahaan" class="btn">Masuk sebagai Perusahaan</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Administrator</h2>
+                    <p>Kelola sistem secara keseluruhan, pantau aktivitas platform, dan pastikan pengalaman terbaik bagi semua pengguna.</p>
+                    <a href="/LoginAndRegisterPage/LoginAdmin" class="btn">Masuk sebagai Admin</a>
+                </div>
             </div>
         </div>
+
+        <div class="footer">
+            <p>© 2023 CareerConnect. Seluruh hak cipta dilindungi.</p>
+        </div>
     </div>
+
+    <script>
+        // Menambahkan efek interaktif tambahan
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

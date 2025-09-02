@@ -64,6 +64,42 @@ namespace BbibbJobStreetJwtToken.Services
         }
 
 
+        public IPagedList<LowonganPekerjaanViewDTO> GetListLowonganPekerjaanForSuperAdmin(int page, int pageSize, string searchTerm = "")
+        {
+
+            var query = _context.LowonganPekerjaans
+                .Include(y => y.Kategori)
+                .Include(y => y.Perusahaan)
+                .Where(x => x.status != StatusLowongan.StatusLowonganPekerjaan.Delete)
+                .Select(x => new LowonganPekerjaanViewDTO
+                {
+                    Id = x.Id,
+                    Logo = !string.IsNullOrEmpty(x.Perusahaan.LogoPath) ? "/" + x.Perusahaan.LogoPath : null,
+                    Judul = x.Judul,
+                    Alamat = x.Alamat,
+                    Posisi = x.Posisi,
+                    Deskripsi = x.Deskripsi,
+                    NamaKategori = x.Kategori.NamaKategori,
+                    NamaPerusahaan = x.Perusahaan.NamaPerusahaan,
+                    TanggalDibuat = x.TanggalDibuat,
+                    status = x.status,
+                });
+
+            // tambahin searching
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(x =>
+                    x.Judul.Contains(searchTerm) ||
+                    x.Posisi.Contains(searchTerm) ||
+                    x.Alamat.Contains(searchTerm));
+            }
+
+            // return dengan pagination
+            return query.OrderByDescending(x => x.TanggalDibuat)
+                        .ToPagedList(page, pageSize);
+        }
+
+
         public List<LowonganPekerjaanViewDTO> GetListLowonganPekerjaanForUser()
         {
             var data = _context.LowonganPekerjaans.Include(y => y.Kategori).Include(y => y.Perusahaan).Where(x => x.status != StatusLowongan.StatusLowonganPekerjaan.Delete).Select(x => new LowonganPekerjaanViewDTO
@@ -159,6 +195,21 @@ namespace BbibbJobStreetJwtToken.Services
             var perusahaanId = GetCurrentPerusahaanId();
             var data = _context.LowonganPekerjaans
                 .FirstOrDefault(x => x.Id == id && x.PerusahaanId == perusahaanId);
+
+            if (data == null)
+            {
+                return false;
+            }
+
+            data.status = StatusLowongan.StatusLowonganPekerjaan.Delete;
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteLowonganPekerjaanForSuperAdmin(int id)
+        {
+            var data = _context.LowonganPekerjaans
+                .FirstOrDefault(x => x.Id == id);
 
             if (data == null)
             {

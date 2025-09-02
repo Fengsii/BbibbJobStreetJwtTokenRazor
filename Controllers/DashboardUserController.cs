@@ -1,6 +1,7 @@
 ﻿using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Models.DTO;
+using BbibbJobStreetJwtToken.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,65 @@ namespace BbibbJobStreetJwtToken.Controllers
         private readonly ILamaran _lamaran;
         private readonly ILowonganTersimpan _lowonganTersimpan;
         private readonly IHistoryLamaran _historyLamaran;
+        private readonly IUser _user;
 
-        public DashboardUserController(ILowonganPekerjaan lowonganPekerjaan, ILamaran lamaran, ILowonganTersimpan lowonganTersimpan, IHistoryLamaran historyLamaran)
+        public DashboardUserController(ILowonganPekerjaan lowonganPekerjaan, ILamaran lamaran, ILowonganTersimpan lowonganTersimpan, IHistoryLamaran historyLamaran, IUser user)
         {
             _lowonganPekerjaan = lowonganPekerjaan;
             _lamaran = lamaran;
             _lowonganTersimpan = lowonganTersimpan;
             _historyLamaran = historyLamaran;
+            _user = user;
+        }
+
+
+
+        //================ Untuk Profile User =============\\
+
+        public IActionResult UserProfile()
+        {
+            var data = _user.GetCurrentUser();
+            return View(data);
+        }
+
+        [HttpGet]
+        public IActionResult UserProfileSetting()
+        {
+            var currentUser = _user.GetCurrentUser();
+
+            // Convert ke UserProfileUpdateDTO untuk form edit
+            var dto = new UserProfileUpdateDTO
+            {
+                Id = currentUser.Id,
+                Username = currentUser.Username,
+                Email = currentUser.Email,
+                Posisi = currentUser.Posisi
+                // Password fields diisi oleh user jika ingin mengubah
+            };
+
+            return View(dto);
+        }
+
+        [HttpPost]
+        public IActionResult UserProfileSetting(UserProfileUpdateDTO dto)
+        {
+            try
+            {
+                var data = _user.UpdateUserProfile(dto);
+                if (data)
+                {
+                    TempData["SuccessMessage"] = "Profile berhasil diperbarui";
+                    return RedirectToAction(nameof(UserProfile));
+                }
+
+                TempData["ErrorMessage"] = "Gagal memperbarui profile";
+                return View(dto);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View(dto);
+            }
         }
 
 

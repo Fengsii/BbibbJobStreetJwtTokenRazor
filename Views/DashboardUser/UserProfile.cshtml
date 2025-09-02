@@ -1,5 +1,963 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* 
+
+@model BbibbJobStreetJwtToken.Models.DTO.UserProfileViewDTO
 @{
+    Layout = "_LayoutUser";
 }
+
+<style>
+    /* Profile Section Styles */
+    .profile-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        position: relative;
+    }
+
+    .profile-cover {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 12px 12px 0 0;
+        position: relative;
+        background-color: #4361ee;
+    }
+
+    .cover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(67, 97, 238, 0.8), rgba(76, 201, 240, 0.8));
+        border-radius: 12px 12px 0 0;
+    }
+
+    .profile-header {
+        display: flex;
+        align-items: flex-end;
+        margin-top: -75px;
+        padding: 0 30px 30px;
+        position: relative;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .profile-avatar-container {
+        position: relative;
+        margin-right: 30px;
+    }
+
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid white;
+        object-fit: cover;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .avatar-edit-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #4361ee;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+        .avatar-edit-btn:hover {
+            background: #3a56d4;
+            transform: scale(1.1);
+        }
+
+    .profile-info {
+        flex: 1;
+    }
+
+    .profile-name {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+
+    .profile-title {
+        font-size: 1.2rem;
+        color: #4361ee;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .profile-email, .profile-role {
+        color: #7f8c8d;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .profile-edit-btn {
+        margin-top: 15px;
+        padding: 12px 24px;
+        background: #4361ee;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .profile-edit-btn:hover {
+            background: #3a56d4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+    .profile-details {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+    }
+
+    .profile-details-title {
+        font-size: 1.4rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 2px solid #f8f9fa;
+        padding-bottom: 10px;
+    }
+
+    .profile-details-content {
+        color: #5a6c7d;
+        line-height: 1.6;
+        font-size: 1rem;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border-left: 4px solid #4361ee;
+    }
+
+    .detail-label {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .detail-value {
+        font-size: 1.1rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .badge-role {
+        background: #4361ee;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .profile-stats {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .stat-card {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #4361ee, #4895ef);
+        color: white;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+    .stat-icon {
+        font-size: 2rem;
+        margin-right: 15px;
+        opacity: 0.9;
+    }
+
+    .stat-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 0;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideIn 0.3s ease;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8fafc;
+        border-radius: 12px 12px 0 0;
+    }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+        .close:hover {
+            color: #e74c3c;
+        }
+
+    .modal-body {
+        padding: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-group input:focus {
+                outline: none;
+                border-color: #4361ee;
+                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            }
+
+    .image-preview {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .preview-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #e9ecef;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #4361ee;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background: #3a56d4;
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        background: #f8f9fa;
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+    /* Animations */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @@keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .profile-header {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .profile-avatar-container {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-content {
+            width: 95%;
+            margin: 10% auto;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .profile-name {
+            font-size: 1.8rem;
+        }
+
+        .profile-cover {
+            height: 200px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-primary, .btn-secondary {
+            width: 100%;
+        }
+    }
+</style>
+
+<section id="profile-section" class="page active">
+    <div class="profile-section">
+        <!-- Cover Image -->
+        <div class="profile-cover" style="background-image: url('@Model.CoverImage')">
+            <div class="cover-overlay"></div>
+        </div>
+
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <img src="@Model.ProfileImage" alt="Profile" class="profile-avatar" id="profileAvatar">
+                <div class="profile-dropdown">
+                    <a href="/DashboardUser/UserProfileSetting" class="avatar-edit-btn">
+                        <i class="fas fa-camera"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile-info">
+                <h1 class="profile-name">@Model.Username</h1>
+                <p class="profile-title">@Model.Posisi</p>
+                <p class="profile-email">
+                    <i class="fas fa-envelope"></i>
+                    @Model.Email
+                </p>
+                <p class="profile-role">
+                    <i class="fas fa-user-tag"></i>
+                    @Model.Role
+                </p>
+            </div>
+        </div>
+
+        <div class="profile-details">
+            <h2 class="profile-details-title">
+                <i class="fas fa-user"></i>
+                About
+            </h2>
+            <p class="profile-details-content" id="aboutContent">
+                @Model.Posisi dengan pengalaman dalam bidangnya. Tertarik pada pengembangan karir dan selalu mencari peluang baru.
+            </p>
+        </div>
+
+        <div class="profile-details">
+            <h2 class="profile-details-title">
+                <i class="fas fa-briefcase"></i>
+                Position Details
+            </h2>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Username</span>
+                    <span class="detail-value">@Model.Username</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">@Model.Email</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Role</span>
+                    <span class="detail-value badge badge-role">@Model.Role</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Position</span>
+                    <span class="detail-value">@Model.Posisi</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@model BbibbJobStreetJwtToken.Models.DTO.UserProfileViewDTO
+@{
+    Layout = "_LayoutUser";
+}
+
+<style>
+    /* LinkedIn-inspired Styles */
+    :root {
+        --linkedin-blue: #0a66c2;
+        --linkedin-light-blue: #70b5f9;
+        --linkedin-dark-blue: #004182;
+        --linkedin-background: #f3f2ef;
+        --linkedin-card: #ffffff;
+        --linkedin-text: #333333;
+        --linkedin-text-light: #666666;
+        --linkedin-border: #e0e0e0;
+    }
+
+    body {
+        background-color: var(--linkedin-background);
+        color: var(--linkedin-text);
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-container {
+        max-width: 1128px;
+        margin: 20px auto;
+        padding: 0 16px;
+    }
+
+    /* Profile Card Styles */
+    .profile-card {
+        background-color: var(--linkedin-card);
+        border-radius: 10px;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.13);
+        overflow: hidden;
+        margin-bottom: 16px;
+        position: relative;
+    }
+
+    .profile-cover {
+        height: 200px;
+        background-color: var(--linkedin-light-blue);
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    .profile-info-section {
+        padding: 0 24px 24px;
+        position: relative;
+        margin-top: -72px;
+    }
+
+    .profile-avatar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 16px;
+    }
+
+    .profile-avatar {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 4px solid var(--linkedin-card);
+        object-fit: cover;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.13);
+        background-color: var(--linkedin-card);
+    }
+
+    .profile-action-buttons {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .btn-linkedin {
+        background-color: var(--linkedin-blue);
+        color: white;
+        border: none;
+        border-radius: 16px;
+        padding: 8px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background-color 0.2s;
+        font-size: 14px;
+        height: 36px;
+    }
+
+    .btn-linkedin-outline {
+        background-color: transparent;
+        color: var(--linkedin-blue);
+        border: 1px solid var(--linkedin-blue);
+        border-radius: 16px;
+        padding: 8px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+        font-size: 14px;
+        height: 36px;
+        text-decoration: none;
+    }
+
+    .btn-logout {
+        background-color: transparent;
+        color: #666666;
+        border: 1px solid #cccccc;
+        border-radius: 16px;
+        padding: 8px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+        font-size: 14px;
+        height: 36px;
+    }
+
+    .btn-linkedin:hover {
+        background-color: var(--linkedin-dark-blue);
+    }
+
+    .btn-linkedin-outline:hover {
+        background-color: rgba(112, 181, 249, 0.2);
+        border-color: var(--linkedin-dark-blue);
+        color: var(--linkedin-dark-blue);
+        text-decoration: none;
+    }
+
+    .btn-logout:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-color: #999999;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    }
+
+    .profile-details {
+        margin-bottom: 8px;
+    }
+
+    .profile-name {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 0 0 4px;
+        color: var(--linkedin-text);
+    }
+
+    .profile-title {
+        font-size: 18px;
+        font-weight: 400;
+        margin: 0 0 12px;
+        color: var(--linkedin-text-light);
+    }
+
+    .profile-contact {
+        margin-top: 16px;
+    }
+
+    .profile-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        color: var(--linkedin-text-light);
+        margin-bottom: 8px;
+    }
+
+    /* About Section */
+    .profile-about {
+        background-color: var(--linkedin-card);
+        border-radius: 10px;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.13);
+        padding: 24px;
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0 0 16px;
+        color: var(--linkedin-text);
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--linkedin-border);
+    }
+
+    .about-content {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--linkedin-text);
+        margin: 0;
+    }
+
+    /* Details Section */
+    .profile-details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .detail-label {
+        font-size: 14px;
+        color: var(--linkedin-text-light);
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .detail-value {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--linkedin-text);
+    }
+
+    .badge-role {
+        background-color: #e6f7ff;
+        color: var(--linkedin-blue);
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 14px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .profile-avatar-container {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        .profile-action-buttons {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .profile-details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-name {
+            font-size: 24px;
+        }
+
+        .profile-title {
+            font-size: 16px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .profile-container {
+            padding: 0 12px;
+        }
+
+        .profile-info-section {
+            padding: 0 16px 16px;
+        }
+
+        .profile-action-buttons {
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-linkedin, .btn-linkedin-outline, .btn-logout {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .profile-about {
+            padding: 16px;
+        }
+    }
+</style>
+
+<div class="profile-container">
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <div class="profile-cover" style="background-image: url('@Model.CoverImage')"></div>
+
+        <div class="profile-info-section">
+            <div class="profile-avatar-container">
+                <img src="@Model.ProfileImage" alt="Profile" class="profile-avatar">
+
+                <div class="profile-action-buttons">
+                    <a href="/DashboardUser/UserProfileSetting" class="btn-linkedin-outline">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </a>
+
+                    <form id="logoutForm" asp-controller="LoginPage" asp-action="Logout" method="post">
+                        <button type="submit" class="btn-logout">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="profile-details">
+                <h1 class="profile-name">@Model.Username</h1>
+                <p class="profile-title">@Model.Posisi</p>
+
+                <div class="profile-contact">
+                    <div class="profile-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>@Model.Email</span>
+                    </div>
+                    <div class="profile-contact-item">
+                        <i class="fas fa-user-tag"></i>
+                        <span>@Model.Role</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="profile-about">
+        <h2 class="section-title">Tentang</h2>
+        <p class="about-content">
+            @Model.Posisi dengan pengalaman dalam bidangnya. Tertarik pada pengembangan karir dan selalu mencari peluang baru.
+        </p>
+    </div>
+
+    <!-- Details Section -->
+    <div class="profile-about">
+        <h2 class="section-title">Detail</h2>
+        <div class="profile-details-grid">
+            <div class="detail-item">
+                <span class="detail-label">Username</span>
+                <span class="detail-value">@Model.Username</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Email</span>
+                <span class="detail-value">@Model.Email</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Role</span>
+                <span class="detail-value">
+                    <span class="badge-role">@Model.Role</span>
+                </span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Position</span>
+                <span class="detail-value">@Model.Posisi</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('logoutForm');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Tampilkan konfirmasi
+            Swal.fire({
+                title: 'Logout?',
+                text: "Apakah Anda yakin ingin logout?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0a66c2',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Logout',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form
+                    form.submit();
+                }
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                        <text>
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: '@TempData["SuccessMessage"]',
+                            icon: 'success',
+                            confirmButtonColor: '#0a66c2'
+                        });
+                        </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                        <text>
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: '@TempData["ErrorMessage"]',
+                            icon: 'error',
+                            confirmButtonColor: '#d33'
+                        });
+                        </text>
+        }
+    });
+</script>

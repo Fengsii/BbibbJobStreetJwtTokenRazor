@@ -1,46 +1,223 @@
-﻿@using BbibbJobStreetJwtToken.Models.DTO
-@model List<KategoriPekerjaanDTO>
-@{
+﻿
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<BbibbJobStreetJwtToken.Models.DTO.KategoriPekerjaanDTO>
 
-    Layout = "_LayoutAdmin"; // Pakai template
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Manajemen Kategori Pekerjaan";
 }
 
+<style>
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+    
+    .page-item {
+        margin: 0 5px;
+    }
+    
+    .page-link {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .page-link:hover {
+        background-color: #f5f5f5;
+    }
+    
+    .active .page-link {
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+    
+    .disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+    
+    .text-truncate {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .alert {
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #e3f2fd;
+        color: #0d47a1;
+        display: flex;
+        align-items: center;
+    }
+    
+    .alert i {
+        margin-right: 10px;
+    }
+</style>
 
-<div class="page active" id="kategori">
-    <div class="table-container">
-        <h3><i class="fas fa-file-alt"></i> Kategori Pekerjaan</h3>
+<!-- Categories Page -->
+<div id="categories-page" class="page active">
+    <div class="data-grid-actions">
         <a href="/DashboardAdmin/KategoriPekerjaanAddUpdate">
-            <button class="action-btn"><i class="fas fa-plus"></i> Tambah Kategori</button>
+            <button class="action-btn" id="add-category-btn"><i class="fas fa-plus"></i> Tambah Kategori</button>
         </a>
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nama Kategori</th>
-                    <th>Deskripsi</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Sample data for demonstration -->
-                @foreach (var data in Model)
-                {
+        
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <form method="get" action="@Url.Action("KategoriPekerjaan", "DashboardAdmin")">
+                <input type="text" name="searchTerm" placeholder="Cari kategori..." value="@ViewBag.SearchTerm">
+            </form>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h3><i class="fas fa-list"></i> Daftar Kategori</h3>
+        
+        @if (Model.Count > 0)
+        {
+            <table>
+                <thead>
                     <tr>
-                        <td>@data.Id</td>
-                        <td class="text-truncate">@data.NamaKategori</td>
-                        <td class="text-truncate">@data.Deskripsi</td>
-                        <td>
-                            <a href="@Url.Action("KategoriPekerjaanAddUpdate", "DashboardAdmin", new { id = data.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
-                            <form method="post" action="@Url.Action("DeleteKategoriPekerjaan", "DashboardAdmin")" style="display:inline">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@data.Id" />
-                                <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');"><i class="bi bi-trash"></i> Delete</button>
-                            </form>
-                        </td>
+                        <th>Id</th>
+                        <th>Nama Kategori</th>
+                        <th>Deskripsi</th>
+                        <th>Aksi</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach(var data in Model)
+                    {
+                        <tr>
+                            <td>@data.Id</td>
+                            <td class="text-truncate">@data.NamaKategori</td>
+                            <td class="text-truncate">@data.Deskripsi</td>
+                            <td>
+                                <a href="@Url.Action("KategoriPekerjaanAddUpdate", "DashboardAdmin", new { id = data.Id })">
+                                    <button class="btn btn-sm btn-update"><i class="fas fa-edit"></i> Update</button>
+                                </a>
+                                <form id="dele-form" method="post" action="@Url.Action("DeleteKategoriPekerjaan", "DashboardAdmin")" style="display:inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@data.Id" />
+                                    <button type="submit" class="btn btn-sm btn-delete" ><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @* onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');" *@
+            <!-- Pagination Controls -->
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, page => Url.Action("KategoriPekerjaan", new { page, searchTerm = ViewBag.SearchTerm }), 
+                new PagedListRenderOptions {
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" },
+                    Display = PagedListDisplayMode.IfNeeded,
+                    MaximumPageNumbersToDisplay = 5
+                })
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> Tidak ada data kategori yang ditemukan.
+            </div>
+        }
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('dele-form');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Tampilkan konfirmasi
+            Swal.fire({
+                title: 'Delete Category?',
+                text: "Apakah Anda yakin ingin menghapus kategori ini?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0a66c2',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Kirim',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form
+                    form.submit();
+                }
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                                <text>
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: '@TempData["SuccessMessage"]',
+                                    icon: 'success',
+                                    confirmButtonColor: '#0a66c2'
+                                });
+                                </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                                <text>
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: '@TempData["ErrorMessage"]',
+                                    icon: 'error',
+                                    confirmButtonColor: '#d33'
+                                });
+                                </text>
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto submit form pencarian saat mengetik
+        const searchInput = document.querySelector('input[name="searchTerm"]');
+        const searchForm = document.querySelector('.search-box form');
+        
+        // Hanya submit form setelah pengguna berhenti mengetik
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function() {
+                searchForm.submit();
+            }, 500); // Submit setelah 500ms berhenti mengetik
+        });
+        
+        // Submit form saat tekan enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchForm.submit();
+            }
+        });
+    });
+</script>

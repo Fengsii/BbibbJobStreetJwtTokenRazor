@@ -1,73 +1,153 @@
-﻿@model BbibbJobStreetJwtToken.Models.DTO.RegisterPerusahaanDTO
-
+﻿
+@model BbibbJobStreetJwtToken.Models.DTO.RegisterPerusahaanDTO
 
 @{
     Layout = "_LayoutPerusahaan";
 }
 
-
-<!-- Profile Edit Page -->
 <div class="page active" id="profile-edit">
     <div class="form-container">
         <h3><i class="fas fa-edit"></i> Edit Profil Perusahaan</h3>
         <form id="profile-form" method="post" asp-action="CompanyProfileSetting" enctype="multipart/form-data">
+
+            <!-- penting! hidden ID -->
+            <input type="hidden" asp-for="PerusahaanId" />
+
             <div class="form-grid">
                 <div class="form-group">
-                    <label asp-for="NamaPerusahaan" for="NamaPerusahaan"><i class="fas fa-signature"></i> Nama Perusahaan</label>
-                    <input asp-for="NamaPerusahaan" type="text" id="NamaPerusahaan" name="NamaPerusahaan" required>
+                    <label asp-for="NamaPerusahaan"></label>
+                    <input asp-for="NamaPerusahaan" class="form-control" required />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Email" for="Email"><i class="fas fa-envelope"></i> Email</label>
-                    <input asp-for="Email" type="email" id="Email" name="Email"  required>
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" type="email" class="form-control" required />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Password" for="Email"><i class="fas fa-envelope"></i> Password</label>
-                    <input asp-for="Password" type="password" id="Password" name="Password" required>
+                    <label asp-for="Password">Password (opsional)</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Kosongkan jika tidak ingin ubah" />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Telepon" for="Telepon"><i class="fas fa-phone"></i> Telepon</label>
-                    <input asp-for="Telepon" type="tel" id="Telepon" name="Telepon" required>
+                    <label asp-for="Telepon"></label>
+                    <input asp-for="Telepon" class="form-control" />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="BidangUsaha" for="BidangUsaha"><i class="fas fa-briefcase"></i> Bidang Usaha</label>
-                    <input asp-for="BidangUsaha" type="text" id="BidangUsaha" name="BidangUsaha" value="Teknologi Informasi" required>
+                    <label asp-for="BidangUsaha"></label>
+                    <input asp-for="BidangUsaha" class="form-control" />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Alamat" for="Alamat"><i class="fas fa-road"></i> Alamat</label>
-                    <input asp-for="Alamat" type="text" id="Alamat" name="Alamat" value="Jl. Sudirman No. 123" required>
+                    <label asp-for="Alamat"></label>
+                    <input asp-for="Alamat" class="form-control" />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Kota" for="Kota"><i class="fas fa-city"></i> Kota</label>
-                    <input asp-for="Kota" type="text" id="Kota" name="Kota" value="Jakarta Selatan" required>
+                    <label asp-for="Kota"></label>
+                    <input asp-for="Kota" class="form-control" />
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Provinsi" for="Provinsi"><i class="fas fa-map"></i> Provinsi</label>
-                    <select asp-for="Provinsi" id="Provinsi" name="Provinsi" required>
-                        <option value="DKI Jakarta" selected>DKI Jakarta</option>
-                        <option value="Jawa Barat">Jawa Barat</option>
-                        <option value="Jawa Tengah">Jawa Tengah</option>
-                        <option value="Jawa Timur">Jawa Timur</option>
-                        <option value="Banten">Banten</option>
-                        <option value="Bali">Bali</option>
+                    <label asp-for="Provinsi"></label>
+                    <select asp-for="Provinsi" class="form-control">
+                        <option value="">-- Pilih Provinsi --</option>
+                        <option>DKI Jakarta</option>
+                        <option>Jawa Barat</option>
+                        <option>Riau</option>
+                        <option>Jawa Tengah</option>
+                        <option>Jawa Timur</option>
+                        <option>Banten</option>
+                        <option>Bali</option>
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="TanggalBerdiri" for="TanggalBerdiri"><i class="fas fa-rocket"></i> Tanggal Berdiri</label>
-                    <input asp-for="TanggalBerdiri" type="date" id="TanggalBerdiri" name="TanggalBerdiri" value="2010-01-15" required>
+                    <label asp-for="TanggalBerdiri"></label>
+                    <input asp-for="TanggalBerdiri" type="date" class="form-control" />
                 </div>
+
                 <div class="form-group">
-                    <label for="logoInput">Logo Perusahaan</label>
-                    <input type="file" asp-for="LogoPath" id="logoInput" accept="image/*" />
-                    <span asp-validation-for="LogoPath" class="text-danger"></span>
+                    <label asp-for="LogoPath">Logo Perusahaan</label>
+                    <input asp-for="LogoPath" type="file" class="form-control" accept="image/*" />
                 </div>
             </div>
 
             <div class="form-actions">
-                <a href="@Url.Action("CompanyProfileSetting", "DashboardPerusahaan")" class="btn btn-cancel">
-                    <button type="button" class="btn btn-secondary" id="cancel-edit-btn"><i class="fas fa-times"></i> Batal</button>
+                <a href="@Url.Action("CompanyProfile", "DashboardPerusahaan")" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Batal
                 </a>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Perubahan</button>
             </div>
         </form>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('profile-form');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Tampilkan konfirmasi
+            Swal.fire({
+                title: 'Update Company?',
+                text: "Apakah Anda yakin ingin update company?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0a66c2',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Update',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form
+                    form.submit();
+                }
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                        <text>
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: '@TempData["SuccessMessage"]',
+                            icon: 'success',
+                            confirmButtonColor: '#0a66c2'
+                        });
+                        </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                        <text>
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: '@TempData["ErrorMessage"]',
+                            icon: 'error',
+                            confirmButtonColor: '#d33'
+                        });
+                        </text>
+        }
+    });
+</script>
+
+<script>
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('passwordInput');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle icon
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>

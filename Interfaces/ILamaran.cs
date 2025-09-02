@@ -12,6 +12,7 @@ namespace BbibbJobStreetJwtToken.Interfaces
         bool UpdateLamaran(LamaranAddUpdateDTO lamaranAddUpdateDTO);
         Task<byte[]> DownloadCvAsync(int lamaranId);
         public bool DeleteLamaran(int id);
+
         
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BbibbJobStreetJwtToken.Models.DTO
+﻿using static BbibbJobStreetJwtToken.Models.GeneralStatus;
+
+namespace BbibbJobStreetJwtToken.Models.DTO
 {
     public class UserUpdateDTO
     {
@@ -9,7 +11,8 @@
         public string Password { get; set; }
         public string Posisi { get; set; }
         public string ProfileImage { get; set; }
-        public string CoverImage { get; set; }
+        public string? CoverImage { get; set; }
         public DateTime CreatedAt { get; set; }
+        public GeneralStatusData Status { get; set; }
     }
 }

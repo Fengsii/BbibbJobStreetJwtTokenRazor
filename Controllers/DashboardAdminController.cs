@@ -1,5 +1,6 @@
 ﻿using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models.DTO;
+using BbibbJobStreetJwtToken.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BbibbJobStreetJwtToken.Controllers
@@ -7,24 +8,42 @@ namespace BbibbJobStreetJwtToken.Controllers
     public class DashboardAdminController : Controller
     {
         private readonly IKategoriPekerjaan _kategoriPekerjaan;
-        public DashboardAdminController(IKategoriPekerjaan kategoriPekerjaan)
+        private readonly ILowonganPekerjaan _lowonganPekerjaan;
+        private readonly IPerusahaan _perusahaan;
+        private readonly IUser _user;
+        private readonly IDashboardAdminService _dashboardAdminService;
+        public DashboardAdminController(IKategoriPekerjaan kategoriPekerjaan, ILowonganPekerjaan lowonganPekerjaan, IPerusahaan perusahaan, IUser user, IDashboardAdminService dashboardAdminService)
         {
             _kategoriPekerjaan = kategoriPekerjaan;
+            _lowonganPekerjaan = lowonganPekerjaan;
+            _perusahaan = perusahaan;
+            _user = user;
+            _dashboardAdminService = dashboardAdminService;
         }
+
+
+        ///========================= UNTUK DASHBOARD ADMIN =====================\\\
 
         public IActionResult Index()
         {
-            return View();
+            var dashboardStats = _dashboardAdminService.GetDashboardStats();
+            return View(dashboardStats);
         }
 
+        ///========================= UNTUK KATEGORI =====================\\\
 
-
-        //==== UNTUK KATEGORI ====\\
-        public IActionResult KategoriPekerjaan()
+        // Action baru dengan pagination dan searching
+        public IActionResult KategoriPekerjaan(int? page, string searchTerm = "")
         {
-            var data = _kategoriPekerjaan.GetListKategoriPekerjaan();
-            return View(data);
+            int pageNumber = page ?? 1;
+            int pageSize = 5; // Jumlah item per halaman
 
+            var kategoriList = _kategoriPekerjaan.GetListKategoriPekerjaan(pageNumber, pageSize, searchTerm);
+
+            // Simpan searchTerm di ViewBag untuk digunakan di view
+            ViewBag.SearchTerm = searchTerm;
+
+            return View(kategoriList);
         }
 
         public IActionResult KategoriPekerjaanAddUpdate(int id)
@@ -63,7 +82,160 @@ namespace BbibbJobStreetJwtToken.Controllers
             {
                 return RedirectToAction("KategoriPekerjaan");
             }
-            return BadRequest("Gagal menghapus supplier.");
+            return BadRequest("Gagal menghapus kategori.");
+        }
+
+
+        ///========================= UNTUK LOWONGAN =====================\\\
+
+        public IActionResult LowonganList(int? page, string searchTerm = "")
+        {
+            int pageNumber = page ?? 1;
+            int pageSize = 5; // Jumlah item per halaman
+
+            var lowonganList = _lowonganPekerjaan.GetListLowonganPekerjaanForSuperAdmin(pageNumber, pageSize, searchTerm);
+
+            // Simpan searchTerm di ViewBag untuk digunakan di view
+            ViewBag.SearchTerm = searchTerm;
+
+            return View(lowonganList);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteLowonganPekerjaan(int id)
+        {
+            var data = _lowonganPekerjaan.DeleteLowonganPekerjaanForSuperAdmin(id);
+            if (data)
+            {
+                return RedirectToAction("LowonganList");
+            }
+            return BadRequest("Gagal menghapus lowongan.");
+        }
+
+
+
+        ///========================= UNTUK COMPANY =====================\\\
+
+        public IActionResult CompanyList(int? page, string searchTerm = "")
+        {
+            int pageNumber = page ?? 1;
+            int pageSize = 5; // Jumlah item per halaman
+
+            var companyList = _perusahaan.GetCurrentCompanyForSuperAdmin(pageNumber, pageSize, searchTerm);
+
+            // Simpan searchTerm di ViewBag untuk digunakan di view
+            ViewBag.SearchTerm = searchTerm;
+
+            return View(companyList);
+        }
+
+        public IActionResult UpdateCompany(int id)
+        {
+            var company = _perusahaan.GetCurrentCompanyForSuperAdmin()
+                .FirstOrDefault(x => x.PerusahaanId == id);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            // Convert ke RegisterPerusahaanDTO untuk form edit
+            var dto = new RegisterPerusahaanDTO
+            {
+                PerusahaanId = company.PerusahaanId,
+                NamaPerusahaan = company.NamaPerusahaan,
+                Email = company.Email,
+                Telepon = company.Telepon,
+                Alamat = company.Alamat,
+                Kota = company.Kota,
+                Provinsi = company.Provinsi,
+                BidangUsaha = company.BidangUsaha,
+                TanggalBerdiri = company.TanggalBerdiri,
+                Status = company.Status
+            };
+
+            return View(dto);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCompany(RegisterPerusahaanDTO dto)
+        {
+            var data = _perusahaan.UpdateCompanyForSuperAdmin(dto);
+            if (data)
+            {
+                return RedirectToAction(nameof(CompanyList));
+            }
+            return View(dto);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCompany(int id)
+        {
+            var data = _perusahaan.DeleteCompanyForSuperAdmin(id);
+            if (data)
+            {
+                return RedirectToAction("CompanyList");
+            }
+            return BadRequest("Gagal menghapus Company.");
+        }
+
+
+
+
+        ///========================= UNTUK USER =====================\\\
+        public IActionResult UserList(int? page, string searchTerm = "")
+        {
+            int pageNumber = page ?? 1;
+            int pageSize = 5;
+
+            var userList = _user.GetListUsers(pageNumber, pageSize, searchTerm);
+            ViewBag.SearchTerm = searchTerm;
+
+            return View(userList);
+        }
+
+        public IActionResult UpdateUser(int id)
+        {
+            var user = _user.GetListUsers()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var dto = new UserUpdateDTO
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                Posisi = user.Posisi,
+                Status = user.Status
+            };
+
+            return View(dto);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUser(UserUpdateDTO dto)
+        {
+            var data = _user.UpdateUser(dto);
+            if (data)
+            {
+                return RedirectToAction(nameof(UserList));
+            }
+            return View(dto);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUser(int id)
+        {
+            var data = _user.DeleteUser(id);
+            if (data)
+            {
+                return RedirectToAction("UserList");
+            }
+            return BadRequest("Gagal menghapus User.");
         }
 
     }

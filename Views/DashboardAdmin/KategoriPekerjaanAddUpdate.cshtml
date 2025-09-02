@@ -6,34 +6,28 @@
     ViewData["Title"] = "Tambah Kategori Pekerjaan";
 }
 
-<div class="page active" id="kategori-form">
-    <div class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Tambah Kategori Pekerjaan Baru</h3>
 
-        <form asp-controller="DashboardAdmin" asp-action="KategoriPekerjaanAddUpdate" method="post">
-            <!-- Hidden field untuk ID (untuk update) -->
+<!-- Update Category Page -->
+<div id="update-category-page" class="page active">
+    <div class="form-container">
+        <h3><i class="fas fa-edit"></i>Kategori</h3>
+        <form id="update-category-form" asp-controller="DashboardAdmin" asp-action="KategoriPekerjaanAddUpdate" method="post">
             <div class="form-group" hidden>
                 <label for="Id">ID</label>
                 <input type="text" class="form-control" id="Id" asp-for="Id">
             </div>
-
-            <!-- Nama Kategori -->
             <div class="form-group">
                 <label for="NamaKategori">Nama Kategori</label>
                 <input type="text" class="form-control" id="NamaKategori" asp-for="NamaKategori"
                        placeholder="Masukkan nama kategori (contoh: IT, Marketing, Desain)">
                 <span asp-validation-for="NamaKategori" class="text-danger"></span>
             </div>
-
-            <!-- Deskripsi -->
             <div class="form-group">
                 <label for="Deskripsi">Deskripsi</label>
                 <textarea class="form-control" id="Deskripsi" asp-for="Deskripsi"
                           placeholder="Masukkan deskripsi kategori" rows="4"></textarea>
                 <span asp-validation-for="Deskripsi" class="text-danger"></span>
             </div>
-
-            <!-- Form Actions -->
             <div class="form-actions">
                 <a href="@Url.Action("KategoriPekerjaan", "DashboardAdmin")" class="action-btn secondary">
                     <i class="fas fa-times"></i> Batal
@@ -46,3 +40,57 @@
     </div>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('update-category-form');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Tampilkan konfirmasi
+            Swal.fire({
+                title: 'Update Category?',
+                text: "Apakah Anda yakin ingin update kategori ini?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0a66c2',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Kirim',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form
+                    form.submit();
+                }
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                                    <text>
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: '@TempData["SuccessMessage"]',
+                                        icon: 'success',
+                                        confirmButtonColor: '#0a66c2'
+                                    });
+                                    </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                                    <text>
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: '@TempData["ErrorMessage"]',
+                                        icon: 'error',
+                                        confirmButtonColor: '#d33'
+                                    });
+                                    </text>
+        }
+    });
+</script>

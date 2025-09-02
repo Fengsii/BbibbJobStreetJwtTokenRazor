@@ -16,5 +16,6 @@ namespace BbibbJobStreetJwtToken.Models.DTO
         public string BidangUsaha { get; set; }
         public DateTime TanggalBerdiri { get; set; }
         public IFormFile? LogoPath { get; set; }
+        public GeneralStatusData Status { get; set; }
     }
 }

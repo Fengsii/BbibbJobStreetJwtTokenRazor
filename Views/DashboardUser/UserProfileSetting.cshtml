@@ -1,0 +1,726 @@
+﻿
+@model BbibbJobStreetJwtToken.Models.DTO.UserProfileUpdateDTO
+@{
+    Layout = "_LayoutUser";
+}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #0a66c2;
+            --secondary: #ffffff;
+            --dark: #000000;
+            --light-gray: #eef3f8;
+            --gray: #666666;
+            --dark-gray: #333333;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--secondary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease;
+        }
+
+        @@keyframes slideDown {
+            from
+
+        {
+            transform: translateY(-100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+            .logo i {
+                margin-right: 10px;
+                font-size: 28px;
+            }
+
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+
+            .search-bar input {
+                width: 100%;
+                padding: 10px 15px 10px 40px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+                transition: var(--transition);
+            }
+
+                .search-bar input:focus {
+                    outline: none;
+                    border-color: var(--primary);
+                    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+                }
+
+            .search-bar i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--gray);
+            }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+            .nav-links li {
+                margin-left: 20px;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: var(--gray);
+                font-size: 14px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: var(--transition);
+            }
+
+                .nav-links a:hover {
+                    color: var(--primary);
+                }
+
+            .nav-links i {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .nav-links .active {
+                color: var(--primary);
+                position: relative;
+            }
+
+                .nav-links .active::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 5px;
+                    height: 5px;
+                    background-color: var(--primary);
+                    border-radius: 50%;
+                }
+
+        .language-switcher {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .language-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+            .language-btn:hover {
+                color: var(--primary);
+            }
+
+            .language-btn i {
+                margin-left: 5px;
+            }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            transition: var(--transition);
+        }
+
+        .profile-btn:hover .profile-img {
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 70px;
+            padding: 20px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 25%;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+            animation: slideInLeft 0.5s ease;
+        }
+
+        @@keyframes slideInLeft {
+            from
+
+        {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+            .sidebar-section:last-child {
+                margin-bottom: 0;
+            }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+            .sidebar-link:hover {
+                color: var(--primary);
+            }
+
+            .sidebar-link i {
+                margin-right: 10px;
+                font-size: 18px;
+            }
+
+            .sidebar-link.active {
+                color: var(--primary);
+                font-weight: 500;
+            }
+
+        .sidebar-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 15px 0;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @@keyframes slideInRight {
+            from
+
+        {
+            transform: translateX(20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        }
+
+        /* Profile Edit Section Styles */
+        .profile-edit-section {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+        }
+
+            .section-title i {
+                margin-right: 10px;
+                color: var(--primary);
+            }
+
+        .edit-profile-form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+        }
+
+            .form-label i {
+                margin-right: 10px;
+                color: var(--primary);
+                font-size: 16px;
+                width: 20px;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: var(--transition);
+            background-color: var(--light-gray);
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+            }
+
+        .text-danger {
+            color: #e53935;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        .file-input-hint {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .image-preview-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .image-preview {
+            text-align: center;
+            flex: 1;
+        }
+
+        .preview-label {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 120px;
+            background-color: var(--light-gray);
+            border: 2px dashed var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+            .image-placeholder img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .password-toggle {
+            position: relative;
+        }
+
+            .password-toggle i {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: var(--gray);
+            }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+
+            .btn-secondary:hover {
+                background-color: #e0e0e0;
+            }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+            .btn-primary:hover {
+                background-color: #004182;
+            }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 992px) {
+            .content-wrapper
+
+        {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 100%;
+            position: static;
+            margin-bottom: 20px;
+        }
+
+        }
+
+        @@media (max-width: 768px) {
+            .header-container
+
+        {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .logo {
+            margin-bottom: 10px;
+        }
+
+        .search-bar {
+            margin: 10px 0;
+        }
+
+        .nav-links {
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+            .nav-links li {
+                margin-left: 0;
+            }
+
+        .image-preview-container {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        }
+
+        @@media (max-width: 576px) {
+            .profile-edit-section
+
+        {
+            padding: 20px;
+        }
+
+        }
+    </style>
+
+<body>
+
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <div class="profile-edit-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </h2>
+
+                    <form method="post" asp-action="UserProfileSetting" id="profileForm" asp-controller="DashboardUser" enctype="multipart/form-data" class="edit-profile-form">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Hidden field untuk ID -->
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="image-preview-container">
+                            <div class="image-preview">
+                                <div class="preview-label">Profile Image Preview</div>
+                                <div class="image-placeholder" id="profilePreview">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="file-input-hint">Recommended: 200x200 pixels</div>
+                            </div>
+
+                            <div class="image-preview">
+                                <div class="preview-label">Cover Image Preview</div>
+                                <div class="image-placeholder" id="coverPreview">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="file-input-hint">Recommended: 1200x300 pixels</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Username">
+                                <i class="fas fa-user"></i> Username
+                            </label>
+                            <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Email">
+                                <i class="fas fa-envelope"></i> Email
+                            </label>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Posisi">
+                                <i class="fas fa-briefcase"></i> Position
+                            </label>
+                            <input asp-for="Posisi" class="form-control" placeholder="Enter your position" />
+                            <span asp-validation-for="Posisi" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" asp-for="ProfileImage">
+                                <i class="fas fa-camera"></i> Profile Image
+                            </label>
+                            <input asp-for="ProfileImage" type="file" class="form-control" accept="image/*" id="profileImageInput" />
+                            <div class="file-input-hint">Upload your profile photo</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" asp-for="CoverImage">
+                                <i class="fas fa-images"></i> Cover Image
+                            </label>
+                            <input asp-for="CoverImage" type="file" class="form-control" accept="image/*" id="coverImageInput" />
+                            <div class="file-input-hint">Upload your cover image</div>
+                        </div>
+
+                        <div class="form-group password-toggle">
+                            <label class="form-label" asp-for="NewPassword">
+                                 Password (optional)
+                            </label>
+                            <input asp-for="NewPassword" type="text" class="form-control" id="passwordInput" placeholder="Leave blank if you don't want to change" />
+                            <i class="fas fa-eye" id="togglePassword"></i>
+                            <div class="file-input-hint">Minimum 8 characters with letters and numbers</div>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="@Url.Action("UserProfile", "DashboardUser")" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('profileForm');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Update Profile?',
+                    text: "Apakah Anda yakin ingin update profile?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0a66c2',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Update',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form
+                        form.submit();
+                    }
+                });
+            });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                        <text>
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: '@TempData["SuccessMessage"]',
+                            icon: 'success',
+                            confirmButtonColor: '#0a66c2'
+                        });
+                        </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                        <text>
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: '@TempData["ErrorMessage"]',
+                            icon: 'error',
+                            confirmButtonColor: '#d33'
+                        });
+                        </text>
+            }
+        });
+    </script>
+
+    <script>
+      
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Toggle icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>

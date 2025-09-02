@@ -262,10 +262,10 @@
                         <td data-label="Status">@lamaran.Status</td>
                         <td data-label="Aksi">
                             <a href="@Url.Action("UpdateStatusPelamar", "DashboardPerusahaan", new { id = lamaran.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
-                            <form method="post" action="@Url.Action("DeleteLamaran", "DashboardPerusahaan")" style="display:inline">
+                            <form class="delapp-form" method="post" action="@Url.Action("DeleteLamaran", "DashboardPerusahaan")" style="display:inline">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@lamaran.Id" />
-                                <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus Kategori ini?');"><i class="bi bi-trash"></i> Delete</button>
+                                <button type="submit" class="btn btn-sm btn-delete"><i class="bi bi-trash"></i> Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -278,3 +278,66 @@
         </div>
     </div>
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tangkap semua form delete dengan class
+        const deleteForms = document.querySelectorAll('.delapp-form');
+
+        // Loop melalui setiap form
+        deleteForms.forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Simpan referensi form yang diklik
+                const currentForm = this;
+
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Hapus Lamaran?',
+                    text: "Apakah Anda yakin ingin menghapus lamaran ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form yang spesifik
+                        currentForm.submit();
+                    }
+                });
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                <text>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: '@TempData["SuccessMessage"]',
+                    icon: 'success',
+                    confirmButtonColor: '#0a66c2'
+                });
+                </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                <text>
+                Swal.fire({
+                    title: 'Gagal!',
+                    text: '@TempData["ErrorMessage"]',
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+                </text>
+        }
+    });
+</script>

@@ -123,3 +123,8 @@ C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\ne
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\X.PagedList.dll
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
 C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\obj\Debug\net8.0\BbibbJobStreetJwtToken.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\MailKit.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\MimeKit.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\DELL 7390\Documents\CSharp Lanjutan\BbibbJobStreetJwtToken\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

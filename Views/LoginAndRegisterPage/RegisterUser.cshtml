@@ -6,111 +6,449 @@
     Layout = null;
 }
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Register Akun</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Akun Pelamar - CareerConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body {
-            background-color: #f5f6fa;
-            font-family: 'Segoe UI', sans-serif;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --light: #ffffff;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --applicant-accent: #7c3aed; /* Warna ungu untuk pelamar */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
             display: flex;
-            align-items: center;
+            min-height: 100vh;
+            background-color: var(--light);
             justify-content: center;
-            height: 100vh;
+            align-items: center;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
-        .register-box {
-            background-color: #fff;
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 450px;
+        .register-container {
             width: 100%;
+            max-width: 500px;
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
         }
 
-            .register-box h2 {
-                text-align: center;
-                margin-bottom: 25px;
-                color: #2c3e50;
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .applicant-header {
+            background: var(--applicant-accent);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+            .applicant-header h1 {
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
+
+                .applicant-header h1 i {
+                    margin-right: 12px;
+                    font-size: 1.6rem;
+                }
+
+            .applicant-header p {
+                font-size: 1rem;
+                opacity: 0.9;
+            }
+
+        .applicant-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .applicant-form-container {
+            padding: 30px;
+        }
+
+        .applicant-notice {
+            background: #f0f9ff;
+            border-left: 4px solid #38bdf8;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+            .applicant-notice i {
+                color: #38bdf8;
+                margin-right: 10px;
+                font-size: 1.1rem;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
 
         label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
+        .input-with-icon {
+            position: relative;
         }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background-color: #1976D2;
-            color: white;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-        }
-
-            button:hover {
-                background-color: #155a9c;
+            .input-with-icon input {
+                width: 100%;
+                padding: 14px 14px 14px 45px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: all 0.3s;
             }
 
-        .text-center {
-            text-align: center;
-            margin-top: 15px;
+                .input-with-icon input:focus {
+                    outline: none;
+                    border-color: var(--applicant-accent);
+                    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+                }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .show-password-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            cursor: pointer;
         }
 
         .text-danger {
-            color: red;
-            font-size: 0.9em;
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--applicant-accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+            .btn-register:hover {
+                background-color: #6d28d9;
+            }
+
+        .password-strength {
+            margin-top: 10px;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 3px;
+        }
+
+        .password-rules {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+            .password-rules ul {
+                padding-left: 20px;
+                margin-top: 5px;
+            }
+
+            .password-rules li {
+                margin-bottom: 3px;
+            }
+
+            .password-rules .valid {
+                color: #10b981;
+            }
+
+            .password-rules .invalid {
+                color: #ef4444;
+            }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+            .login-link a {
+                color: var(--applicant-accent);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+                .login-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .secure-notice {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .secure-notice i {
+                color: #22c55e;
+                margin-right: 8px;
+            }
+
+        @@media (max-width: 576px) {
+            body
+
+        {
+            padding: 15px;
+            background-image: none;
+        }
+
+        .register-container {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .applicant-header {
+            padding: 20px;
+        }
+
+        .applicant-form-container {
+            padding: 25px 20px;
+        }
+
         }
     </style>
 </head>
 <body>
+    <div class="register-container">
+        <div class="applicant-header">
+            <span class="applicant-badge">Pelamar</span>
+            <h1><i class="fas fa-user-plus"></i> Daftar Akun Baru</h1>
+            <p>Bergabunglah dan temukan pekerjaan impian Anda</p>
+        </div>
 
-    <div class="register-box">
-        <h2>Daftar Akun Baru</h2>
-        <form asp-controller="LoginAndRegisterPage" asp-action="RegisterUser" method="post">
-            <label for="Username">Username</label>
-            <input type="text" asp-for="Username" id="Username" />
-            <span asp-validation-for="Username" class="text-danger"></span>
+        <div class="applicant-form-container">
+            <div class="applicant-notice">
+                <i class="fas fa-info-circle"></i>
+                <div>Isi form berikut untuk membuat akun baru.</div>
+            </div>
 
-            <label for="Email">Email</label>
-            <input type="email" asp-for="Email" id="Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <form asp-controller="LoginAndRegisterPage" id="regisForm" asp-action="RegisterUser" method="post">
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fas fa-user"></i></span>
+                        <input type="text" asp-for="Username" id="Username" placeholder="Masukkan username" required />
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
 
-            <label for="Password">Password</label>
-            <input type="password" asp-for="Password" id="Password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                        <input type="email" asp-for="Email" id="Email" placeholder="Masukkan email" required />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
 
-            <label for="Posisi">Posisi</label>
-            <input type="text" asp-for="Posisi" id="Posisi" />
-            <span asp-validation-for="Posisi" class="text-danger"></span>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fas fa-lock"></i></span>
+                        <input type="password" asp-for="Password" id="password" placeholder="Masukkan password" required onkeyup="checkPasswordStrength()" />
+                        <span class="show-password-icon" onclick="togglePassword('Password')">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
 
-            <button type="submit">Daftar</button>
+                <div class="form-group">
+                    <label for="Posisi">Posisi</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fas fa-briefcase"></i></span>
+                        <input type="text" asp-for="Posisi" id="Posisi" placeholder="Masukkan posisi yang diinginkan" required />
+                    </div>
+                    <span asp-validation-for="Posisi" class="text-danger"></span>
+                </div>
 
-            <div class="text-center">
+                <button type="submit" class="btn-register">Daftar</button>
+            </form>
+
+            <div class="login-link">
                 Sudah punya akun? <a href="/LoginAndRegisterPage/LoginUser">Login di sini</a>
             </div>
-        </form>
+
+            <div class="secure-notice">
+                <i class="fas fa-shield-alt"></i>
+                <span>Data pribadi Anda terlindungi dengan aman</span>
+            </div>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Fungsi toggle password
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.querySelector('.show-password-icon i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+
+
+         document.addEventListener("DOMContentLoaded", function () {
+             const form = document.getElementById('regisForm');
+
+             form.addEventListener('submit', function (e) {
+                 e.preventDefault();
+
+                 // Tampilkan konfirmasi
+                 Swal.fire({
+                     title: 'Register User?',
+                     text: "Anda akan daftar sebagai user",
+                     icon: 'question',
+                     showCancelButton: true,
+                     confirmButtonColor: '#0a66c2',
+                     cancelButtonColor: '#6c757d',
+                     confirmButtonText: 'Ya, Daftar',
+                     cancelButtonText: 'Batal'
+                 }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Tampilkan loading
+                        Swal.fire({
+                            title: 'Memproses...',
+                            text: 'Sedang memverifikasi pendaftaran',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            }
+                        });
+
+                        // Submit form
+                        this.submit();
+                    }
+                });
+            });
+
+             // Tampilkan popup success jika ada pesan dari controller
+             @if (TempData["SuccessMessage"] != null)
+             {
+                                     <text>
+                                     Swal.fire({
+                                         title: 'Berhasil!',
+                                         text: '@TempData["SuccessMessage"]',
+                                         icon: 'success',
+                                         confirmButtonColor: '#0a66c2'
+                                     });
+                                     </text>
+             }
+
+             // Tampilkan popup error jika ada pesan dari controller
+             @if (TempData["ErrorMessage"] != null)
+             {
+                                     <text>
+                                     Swal.fire({
+                                         title: 'Gagal!',
+                                         text: '@TempData["ErrorMessage"]',
+                                         icon: 'error',
+                                         confirmButtonColor: '#d33'
+                                     });
+                                     </text>
+             }
+         });
+
+    </script>
 </body>
 </html>

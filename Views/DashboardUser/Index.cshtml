@@ -68,7 +68,7 @@
                         </p>
                     </div>
 
-                    <form method="post" action="@Url.Action("LowonganTersimpan", "DashboardUser")">
+                    <form id="savejobForm" method="post" action="@Url.Action("LowonganTersimpan", "DashboardUser")">
                         <input type="hidden" name="lowonganId" value="@data.Id" />
                         <button type="submit" class="job-save-btn" onclick="toggleSave(this)">
                             <i class="far fa-bookmark"></i>
@@ -105,6 +105,56 @@
     </div>
 </section>
 
-@* <script>
-  
-</script> *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('savejobForm');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Tampilkan konfirmasi
+            Swal.fire({
+                title: 'Save Job?',
+                text: "Apakah Anda yakin ingin Menyimpan Lowongan ini?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0a66c2',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Save',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form
+                    form.submit();
+                }
+            });
+        });
+
+        // Tampilkan popup success jika ada pesan dari controller
+        @if (TempData["SuccessMessage"] != null)
+        {
+                        <text>
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: '@TempData["SuccessMessage"]',
+                            icon: 'success',
+                            confirmButtonColor: '#0a66c2'
+                        });
+                        </text>
+        }
+
+        // Tampilkan popup error jika ada pesan dari controller
+        @if (TempData["ErrorMessage"] != null)
+        {
+                        <text>
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: '@TempData["ErrorMessage"]',
+                            icon: 'error',
+                            confirmButtonColor: '#d33'
+                        });
+                        </text>
+        }
+    });
+</script>

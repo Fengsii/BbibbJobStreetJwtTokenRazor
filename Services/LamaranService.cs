@@ -15,11 +15,13 @@ namespace BbibbJobStreetJwtToken.Services
         public readonly ApplicationContext _context;
         private readonly IFileHelper _fileHelper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public LamaranService(ApplicationContext applicationContext, IFileHelper fileHelper, IHttpContextAccessor httpContextAccessor)
+        private readonly IEmailHelper _emailHelper;
+        public LamaranService(ApplicationContext applicationContext, IFileHelper fileHelper, IHttpContextAccessor httpContextAccessor, IEmailHelper emailHelper)
         {
             _context = applicationContext;
             _fileHelper = fileHelper;
             _httpContextAccessor = httpContextAccessor;
+            _emailHelper = emailHelper;
         }
 
         ///==================== UNTUK PERUSAHAAN ================\\\
@@ -92,21 +94,81 @@ namespace BbibbJobStreetJwtToken.Services
         public bool UpdateLamaran(LamaranAddUpdateDTO lamaranAddUpdateDTO)
         {
             var perusahaanId = GetCurrentPerusahaanId();
-            var data = _context.Lamarans.Include(l => l.Lowongan)
+            var data = _context.Lamarans
+                .Include(l => l.Lowongan)
                 .ThenInclude(p => p.Perusahaan)
-                .Where(x => x.Lowongan.PerusahaanId == perusahaanId).FirstOrDefault(x => x.Id == lamaranAddUpdateDTO.Id);
+                .FirstOrDefault(x => x.Lowongan.PerusahaanId == perusahaanId && x.Id == lamaranAddUpdateDTO.Id);
+
             if (data == null)
-            {
                 return false;
-            }
 
-
+            var oldStatus = data.Status;
             data.Status = lamaranAddUpdateDTO.Status;
 
             _context.Lamarans.Update(data);
             _context.SaveChanges();
+
+            // hanya kirim kalau status berubah
+            if (oldStatus != data.Status)
+            {
+                var perusahaan = data.Lowongan.Perusahaan;
+                var lowongan = data.Lowongan;
+
+                string subject = $"Update Status Lamaran - {perusahaan.NamaPerusahaan}";
+                //string logoUrl = "/upload/" + Path.GetFileName(perusahaan.LogoPath); // pastikan ini URL/relative path yang bisa diakses
+                string bodyHtml = "";
+
+                if (data.Status == StatusLamaran.DataStatusLamaran.Diterima)
+                {
+                    bodyHtml = $@"
+            <div style='font-family:Arial,sans-serif; color:#333; max-width:600px; margin:auto; border:1px solid #ddd; border-radius:8px; overflow:hidden;'>
+                <div style='background:#f8f9fa; padding:20px; text-align:center;'>
+                    <h2 style='color:#007bff;'>Selamat! Lamaran Anda Diterima 🎉</h2>
+                </div>
+                <div style='padding:20px;'>
+                    <p>Halo <b>{data.Nama}</b>,</p>
+                    <p>Dengan senang hati kami informasikan bahwa lamaran Anda untuk posisi <b>{lowongan.Posisi}</b> di <b>{perusahaan.NamaPerusahaan}</b> telah <span style='color:green;font-weight:bold;'>DITERIMA</span>.</p>
+                    <p>Tim kami akan segera menghubungi Anda terkait proses berikutnya.</p>
+                    <p>Terima kasih telah melamar di <b>{perusahaan.NamaPerusahaan}</b>.</p>
+                    <p>Hormat kami,<br/><b>{perusahaan.NamaPerusahaan}</b></p>
+                </div>
+            </div>";
+                }
+                else if (data.Status == StatusLamaran.DataStatusLamaran.Ditolak)
+                {
+                    bodyHtml = $@"
+            <div style='font-family:Arial,sans-serif; color:#333; max-width:600px; margin:auto; border:1px solid #ddd; border-radius:8px; overflow:hidden;'>
+                <div style='background:#f8f9fa; padding:20px; text-align:center;'>
+                    <h2 style='color:#dc3545;'>Lamaran Anda Ditolak</h2>
+                </div>
+                <div style='padding:20px;'>
+                    <p>Halo <b>{data.Nama}</b>,</p>
+                    <p>Terima kasih atas ketertarikan Anda pada posisi <b>{lowongan.Posisi}</b> di <b>{perusahaan.NamaPerusahaan}</b>.</p>
+                    <p>Sayangnya, lamaran Anda <span style='color:red;font-weight:bold;'>DITOLAK</span> dan tidak dapat kami lanjutkan ke tahap berikutnya.</p>
+                    <p>Kami sangat menghargai waktu dan minat Anda, semoga sukses dalam perjalanan karier Anda.</p>
+                    <p>Hormat kami,<br/><b>{perusahaan.NamaPerusahaan}</b></p>
+                </div>
+            </div>";
+                }
+
+                if (!string.IsNullOrEmpty(bodyHtml))
+                {
+                    _emailHelper.SendStatusLamaranEmailAsync(data.Email, subject, bodyHtml);
+                }
+            }
+
             return true;
         }
+
+
+
+
+
+
+
+
+
+
 
 
         ///==================== UNTUK USER ================\\\

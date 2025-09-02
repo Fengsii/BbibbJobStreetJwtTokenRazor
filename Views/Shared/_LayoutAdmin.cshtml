@@ -5,17 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BbibbJobStreet - Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css" rel="stylesheet">
+    
     <style>
+        /* CSS dari dashboard super admin (sudah ada) */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', 'Arial', sans-serif;
+        }
+
+            *::-webkit-scrollbar {
+                display: none;
+            }
+
+        :root {
+            --primary: #1976D2;
+            --primary-light: #2196F3;
+            --primary-dark: #0D47A1;
+            --secondary: #03A9F4;
+            --accent: #00BCD4;
+            --text: #263238;
+            --text-light: #78909C;
+            --bg: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
         }
 
         body {
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
         }
 
         .container {
@@ -26,22 +49,28 @@
         /* Sidebar Styles */
         .sidebar {
             width: 270px;
-            background-color: #2c3e50;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
             color: #fff;
             padding: 20px;
             position: fixed;
             height: 100%;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
             .sidebar h2 {
-                color: #3498db;
+                color: #fff;
                 margin-bottom: 30px;
                 font-size: 26px;
                 text-align: center;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                animation: fadeIn 1s ease;
             }
 
                 .sidebar h2 i {
@@ -57,51 +86,112 @@
                 }
 
                     .sidebar ul li a {
-                        color: #ecf0f1;
+                        color: rgba(255, 255, 255, 0.9);
                         text-decoration: none;
-                        font-size: 18px;
+                        font-size: 16px;
                         display: flex;
                         align-items: center;
-                        padding: 12px;
-                        border-radius: 5px;
-                        transition: background 0.3s ease, transform 0.3s ease;
+                        padding: 12px 15px;
+                        border-radius: 8px;
+                        transition: all 0.3s ease;
+                        position: relative;
+                        overflow: hidden;
                     }
 
-                        .sidebar ul li a i {
-                            margin-right: 10px;
+                        .sidebar ul li a:before {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            height: 100%;
+                            width: 5px;
+                            background: white;
+                            transform: scaleY(0);
+                            transition: transform 0.3s ease;
                         }
 
-                        .sidebar ul li a:hover {
-                            background-color: #3498db;
-                            transform: translateX(10px);
+                        .sidebar ul li a:hover:before,
+                        .sidebar ul li a.active:before {
+                            transform: scaleY(1);
                         }
+
+                        .sidebar ul li a i {
+                            margin-right: 15px;
+                            font-size: 18px;
+                            width: 20px;
+                            text-align: center;
+                        }
+
+                        .sidebar ul li a:hover,
+                        .sidebar ul li a.active {
+                            background: rgba(255, 255, 255, 0.15);
+                            transform: translateX(10px);
+                            color: #fff;
+                        }
+
+            .sidebar form {
+                margin-top: 20px;
+            }
+
+                .sidebar form button {
+                    width: 100%;
+                    text-align: left;
+                    background: none;
+                    border: none;
+                    color: rgba(255, 255, 255, 0.9);
+                    font-size: 16px;
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 15px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                    .sidebar form button:hover {
+                        background: rgba(255, 255, 255, 0.15);
+                        transform: translateX(10px);
+                    }
+
+                    .sidebar form button i {
+                        margin-right: 15px;
+                        font-size: 18px;
+                        width: 20px;
+                        text-align: center;
+                    }
 
         /* Header Styles */
         .header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            padding: 20px 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
             margin-left: 270px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: margin-left 0.4s ease;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
             .header h1 {
-                color: #2c3e50;
+                color: var(--primary);
                 font-size: 24px;
                 display: flex;
                 align-items: center;
+                animation: slideInFromLeft 0.5s ease;
             }
 
                 .header h1 i {
                     margin-right: 10px;
-                    color: #3498db;
+                    color: var(--primary);
                 }
 
             .header .user-profile {
                 display: flex;
                 align-items: center;
+                animation: slideInFromRight 0.5s ease;
             }
 
                 .header .user-profile img {
@@ -109,125 +199,346 @@
                     height: 40px;
                     border-radius: 50%;
                     margin-right: 10px;
+                    object-fit: cover;
+                    border: 2px solid var(--primary-light);
                 }
 
                 .header .user-profile span {
                     font-size: 16px;
-                    color: #2c3e50;
+                    color: var(--text);
+                    font-weight: 500;
                 }
+
+        .toggle-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+            .toggle-btn:hover {
+                transform: rotate(90deg);
+            }
 
         /* Main Content Styles */
         .main-content {
             margin-left: 270px;
-            padding: 20px;
+            padding: 30px;
             flex-grow: 1;
+            transition: margin-left 0.4s ease;
         }
 
         .card-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 30px;
         }
 
         .card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, var(--card-bg) 0%, #f8fafc 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.6s ease;
+            border-left: 4px solid var(--primary);
         }
 
+            .card:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to right, transparent, rgba(25, 118, 210, 0.05));
+                z-index: 0;
+            }
+
             .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+                transform: translateY(-8px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             }
 
             .card i {
-                font-size: 30px;
-                color: #3498db;
-                margin-bottom: 10px;
+                font-size: 36px;
+                color: var(--primary);
+                margin-bottom: 15px;
+                position: relative;
+                z-index: 1;
             }
 
             .card h3 {
-                color: #3498db;
+                color: var(--text-light);
                 margin-bottom: 10px;
+                font-size: 16px;
+                font-weight: 500;
+                position: relative;
+                z-index: 1;
             }
 
             .card p {
-                font-size: 24px;
-                color: #2c3e50;
+                font-size: 32px;
+                color: var(--primary);
+                font-weight: 700;
+                position: relative;
+                z-index: 1;
             }
 
         /* Action Button */
         .action-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db;
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
             color: #fff;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             margin: 20px 0;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
         }
 
-            .action-btn:hover {
-                background-color: #2980b9;
+            .action-btn i {
+                margin-right: 8px;
             }
+
+            .action-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 15px rgba(25, 118, 210, 0.4);
+            }
+
+            .action-btn.secondary {
+                background: linear-gradient(to right, #78909C, #90A4AE);
+                box-shadow: 0 4px 10px rgba(120, 144, 156, 0.3);
+            }
+
+                .action-btn.secondary:hover {
+                    box-shadow: 0 6px 15px rgba(120, 144, 156, 0.4);
+                }
 
         /* Table Styles */
         .table-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             margin-top: 20px;
+            animation: fadeIn 0.8s ease;
+            overflow-x: auto;
         }
+
+            .table-container h3 {
+                color: var(--primary);
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+            }
+
+                .table-container h3 i {
+                    margin-right: 10px;
+                }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            border-spacing: 0;
         }
 
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid #e0e0e0;
         }
 
         th {
-            background-color: #3498db;
+            background-color: var(--primary);
             color: #fff;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
         }
 
-        tr:hover {
-            background-color: #f1f5f9;
+        tr {
+            transition: background 0.3s ease;
         }
 
-        /* Chart Placeholder */
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            tr:hover {
+                background-color: #f1f5f9;
+            }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .btn i {
+                margin-right: 5px;
+            }
+
+        .btn-update {
+            background: var(--primary);
+            color: white;
+        }
+
+            .btn-update:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+            }
+
+        .btn-delete {
+            background: var(--danger);
+            color: white;
+        }
+
+            .btn-delete:hover {
+                background: #d32f2f;
+                transform: translateY(-2px);
+            }
+
+        /* Chart Container */
         .chart-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             margin-top: 20px;
-            height: 200px;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            animation: fadeIn 1s ease;
         }
 
-        .chart-placeholder {
-            font-size: 18px;
-            color: #2c3e50;
-            text-align: center;
+        /* Form Styles */
+        .form-container {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+            animation: fadeIn 0.8s ease;
         }
+
+            .form-container h3 {
+                color: var(--primary);
+                margin-bottom: 25px;
+                display: flex;
+                align-items: center;
+                font-size: 22px;
+            }
+
+                .form-container h3 i {
+                    margin-right: 10px;
+                }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                color: var(--text);
+                font-weight: 500;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+            }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+            .page.active {
+                display: block;
+            }
+
+        /* Data Grid Styles */
+        .data-grid-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+            .search-box input {
+                width: 100%;
+                padding: 12px 15px 12px 40px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 16px;
+            }
+
+            .search-box i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-light);
+            }
 
         /* Responsive Design */
+        @@media (max-width: 1024px) {
+            .card-container
+
+        {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        }
+
         @@media (max-width: 768px) {
             .sidebar
 
@@ -245,20 +556,48 @@
 
         .toggle-btn {
             display: block;
-            font-size: 24px;
-            cursor: pointer;
-            color: #2c3e50;
+        }
+
+        .card-container {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .data-grid-actions {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .search-box {
+            width: 100%;
         }
 
         }
 
-        /* Animasi Fade In */
+        /* Animations */
         @@keyframes fadeIn {
             from
 
         {
             opacity: 0;
-            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+        }
+
+        }
+
+        @@keyframes fadeInUp {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(30px);
         }
 
         to {
@@ -268,10 +607,110 @@
 
         }
 
-        .main-content, .card, .table-container, .chart-container {
-            animation: fadeIn 0.5s ease-in;
+        @@keyframes slideInFromLeft {
+            from
+
+        {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        }
+
+        @@keyframes slideInFromRight {
+            from
+
+        {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        }
+
+        /* Smooth transitions for all elements */
+        .main-content > * {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Hover effects for interactive elements */
+        .btn, .action-btn, .sidebar ul li a, .card {
+            transition: all 0.3s ease;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @@keyframes spin {
+            to
+
+        {
+            transform: rotate(360deg);
+        }
+
+        }
+
+        /* Additional styles for category pages */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: rgba(76, 175, 80, 0.15);
+            color: var(--success);
+        }
+
+        .status-inactive {
+            background-color: rgba(244, 67, 54, 0.15);
+            color: var(--danger);
+        }
+
+        .btn-view {
+            background: var(--secondary);
+            color: white;
+        }
+
+            .btn-view:hover {
+                background: #039be5;
+                transform: translateY(-2px);
+            }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 12px;
         }
     </style>
+
+
+
+
+
+
 </head>
 <body>
     <div class="container">
@@ -279,17 +718,13 @@
         <div class="sidebar">
             <h2><i class="fas fa-briefcase"></i> BbibbJobStreet</h2>
             <ul>
-                <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-suitcase"></i> Lowongan</a></li>
-                <li><a href="/DashboardAdmin/KategoriPekerjaan" class="nav-link" data-page="kategori"><i class="fas fa-file-alt"></i> Kategori</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> Pelamar</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Laporan</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
-                <li><a href="#"><i class="fas fa-building"></i> Perusahaan</a></li>
-                <li><a href="#"><i class="fas fa-bell"></i> Notifikasi</a></li>
-                @* <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li> *@
-                <form asp-controller="LoginPage" asp-action="Logout" method="post" style="display: inline;">
-                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                <li><a href="/DashboardAdmin/Index" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/DashboardAdmin/LowonganList" class="nav-link"><i class="fas fa-suitcase"></i> Lowongan</a></li>
+                <li><a href="/DashboardAdmin/KategoriPekerjaan" class="nav-link"><i class="fas fa-file-alt"></i> Kategori</a></li>
+                <li><a href="/DashboardAdmin/CompanyList" class="nav-link"><i class="fas fa-building"></i> Perusahaan</a></li>
+                <li><a href="/DashboardAdmin/UserList" class="nav-link"><i class="fas fa-user-graduate"></i> Pelamar</a></li>
+                <form asp-controller="LoginPage" asp-action="Logout" method="post">
+                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; width: 100%; text-align: left;">
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </button>
                 </form>
@@ -307,18 +742,160 @@
                 </div>
             </div>
 
-            <a href="#" class="action-btn"><i class="fas fa-plus"></i> Tambah Lowongan</a>
+            <!-- Other pages would follow the same pattern -->
             @RenderBody()
-
         </div>
-       
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script>
         // Toggle sidebar for mobile
         document.querySelector('.toggle-btn').addEventListener('click', () => {
             document.querySelector('.sidebar').classList.toggle('active');
         });
+
+        // Page navigation
+        document.querySelectorAll('[data-page]').forEach(element => {
+            element.addEventListener('click', (e) => {
+                if (element.tagName === 'A') e.preventDefault();
+
+                const pageId = element.getAttribute('data-page');
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+
+                document.querySelectorAll('.sidebar ul li a').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                if (pageId) {
+                    document.getElementById(pageId).classList.add('active');
+
+                    // If this is a sidebar link, highlight it
+                    if (element.classList.contains('nav-link')) {
+                        element.classList.add('active');
+                    }
+
+                    // Update page title
+                    const pageTitle = element.textContent.trim();
+                    if (pageTitle && pageId !== 'dashboard') {
+                        document.querySelector('.header h1').innerHTML = `<i class="fas fa-${getPageIcon(pageId)}"></i> ${pageTitle}`;
+                    } else {
+                        document.querySelector('.header h1').innerHTML = '<i class="fas fa-tachometer-alt"></i> Super Admin Dashboard';
+                    }
+                }
+            });
+        });
+
+        function getPageIcon(pageId) {
+            const icons = {
+                'dashboard': 'tachometer-alt',
+                'user-list': 'users',
+                'user-form': 'user-edit',
+                'perusahaan-list': 'building',
+                'perusahaan-form': 'edit',
+                'lowongan-list': 'suitcase',
+                'lowongan-form': 'plus-circle',
+                'kategori': 'file-alt'
+            };
+            return icons[pageId] || 'circle';
+        }
+
+        // Initialize chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('statsChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                    datasets: [
+                        {
+                            label: 'User',
+                            data: [120, 190, 300, 500, 200, 300, 400, 480, 362, 540, 600, 800],
+                            borderColor: '#1976D2',
+                            backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Perusahaan',
+                            data: [80, 110, 130, 120, 150, 180, 200, 210, 250, 300, 320, 367],
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Lowongan',
+                            data: [200, 300, 400, 500, 450, 500, 550, 600, 650, 700, 800, 892],
+                            borderColor: '#FF9800',
+                            backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Statistik User, Perusahaan, dan Lowongan (2025)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animation to cards on scroll
+        const animatedElements = document.querySelectorAll('.card, .table-container, .chart-container');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
     </script>
+    @RenderSection("Scripts", required: false) <!-- INI HARUS ADA -->
 </body>
-</html> 
+</html>

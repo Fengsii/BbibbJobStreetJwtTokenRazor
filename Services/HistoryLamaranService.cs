@@ -32,7 +32,7 @@ namespace BbibbJobStreetJwtToken.Services
                             Logo = "/upload/" + Path.GetFileName(x.Lowongan.Perusahaan.LogoPath),
                             Posisi = x.Lowongan.Posisi,
                             Deskripsi = x.Lowongan.Deskripsi,
-                            TanggalDilamar = DateTime.Now,
+                            TanggalDilamar = x.TanggalDilamar,
                             Status = x.Status,
                         }).ToList();
 
