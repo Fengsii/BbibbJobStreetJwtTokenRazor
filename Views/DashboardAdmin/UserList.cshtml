@@ -131,7 +131,7 @@
                                     <a href="@Url.Action("UpdateUser", "DashboardAdmin", new { id = data.Id})">
                                         <button class="btn btn-sm btn-update"><i class="fas fa-edit"></i> Update</button>
                                     </a>
-                                    <form method="post" class="delete-form" action="@Url.Action("DeleteUser", "DashboardAdmin")" style="display:inline">
+                                    <form method="post" class="delapp-form" action="@Url.Action("DeleteUser", "DashboardAdmin")" style="display:inline">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="id" value="@data.Id" />
                                         <button type="submit" class="btn btn-sm btn-delete" >
@@ -164,139 +164,67 @@
         }
     </div>
 </div>
-<!-- User List Page -->
-<div class="page active" id="user-list">
-    <div class="data-grid-actions">
-        <h3><i class="fas fa-users"></i> Daftar User</h3>
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <form method="get" action="@Url.Action("UserList", "DashboardAdmin")">
-                <input type="text" name="searchTerm" placeholder="Cari user..." value="@ViewBag.SearchTerm">
-            </form>
-        </div>
-    </div>
 
-    <div class="table-container">
-        @if (Model != null && Model.Count > 0)
-        {
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Posisi</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var data in Model)
-                    {
-                        <tr>
-                            <td>@data.Id</td>
-                            <td>@data.Username</td>
-                            <td>@data.Email</td>
-                            <td>@data.Posisi</td>
-                            <td>@data.Status</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="@Url.Action("UpdateUser", "DashboardAdmin", new { id = data.Id})">
-                                        <button class="btn btn-sm btn-update"><i class="fas fa-edit"></i> Update</button>
-                                    </a>
-                                    <form method="post" class="delete-form" action="@Url.Action("DeleteUser", "DashboardAdmin")" style="display:inline">
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="id" value="@data.Id" />
-                                        <button type="submit" class="btn btn-sm btn-delete" >
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            
-            <!-- Pagination Controls -->
-            <div class="pagination-container">
-                @Html.PagedListPager(Model, page => Url.Action("UserList", new { page, searchTerm = ViewBag.SearchTerm }), 
-                new PagedListRenderOptions {
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new string[] { "page-link" },
-                    Display = PagedListDisplayMode.IfNeeded,
-                    MaximumPageNumbersToDisplay = 5
-                })
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i> Tidak ada data user yang ditemukan.
-            </div>
-        }
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Tangkap SEMUA form delete dengan class
-        const deleteForms = document.querySelectorAll('.delete-form');
-        
-        // Loop melalui setiap form
-        deleteForms.forEach(function(form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tangkap semua form delete dengan class
+            const deleteForms = document.querySelectorAll('.delapp-form');
 
-                // Simpan referensi form yang diklik
-                const currentForm = this;
+            // Loop melalui setiap form
+            deleteForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                // Tampilkan konfirmasi
-                Swal.fire({
-                    title: 'Hapus User?',
-                    text: "Apakah Anda yakin ingin menghapus user ini?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Ya, Hapus',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Submit form yang spesifik
-                        currentForm.submit();
-                    }
+                    // Simpan referensi form yang diklik
+                    const currentForm = this;
+
+                    // Tampilkan konfirmasi
+                    Swal.fire({
+                        title: 'Hapus Lowongan?',
+                        text: "Apakah Anda yakin ingin menghapus lowongan ini?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit form yang spesifik
+                            currentForm.submit();
+                        }
+                    });
                 });
             });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: '@TempData["SuccessMessage"]',
+                        icon: 'success',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: '@TempData["ErrorMessage"]',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                    </text>
+            }
         });
-
-        // Tampilkan popup success jika ada pesan dari controller
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <text>
-            Swal.fire({
-                title: 'Berhasil!',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonColor: '#0a66c2'
-            });
-            </text>
-        }
-
-        // Tampilkan popup error jika ada pesan dari controller
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <text>
-            Swal.fire({
-                title: 'Gagal!',
-                text: '@TempData["ErrorMessage"]',
-                icon: 'error',
-                confirmButtonColor: '#d33'
-            });
-            </text>
-        }
-    });
-</script>
+    </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

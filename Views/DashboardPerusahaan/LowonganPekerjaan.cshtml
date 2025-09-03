@@ -1,4 +1,5 @@
 ﻿
+
 @using X.PagedList.Mvc.Core
 @model X.PagedList.IPagedList<BbibbJobStreetJwtToken.Models.DTO.LowonganPekerjaanViewDTO>
 
@@ -6,7 +7,7 @@
     Layout = "_LayoutPerusahaan";
 }
 
-<style>
+@* <style>
     /* General table container styling */
     .table-container {
         max-width: 1200px;
@@ -32,6 +33,7 @@
         width: 100%;
         border-collapse: collapse;
         font-family: Arial, sans-serif;
+        min-width: 600px; /* Prevent table from collapsing too much on mobile */
     }
 
         table thead {
@@ -52,8 +54,7 @@
 
         table tbody tr:hover {
             background: #f1f9ff;
-            transform: scale(1.01);
-            transition: transform 0.2s ease, background 0.3s ease;
+            transition: background 0.3s ease;
         }
 
     /* Logo styling */
@@ -69,27 +70,41 @@
 
     /* Button styling */
     .action-btn, .btn {
-        padding: 8px 16px;
+        padding: 8px 12px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         text-decoration: none;
         display: inline-block;
-        background: #007bff;
-        color: #fff;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        transition: all 0.3s ease;
         min-width: 80px;
         text-align: center;
+        font-size: 14px;
+        margin: 2px 0;
     }
 
-        .action-btn i, .btn i {
-            margin-right: 5px;
-        }
+    .btn-primary, .btn-update {
+        background: #007bff;
+        color: #fff;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .action-btn {
+        background: #28a745;
+        color: #fff;
+        margin-bottom: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
 
         .action-btn:hover, .btn:hover {
-            background: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
     /* Input group styling */
@@ -101,7 +116,7 @@
 
     .form-control {
         padding: 10px;
-        border: 1px solid #007bff;
+        border: 1px solid #ddd;
         border-radius: 4px;
         flex-grow: 1;
         transition: border-color 0.3s ease;
@@ -109,137 +124,207 @@
 
         .form-control:focus {
             outline: none;
-            border-color: #0056b3;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
         }
 
-    /* Pagination styling */
-    .pagination {
+    /* Improved Pagination styling */
+    .pagination-container {
         display: flex;
         justify-content: center;
-        gap: 8px;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .pagination li {
+            display: inline-block;
+        }
+
         .pagination a, .pagination span {
-            padding: 8px 14px;
-            border: 1px solid #007bff;
-            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            height: 38px;
+            padding: 0 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
             color: #007bff;
             text-decoration: none;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: all 0.2s ease;
             font-size: 14px;
+            font-weight: 500;
         }
 
             .pagination a:hover {
-                background: #007bff;
-                color: #fff;
+                background-color: #f0f7ff;
+                border-color: #007bff;
+                transform: translateY(-1px);
             }
 
-        .pagination .current {
-            background: #007bff;
+        .pagination .active span {
+            background-color: #007bff;
             color: #fff;
-            border: 1px solid #007bff;
-            cursor: default;
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
         }
 
-        .pagination .disabled, .pagination .ellipsis {
+        .pagination .disabled span {
+            color: #aaa;
+            border-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+
+        /* Navigation buttons */
+        .pagination .pagination-nav {
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+
+            .pagination .pagination-nav:hover {
+                background-color: #e9ecef;
+            }
+
+        /* Hide ellipsis or unnecessary pagination elements */
+        .pagination .ellipsis {
             display: none;
         }
 
-    /* Responsive design */
+    /* Responsive design for mobile */
     @@media (max-width: 768px) {
-        .table-container
+        .table-container {
+            padding: 15px;
+            margin: 10px;
+            width: auto;
+        }
 
-    {
-        padding: 10px;
+        .input-group {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn {
+            width: 100%;
+            margin: 4px 0;
+        }
+
+        table {
+            display: block;
+            overflow-x: auto;
+            min-width: unset;
+        }
+
+            table thead {
+                display: none;
+            }
+
+            table tbody tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+                background: #fff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            table tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 8px;
+                border-bottom: 1px solid #f0f0f0;
+                text-align: right;
+            }
+
+                table tbody td:last-child {
+                    border-bottom: none;
+                }
+
+                table tbody td::before {
+                    content: attr(data-label);
+                    font-weight: bold;
+                    color: #007bff;
+                    margin-right: 10px;
+                    flex: 1;
+                    text-align: left;
+                }
+                /* Action buttons in mobile view */
+                table tbody td[data-label="Aksi"] {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                }
+
+        .logo-placeholder, img {
+            width: 30px;
+            height: 30px;
+        }
+        /* Pagination mobile adjustments */
+        .pagination {
+            gap: 4px;
+        }
+
+            .pagination a, .pagination span {
+                min-width: 34px;
+                height: 34px;
+                font-size: 13px;
+                padding: 0 6px;
+            }
     }
 
-    table {
-        display: block;
-        overflow-x: auto;
+    /* Responsive design for tablet */
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .table-container {
+            padding: 15px;
+            margin: 15px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 6px 10px;
+            font-size: 13px;
+            min-width: 70px;
+        }
+
+        .logo-placeholder, img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .input-group {
+            flex-wrap: wrap;
+        }
     }
 
-        table thead {
-            display: none;
+    /* Improve desktop experience */
+    @@media (min-width: 1025px) {
+        table th, table td {
+            font-size: 15px;
         }
 
         table tbody tr {
-            display: block;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
         }
 
-        table tbody td {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            border-bottom: none;
-        }
-
-            table tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #007bff;
-                flex: 1;
+            table tbody tr:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
-
-            table tbody td:not(:last-child) {
-                border-bottom: 1px solid #eee;
-            }
-
-    .action-btn, .btn {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-
-    .logo-placeholder, img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    }
-
-    @@media (min-width: 769px) and (max-width: 1024px) {
-        .table-container
-
-    {
-        padding: 15px;
-    }
-
-    table th, table td {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .action-btn, .btn {
-        padding: 6px 12px;
-        font-size: 14px;
-        min-width: 70px;
-    }
-
-    .logo-placeholder, img {
-        width: 35px;
-        height: 35px;
-    }
-
-    }
-
-    @@media (min-width: 1025px) {
-        table th, table td
-
-    {
-        font-size: 16px;
-    }
-
     }
 </style>
 
@@ -297,11 +382,11 @@
                         <td data-label="Tanggal Dibuat">@lowongan.TanggalDibuat.ToString("dd MMM yyyy")</td>
                         <td data-label="Status">@lowongan.status</td>
                         <td data-label="Aksi">
-                            <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lowongan.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
-                            <form class="low-form" method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
+                            <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lowongan.Id })" class="btn btn-update"><i class="bi bi-pencil"></i> Update</a>
+                            <form class="delapp-form" method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@lowongan.Id" />
-                                <button type="submit" class="btn btn-sm btn-delete"><i class="bi bi-trash"></i> Delete</button>
+                                <button type="submit" class="btn btn-delete"><i class="bi bi-trash"></i> Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -309,18 +394,26 @@
             </tbody>
         </table>
         <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            @Html.PagedListPager(Model, page => Url.Action("LowonganPekerjaan", new { page, searchTerm = ViewBag.SearchTerm }))
+        <div class="pagination-container">
+            @Html.PagedListPager(Model, page => Url.Action("LowonganPekerjaan", new { page, searchTerm = ViewBag.SearchTerm }),
+            new X.PagedList.Web.Common.PagedListRenderOptions
+            {
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" },
+                ContainerDivClasses = new[] { "pagination" },
+                UlElementClasses = new[] { "pagination" },
+                MaximumPageNumbersToDisplay = 5,
+                DisplayEllipsesWhenNotShowingAllPageNumbers = false
+            })
         </div>
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Tangkap SEMUA form delete dengan class
-        const deleteForms = document.querySelectorAll('.low-form');
+        // Tangkap semua form delete dengan class
+        const deleteForms = document.querySelectorAll('.delapp-form');
 
         // Loop melalui setiap form
         deleteForms.forEach(function(form) {
@@ -332,8 +425,8 @@
 
                 // Tampilkan konfirmasi
                 Swal.fire({
-                    title: 'Hapus Lowongan?',
-                    text: "Apakah Anda yakin ingin menghapus lowongan ini?",
+                    title: 'Hapus Lamaran?',
+                    text: "Apakah Anda yakin ingin menghapus lamaran ini?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -352,27 +445,543 @@
         // Tampilkan popup success jika ada pesan dari controller
         @if (TempData["SuccessMessage"] != null)
         {
-                <text>
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: '@TempData["SuccessMessage"]',
-                    icon: 'success',
-                    confirmButtonColor: '#0a66c2'
-                });
-                </text>
+                    <text>
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: '@TempData["SuccessMessage"]',
+                        icon: 'success',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    </text>
         }
 
         // Tampilkan popup error jika ada pesan dari controller
         @if (TempData["ErrorMessage"] != null)
         {
-                <text>
-                Swal.fire({
-                    title: 'Gagal!',
-                    text: '@TempData["ErrorMessage"]',
-                    icon: 'error',
-                    confirmButtonColor: '#d33'
-                });
-                </text>
+                    <text>
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: '@TempData["ErrorMessage"]',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                    </text>
         }
+        // Run on load and resize
+        checkPaginationResponsive();
+        window.addEventListener('resize', checkPaginationResponsive);
     });
-</script>
+</script> *@
+
+
+
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* General table container styling */
+        .table-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+            /* Heading styling */
+            .table-container h3 {
+                color: #0a66c2;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            min-width: 600px; /* Prevent table from collapsing too much on mobile */
+        }
+
+            table thead {
+                background: #0a66c2;
+                color: #fff;
+            }
+
+            table th, table td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                transition: background 0.3s ease;
+            }
+
+            table th {
+                font-weight: bold;
+            }
+
+            table tbody tr:hover {
+                background: #f0f7ff;
+                transition: background 0.3s ease;
+            }
+
+        /* Logo styling */
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e6f2ff;
+            border-radius: 50%;
+        }
+
+        /* Button styling */
+        .action-btn {
+            background: #0a66c2;
+            color: #fff;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+            .action-btn:hover {
+                opacity: 0.9;
+                transform: translateY(-1px);
+                background: #004182;
+            }
+
+        /* Icon buttons */
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            margin: 0 2px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-update {
+            background: #0a66c2;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+        }
+
+        .btn-icon:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-update:hover {
+            background: #004182;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        /* Input group styling */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex-grow: 1;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: #0a66c2;
+                box-shadow: 0 0 5px rgba(10, 102, 194, 0.3);
+            }
+
+        .btn-primary {
+            background: #0a66c2;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background: #004182;
+                transform: translateY(-1px);
+            }
+
+        /* Improved Pagination styling */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .pagination li {
+                display: inline-block;
+            }
+
+            .pagination a, .pagination span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 38px;
+                height: 38px;
+                padding: 0 8px;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                color: #0a66c2;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+                .pagination a:hover {
+                    background-color: #f0f7ff;
+                    border-color: #0a66c2;
+                    transform: translateY(-1px);
+                }
+
+            .pagination .active span {
+                background-color: #0a66c2;
+                color: #fff;
+                border-color: #0a66c2;
+                box-shadow: 0 2px 4px rgba(10, 102, 194, 0.2);
+            }
+
+            .pagination .disabled span {
+                color: #aaa;
+                border-color: #e0e0e0;
+                cursor: not-allowed;
+            }
+
+            /* Navigation buttons */
+            .pagination .pagination-nav {
+                font-weight: bold;
+                background-color: #f8f9fa;
+            }
+
+                .pagination .pagination-nav:hover {
+                    background-color: #e9ecef;
+                }
+
+            /* Hide ellipsis or unnecessary pagination elements */
+            .pagination .ellipsis {
+                display: none;
+            }
+
+        /* Action buttons container */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* Responsive design for mobile */
+        @@media (max-width: 768px) {
+            .table-container {
+                padding: 15px;
+                margin: 10px;
+                width: auto;
+            }
+
+            .input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                min-width: unset;
+            }
+
+                table thead {
+                    display: none;
+                }
+
+                table tbody tr {
+                    display: block;
+                    margin-bottom: 15px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background: #fff;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                }
+
+                table tbody td {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px 8px;
+                    border-bottom: 1px solid #f0f0f0;
+                    text-align: right;
+                }
+
+                    table tbody td:last-child {
+                        border-bottom: none;
+                    }
+
+                    table tbody td::before {
+                        content: attr(data-label);
+                        font-weight: bold;
+                        color: #0a66c2;
+                        margin-right: 10px;
+                        flex: 1;
+                        text-align: left;
+                    }
+                    /* Action buttons in mobile view */
+                    table tbody td[data-label="Aksi"] {
+                        display: flex;
+                        justify-content: center;
+                        gap: 8px;
+                    }
+
+            .action-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .logo-placeholder, img {
+                width: 30px;
+                height: 30px;
+            }
+            /* Pagination mobile adjustments */
+            .pagination {
+                gap: 4px;
+            }
+
+                .pagination a, .pagination span {
+                    min-width: 34px;
+                    height: 34px;
+                    font-size: 13px;
+                    padding: 0 6px;
+                }
+        }
+
+        /* Responsive design for tablet */
+        @@media (min-width: 769px) and (max-width: 1024px) {
+            .table-container {
+                padding: 15px;
+                margin: 15px;
+            }
+
+            table th, table td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .logo-placeholder, img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .input-group {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Improve desktop experience */
+        @@media (min-width: 1025px) {
+            table th, table td {
+                font-size: 15px;
+            }
+
+            table tbody tr {
+                transition: transform 0.2s ease;
+            }
+
+                table tbody tr:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+        }
+    </style>
+
+<body>
+    <div class="page active" id="lowongan">
+        <div class="table-container">
+            <h3><i class="fas fa-suitcase"></i> Daftar Lowongan</h3>
+            <form method="get" asp-action="LowonganPekerjaan">
+                <div class="input-group">
+                    <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Cari judul, posisi, atau alamat..." />
+                    <button type="submit" class="btn-primary">Cari</button>
+                </div>
+            </form>
+            <a href="/DashboardPerusahaan/LowonganPekerjaanAddUpdate">
+                <button class="action-btn" id="btn-tambah-lowongan"><i class="fas fa-plus"></i> Tambah Lowongan</button>
+            </a>
+            <table>
+                <thead>
+                    <tr>
+
+                        <th>Judul</th>
+                        <th>Perusahaan</th>
+                        <th>Posisi</th>
+                        <th>Alamat</th>
+                        <th>Deskripsi</th>
+                        <th>Kategori</th>
+                        <th>Tanggal Dibuat</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lowongan in Model)
+                    {
+                        <tr>
+
+                            <td data-label="Judul">@lowongan.Judul</td>
+                            <td data-label="Perusahaan">@lowongan.NamaPerusahaan</td>
+                            <td data-label="Posisi">@lowongan.Posisi</td>
+                            <td data-label="Alamat">@lowongan.Alamat</td>
+                            <td data-label="Deskripsi">@lowongan.Deskripsi</td>
+                            <td data-label="Kategori">@lowongan.NamaKategori</td>
+                            <td data-label="Tanggal Dibuat">@lowongan.TanggalDibuat.ToString("dd MMM yyyy")</td>
+                            <td data-label="Status">@lowongan.status</td>
+                            <td data-label="Aksi">
+                                <div class="action-buttons">
+                                    <a href="@Url.Action("LowonganPekerjaanAddUpdate", "DashboardPerusahaan", new { id = lowongan.Id })"
+                                       class="btn-icon btn-update" title="Edit Lowongan">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form class="delapp-form" method="post" action="@Url.Action("DeleteLowonganPekerjaan", "DashboardPerusahaan")" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@lowongan.Id" />
+                                        <button type="submit" class="btn-icon btn-delete" title="Hapus Lowongan">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- Pagination -->
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, page => Url.Action("LowonganPekerjaan", new { page, searchTerm = ViewBag.SearchTerm }),
+                new X.PagedList.Web.Common.PagedListRenderOptions
+                {
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link" },
+                    ContainerDivClasses = new[] { "pagination" },
+                    UlElementClasses = new[] { "pagination" },
+                    MaximumPageNumbersToDisplay = 5,
+                    DisplayEllipsesWhenNotShowingAllPageNumbers = false
+                })
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tangkap semua form delete dengan class
+            const deleteForms = document.querySelectorAll('.delapp-form');
+
+            // Loop melalui setiap form
+            deleteForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Simpan referensi form yang diklik
+                    const currentForm = this;
+
+                    // Tampilkan konfirmasi
+                    Swal.fire({
+                        title: 'Hapus Lowongan?',
+                        text: "Apakah Anda yakin ingin menghapus lowongan ini?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit form yang spesifik
+                            currentForm.submit();
+                        }
+                    });
+                });
+            });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: '@TempData["SuccessMessage"]',
+                        icon: 'success',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: '@TempData["ErrorMessage"]',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                    </text>
+            }
+        });
+    </script>
+</body>
+

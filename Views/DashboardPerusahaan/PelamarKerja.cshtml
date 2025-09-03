@@ -1,4 +1,5 @@
 ﻿
+
 @using X.PagedList.Mvc.Core
 @model X.PagedList.IPagedList<BbibbJobStreetJwtToken.Models.DTO.LamaranViewDTO>
 
@@ -6,338 +7,542 @@
     Layout = "_LayoutPerusahaan";
 }
 
-<style>
-    /* General table container styling */
-    .table-container {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        background: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow-x: auto;
-    }
-
-    /* Table styling */
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-    }
-
-        .table thead {
-            background: #007bff;
-            color: #fff;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* General table container styling */
+        .table-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow-x: auto;
         }
 
-        .table th, .table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            transition: background 0.3s ease;
+            /* Heading styling */
+            .table-container h3 {
+                color: #0a66c2;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 22px;
+                font-weight: 600;
+            }
+
+        /* Table styling */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-width: 600px;
         }
 
-        .table th {
-            font-weight: bold;
-        }
-
-        .table tbody tr:hover {
-            background: #f1f9ff;
-            transform: scale(1.01);
-            transition: transform 0.2s ease, background 0.3s ease;
-        }
-
-    /* Button styling */
-    .btn {
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-        min-width: 80px; /* Ensure consistent button size */
-        text-align: center;
-    }
-
-    .btn-primary, .btn-update, .btn-delete {
-        background: #007bff;
-        color: #fff;
-    }
-
-    .btn:hover {
-        background: #0056b3;
-        transform: translateY(-2px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Input group styling */
-    .input-group {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .form-control {
-        padding: 10px;
-        border: 1px solid #007bff;
-        border-radius: 4px;
-        flex-grow: 1;
-        transition: border-color 0.3s ease;
-    }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #0056b3;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-    /* Pagination styling */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 20px;
-    }
-
-        .pagination a, .pagination span {
-            padding: 8px 14px;
-            border: 1px solid #007bff;
-            border-radius: 4px;
-            color: #007bff;
-            text-decoration: none;
-            transition: background 0.3s ease, color 0.3s ease;
-            font-size: 14px;
-        }
-
-            .pagination a:hover {
-                background: #007bff;
+            .table thead {
+                background: #0a66c2;
                 color: #fff;
             }
 
-        .pagination .current {
-            background: #007bff;
+            .table th, .table td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #eaeaea;
+                transition: background 0.3s ease;
+            }
+
+            .table th {
+                font-weight: 600;
+            }
+
+            .table tbody tr:hover {
+                background: #f0f7ff;
+                transition: background 0.3s ease;
+            }
+
+        /* Button styling */
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            text-align: center;
+            font-size: 14px;
+            margin: 2px 0;
+        }
+
+        .btn-primary {
+            background: #0a66c2;
             color: #fff;
-            border: 1px solid #007bff;
-            cursor: default;
         }
 
-        /* Hide ellipsis or unnecessary pagination elements */
-        .pagination .disabled, .pagination .ellipsis {
-            display: none;
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
-    /* Responsive design */
-    @@media (max-width: 768px) {
-        .table-container
-
-    {
-        padding: 10px;
-    }
-
-    .table {
-        display: block;
-        overflow-x: auto;
-    }
-
-        .table thead {
-            display: none;
+        /* Icon buttons */
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            margin: 0 3px;
+            color: white;
+            text-decoration: none;
         }
 
-        .table tbody tr {
-            display: block;
-            margin-bottom: 15px;
+        .btn-update {
+            background: #0a66c2;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+        }
+
+        .btn-download {
+            background: #28a745;
+        }
+
+        .btn-icon:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-update:hover {
+            background: #004182;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .btn-download:hover {
+            background: #218838;
+        }
+
+        /* Input group styling */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            padding: 10px;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            transition: border-color 0.3s ease;
         }
 
-        .table tbody td {
+            .form-control:focus {
+                outline: none;
+                border-color: #0a66c2;
+                box-shadow: 0 0 5px rgba(10, 102, 194, 0.3);
+            }
+
+        .btn-search {
+            background: #0a66c2;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .btn-search:hover {
+                background: #004182;
+                transform: translateY(-1px);
+            }
+
+        /* Improved Pagination styling */
+        .pagination-container {
             display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            border-bottom: none;
+            justify-content: center;
+            margin-top: 30px;
         }
 
-            .table tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #007bff;
-                flex: 1;
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .pagination li {
+                display: inline-block;
             }
 
-            .table tbody td:not(:last-child) {
-                border-bottom: 1px solid #eee;
+            .pagination a, .pagination span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 38px;
+                height: 38px;
+                padding: 0 8px;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                color: #0a66c2;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                font-size: 14px;
+                font-weight: 500;
             }
 
-    .input-group {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-
-    }
-
-    @@media (min-width: 769px) and (max-width: 1024px) {
-        .table-container
-
-    {
-        padding: 15px;
-    }
-
-    .table th, .table td {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .btn {
-        padding: 6px 12px;
-        font-size: 14px;
-        min-width: 70px;
-    }
-
-    }
-
-    @@media (min-width: 1025px) {
-        .table th, .table td
-
-    {
-        font-size: 16px;
-    }
-
-    }
-</style>
-
-<div class="page active" id="lamaran">
-    <div class="table-container">
-        <h3><i class="fas fa-suitcase"></i> Daftar Pelamar</h3>
-
-        <form method="get" asp-action="PelamarKerja" class="mb-3">
-            <div class="input-group">
-                <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Cari nama, email, atau no HP..." />
-                <button type="submit" class="btn btn-primary">Cari</button>
-            </div>
-        </form>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>No HP</th>
-                    <th>Pendidikan</th>
-                    <th>CV</th>
-                    <th>Tanggal Dilamar</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var lamaran in Model)
-                {
-                    <tr>
-                        <td data-label="Nama">@lamaran.Nama</td>
-                        <td data-label="Email">@lamaran.Email</td>
-                        <td data-label="No HP">@lamaran.NoHP</td>
-                        <td data-label="Pendidikan">@lamaran.Pendidikan</td>
-                        <td data-label="CV">
-                            @if (!string.IsNullOrEmpty(lamaran.CV))
-                            {
-                                <a href="@Url.Action("DownloadCv", "DashboardPerusahaan", new { lamaranId = lamaran.Id })"
-                                   target="_blank" class="btn btn-sm btn-primary">
-                                    Download CV
-                                </a>
-                            }
-                            else
-                            {
-                                <span class="text-muted">Tidak ada CV</span>
-                            }
-                        </td>
-                        <td data-label="Tanggal Dilamar">@lamaran.TanggalDilamar.ToString("dd MMM yyyy")</td>
-                        <td data-label="Status">@lamaran.Status</td>
-                        <td data-label="Aksi">
-                            <a href="@Url.Action("UpdateStatusPelamar", "DashboardPerusahaan", new { id = lamaran.Id })" class="btn btn-sm btn-update"><i class="bi bi-pencil"></i> Update</a>
-                            <form class="delapp-form" method="post" action="@Url.Action("DeleteLamaran", "DashboardPerusahaan")" style="display:inline">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@lamaran.Id" />
-                                <button type="submit" class="btn btn-sm btn-delete"><i class="bi bi-trash"></i> Delete</button>
-                            </form>
-                        </td>
-                    </tr>
+                .pagination a:hover {
+                    background-color: #f0f7ff;
+                    border-color: #0a66c2;
+                    transform: translateY(-1px);
                 }
-            </tbody>
-        </table>
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            @Html.PagedListPager(Model, page => Url.Action("PelamarKerja", new { page, searchTerm = ViewBag.SearchTerm }))
+
+            .pagination .active span {
+                background-color: #0a66c2;
+                color: #fff;
+                border-color: #0a66c2;
+                box-shadow: 0 2px 4px rgba(10, 102, 194, 0.2);
+            }
+
+            .pagination .disabled span {
+                color: #aaa;
+                border-color: #e0e0e0;
+                cursor: not-allowed;
+            }
+
+            /* Navigation buttons */
+            .pagination .pagination-nav {
+                font-weight: bold;
+                background-color: #f8f9fa;
+            }
+
+                .pagination .pagination-nav:hover {
+                    background-color: #e9ecef;
+                }
+
+            /* Hide ellipsis or unnecessary pagination elements */
+            .pagination .ellipsis {
+                display: none;
+            }
+
+        /* Action buttons container */
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .status-diproses {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-diterima {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-ditolak {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive design for mobile */
+        @@media (max-width: 768px) {
+            .table-container {
+                padding: 15px;
+                margin: 10px;
+                width: auto;
+            }
+
+            .input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .btn-search {
+                width: 100%;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+                min-width: unset;
+            }
+
+                .table thead {
+                    display: none;
+                }
+
+                .table tbody tr {
+                    display: block;
+                    margin-bottom: 15px;
+                    border: 1px solid #eaeaea;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background: #fff;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                }
+
+                .table tbody td {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px 8px;
+                    border-bottom: 1px solid #f0f0f0;
+                    text-align: right;
+                }
+
+                    .table tbody td:last-child {
+                        border-bottom: none;
+                    }
+
+                    .table tbody td::before {
+                        content: attr(data-label);
+                        font-weight: 600;
+                        color: #0a66c2;
+                        margin-right: 10px;
+                        flex: 1;
+                        text-align: left;
+                    }
+                    /* Action buttons in mobile view */
+                    .table tbody td[data-label="Aksi"] {
+                        display: flex;
+                        justify-content: center;
+                        gap: 8px;
+                    }
+
+            .action-buttons {
+                flex-direction: row;
+            }
+            /* Pagination mobile adjustments */
+            .pagination {
+                gap: 4px;
+            }
+
+                .pagination a, .pagination span {
+                    min-width: 34px;
+                    height: 34px;
+                    font-size: 13px;
+                    padding: 0 6px;
+                }
+        }
+
+        /* Responsive design for tablet */
+        @@media (min-width: 769px) and (max-width: 1024px) {
+            .table-container {
+                padding: 15px;
+                margin: 15px;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .input-group {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Improve desktop experience */
+        @@media (min-width: 1025px) {
+            .table th, .table td {
+                font-size: 15px;
+            }
+
+            .table tbody tr {
+                transition: transform 0.2s ease;
+            }
+
+                .table tbody tr:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+        }
+    </style>
+
+<body>
+    <div class="page active" id="lamaran">
+        <div class="table-container">
+            <h3><i class="fas fa-users"></i> Daftar Pelamar</h3>
+
+            <form method="get" asp-action="PelamarKerja" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Cari nama, email, atau no HP..." />
+                    <button type="submit" class="btn-search">
+                        <i class="fas fa-search"></i> Cari
+                    </button>
+                </div>
+            </form>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>No HP</th>
+                        <th>Pendidikan</th>
+                        <th>CV</th>
+                        <th>Tanggal Dilamar</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lamaran in Model)
+                    {
+                        <tr>
+                            <td data-label="Nama">@lamaran.Nama</td>
+                            <td data-label="Email">@lamaran.Email</td>
+                            <td data-label="No HP">@lamaran.NoHP</td>
+                            <td data-label="Pendidikan">@lamaran.Pendidikan</td>
+                            <td data-label="CV">
+                                @if (!string.IsNullOrEmpty(lamaran.CV))
+                                {
+                                    <a href="@Url.Action("DownloadCv", "DashboardPerusahaan", new { lamaranId = lamaran.Id })"
+                                       target="_blank" class="btn-icon btn-download" title="Download CV">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Tidak ada CV</span>
+                                }
+                            </td>
+                            <td data-label="Tanggal Dilamar">@lamaran.TanggalDilamar.ToString("dd MMM yyyy")</td>
+                            <td data-label="Status">@lamaran.Status </td>
+                            <td data-label="Aksi">
+                                <div class="action-buttons">
+                                    <a href="@Url.Action("UpdateStatusPelamar", "DashboardPerusahaan", new { id = lamaran.Id })"
+                                       class="btn-icon btn-update" title="Update Status">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form class="delapp-form" method="post" action="@Url.Action("DeleteLamaran", "DashboardPerusahaan")" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@lamaran.Id" />
+                                        <button type="submit" class="btn-icon btn-delete" title="Hapus Lamaran">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- Pagination -->
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, page => Url.Action("PelamarKerja", new { page, searchTerm = ViewBag.SearchTerm }),
+                new X.PagedList.Web.Common.PagedListRenderOptions
+                {
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link" },
+                    ContainerDivClasses = new[] { "pagination" },
+                    UlElementClasses = new[] { "pagination" },
+                    MaximumPageNumbersToDisplay = 5,
+                    DisplayEllipsesWhenNotShowingAllPageNumbers = false
+                })
+            </div>
         </div>
     </div>
-</div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tangkap semua form delete dengan class
+            const deleteForms = document.querySelectorAll('.delapp-form');
 
+            // Loop melalui setiap form
+            deleteForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Tangkap semua form delete dengan class
-        const deleteForms = document.querySelectorAll('.delapp-form');
+                    // Simpan referensi form yang diklik
+                    const currentForm = this;
 
-        // Loop melalui setiap form
-        deleteForms.forEach(function(form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Simpan referensi form yang diklik
-                const currentForm = this;
-
-                // Tampilkan konfirmasi
-                Swal.fire({
-                    title: 'Hapus Lamaran?',
-                    text: "Apakah Anda yakin ingin menghapus lamaran ini?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Ya, Hapus',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Submit form yang spesifik
-                        currentForm.submit();
-                    }
+                    // Tampilkan konfirmasi
+                    Swal.fire({
+                        title: 'Hapus Lamaran?',
+                        text: "Apakah Anda yakin ingin menghapus lamaran ini?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit form yang spesifik
+                            currentForm.submit();
+                        }
+                    });
                 });
             });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: '@TempData["SuccessMessage"]',
+                        icon: 'success',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: '@TempData["ErrorMessage"]',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                    </text>
+            }
+
+            // Add responsive class to pagination on small screens
+            function checkPaginationResponsive() {
+                const pagination = document.querySelector('.pagination');
+                if (window.innerWidth < 768) {
+                    pagination.classList.add('pagination-mobile');
+                } else {
+                    pagination.classList.remove('pagination-mobile');
+                }
+            }
+
+            // Run on load and resize
+            checkPaginationResponsive();
+            window.addEventListener('resize', checkPaginationResponsive);
         });
-
-        // Tampilkan popup success jika ada pesan dari controller
-        @if (TempData["SuccessMessage"] != null)
-        {
-                <text>
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: '@TempData["SuccessMessage"]',
-                    icon: 'success',
-                    confirmButtonColor: '#0a66c2'
-                });
-                </text>
-        }
-
-        // Tampilkan popup error jika ada pesan dari controller
-        @if (TempData["ErrorMessage"] != null)
-        {
-                <text>
-                Swal.fire({
-                    title: 'Gagal!',
-                    text: '@TempData["ErrorMessage"]',
-                    icon: 'error',
-                    confirmButtonColor: '#d33'
-                });
-                </text>
-        }
-    });
-</script>
+    </script>
+</body>

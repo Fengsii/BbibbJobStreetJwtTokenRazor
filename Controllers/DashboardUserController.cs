@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BbibbJobStreetJwtToken.Controllers
 {
+    [Authorize(Roles = "User")]
     public class DashboardUserController : BaseController
     {
 

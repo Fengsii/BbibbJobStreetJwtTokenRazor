@@ -1,10 +1,12 @@
 ﻿using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models.DTO;
 using BbibbJobStreetJwtToken.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BbibbJobStreetJwtToken.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DashboardAdminController : Controller
     {
         private readonly IKategoriPekerjaan _kategoriPekerjaan;

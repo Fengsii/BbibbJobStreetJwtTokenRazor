@@ -6,70 +6,586 @@
     Layout = "_LayoutPerusahaan";
 }
 
- <!-- Profile View Page -->
-<div class="page active" id="profile-view">
-    <div class="profile-container">
-        <div class="profile-header">
-            <img src="@Model.LogoPath" alt="Logo Perusahaan" class="profile-logo">
-            <div class="profile-info">
-                <h2>@Model.NamaPerusahaan</h2>
-                <span class="profile-status status-active"><i class="fas fa-check-circle"></i>@Model.Status</span>
-            </div>
-        </div>
 
-        <div class="profile-details">
-            <div class="detail-card">
-                <h3><i class="fas fa-info-circle"></i> Informasi Umum</h3>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-signature"></i> Nama</span>
-                    <span class="value">@Model.NamaPerusahaan</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-envelope"></i> Email</span>
-                    <span class="value">@Model.Email</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-phone"></i> Telepon</span>
-                    <span class="value">+62 @Model.Telepon</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-briefcase"></i> Bidang Usaha</span>
-                    <span class="value">@Model.BidangUsaha</span>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f3f2ef;
+            color: #191919;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Container Styles */
+        .profile-container {
+            max-width: 1128px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Header Styles */
+        .profile-header {
+            display: flex;
+            align-items: flex-end;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            margin-bottom: 24px;
+            position: relative;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+            .profile-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 200px;
+                background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' fill='%230a66c2'/%3E%3Cpath d='M0,100 Q200,150 400,100 L400,200 L0,200 Z' fill='%23147acd' fill-opacity='0.3'/%3E%3Cpath d='M0,80 Q200,50 400,80 L400,200 L0,200 Z' fill='%23085ca2' fill-opacity='0.2'/%3E%3C/svg%3E");
+                background-size: cover;
+                background-position: center;
+            }
+
+        .profile-logo {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: white;
+            margin: 0 35px 30px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .profile-logo:hover {
+                transform: scale(1.03);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            }
+
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 30px;
+            padding-right: 30px;
+        }
+
+            .profile-info h2 {
+                font-size: 34px;
+                font-weight: 700;
+                color: white;
+                margin-bottom: 10px;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                letter-spacing: 0.5px;
+            }
+
+        .company-description {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            font-size: 16px;
+            max-width: 600px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: white;
+            color: #0a66c2;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            transition: transform 0.2s ease;
+        }
+
+            .profile-status:hover {
+                transform: translateY(-2px);
+            }
+
+        .company-stats {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+            .stat-item i {
+                margin-right: 8px;
+                font-size: 16px;
+            }
+
+        /* Detail Cards */
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #0a66c2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.5s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+            .detail-card:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            .detail-card:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .detail-card:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            .detail-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            }
+
+            .detail-card h3 {
+                font-size: 18px;
+                font-weight: 700;
+                color: #0a66c2;
+                margin-bottom: 18px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid #f0f2f5;
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.3px;
+            }
+
+                .detail-card h3 i {
+                    margin-right: 12px;
+                    color: #0a66c2;
+                    font-size: 20px;
+                }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            transition: background-color 0.2s ease;
+        }
+
+            .detail-item:hover {
+                background-color: #f9fbfd;
+            }
+
+            .detail-item:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+
+        .label {
+            flex: 1;
+            min-width: 130px;
+            font-weight: 600;
+            color: #5e6d77;
+            display: flex;
+            align-items: flex-start;
+            font-size: 15px;
+        }
+
+            .label i {
+                margin-right: 12px;
+                color: #0a66c2;
+                width: 18px;
+                margin-top: 2px;
+                font-size: 16px;
+            }
+
+        .value {
+            flex: 2;
+            min-width: 180px;
+            color: #2d3a4a;
+            font-weight: 500;
+            word-break: break-word;
+            font-size: 15px;
+        }
+
+        .value-additional {
+            font-size: 13px;
+            color: #7a8a9a;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            animation: fadeIn 0.8s ease-out;
+            animation-delay: 0.4s;
+            animation-fill-mode: backwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 160px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .btn i {
+                margin-right: 10px;
+                font-size: 16px;
+            }
+
+        .btn-primary {
+            background-color: #0a66c2;
+            color: white;
+            border: 1px solid #0a66c2;
+        }
+
+            .btn-primary:hover {
+                background-color: #004182;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+        .btn-secondary {
+            background-color: white;
+            color: #0a66c2;
+            border: 1px solid #0a66c2;
+        }
+
+            .btn-secondary:hover {
+                background-color: #f0f7ff;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Additional Info Section */
+        .additional-info {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #0a66c2;
+            animation: slideUp 0.5s ease-out;
+            animation-delay: 0.4s;
+            animation-fill-mode: backwards;
+        }
+
+            .additional-info h3 {
+                font-size: 20px;
+                font-weight: 700;
+                color: #0a66c2;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+            }
+
+                .additional-info h3 i {
+                    margin-right: 12px;
+                }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            padding: 8px 16px;
+            background-color: #eef5ff;
+            color: #0a66c2;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+            .tag:hover {
+                background-color: #dde9ff;
+                transform: translateY(-2px);
+            }
+
+        /* Animations */
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+        }
+
+        @@keyframes slideUp {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        /* Responsive Styles */
+        @@media (max-width: 1024px) {
+            .profile-container
+
+        {
+            max-width: 900px;
+        }
+
+        .profile-info h2 {
+            font-size: 30px;
+        }
+
+        }
+
+        @@media (max-width: 768px) {
+            .profile-header
+
+        {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-header::before {
+            height: 160px;
+        }
+
+        .profile-logo {
+            width: 140px;
+            height: 140px;
+            margin: 20px 0;
+        }
+
+        .profile-info {
+            text-align: center;
+            padding: 0 20px 25px;
+        }
+
+            .profile-info h2 {
+                font-size: 26px;
+            }
+
+        .company-stats {
+            justify-content: center;
+        }
+
+        .detail-item {
+            flex-direction: column;
+        }
+
+        .label {
+            margin-bottom: 6px;
+            min-width: 100%;
+            justify-content: center;
+        }
+
+        .value {
+            min-width: 100%;
+            text-align: center;
+            padding-left: 0;
+        }
+
+        .action-buttons {
+            justify-content: center;
+        }
+
+        }
+
+        @@media (max-width: 640px) {
+            .profile-details
+
+        {
+            grid-template-columns: 1fr;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .profile-info h2 {
+            font-size: 24px;
+        }
+
+        .company-description {
+            font-size: 15px;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .profile-container
+
+        {
+            padding: 0 12px;
+        }
+
+        .profile-info h2 {
+            font-size: 22px;
+        }
+
+        .detail-card {
+            padding: 18px;
+        }
+
+        .profile-header::before {
+            height: 140px;
+        }
+
+        .profile-logo {
+            width: 120px;
+            height: 120px;
+        }
+
+        .company-stats {
+            gap: 15px;
+        }
+
+        .stat-item {
+            font-size: 13px;
+        }
+
+        }
+    </style>
+
+<body>
+    <!-- Profile View Page -->
+    <div class="page active" id="profile-view">
+        <div class="profile-container">
+            <div class="profile-header">
+                <img src="@Model.LogoPath" alt="Logo Perusahaan" class="profile-logo">
+                <div class="profile-info">
+                    <h2>@Model.NamaPerusahaan</h2>
+                    <p class="company-description">Perusahaan terdepan dalam @Model.BidangUsaha yang berkomitmen memberikan layanan terbaik sejak @Model.TanggalBerdiri.ToString("yyyy")</p>
+                    <span class="profile-status status-active"><i class="fas fa-check-circle"></i>@Model.Status - Terverifikasi</span>
+
+                    <div class="company-stats">
+                        <div class="stat-item"><i class="fas fa-users"></i> 200+ Karyawan</div>
+                        <div class="stat-item"><i class="fas fa-map-marker-alt"></i> @Model.Kota, @Model.Provinsi</div>
+                        <div class="stat-item"><i class="fas fa-star"></i> 4.8 Rating</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="detail-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Alamat</h3>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-road"></i> Jalan</span>
-                    <span class="value">@Model.Alamat</span>
+            <div class="profile-details">
+                <div class="detail-card">
+                    <h3><i class="fas fa-info-circle"></i> Informasi Umum</h3>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-signature"></i> Nama Perusahaan</span>
+                        <span class="value">@Model.NamaPerusahaan</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-envelope"></i> Email</span>
+                        <span class="value">@Model.Email<span class="value-additional"> Email resmi perusahaan</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-phone"></i> Telepon</span>
+                        <span class="value">+62 @Model.Telepon<span class="value-additional"> Jam kerja: 08.00 - 17.00</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-briefcase"></i> Bidang Usaha</span>
+                        <span class="value">@Model.BidangUsaha<span class="value-additional"> Spesialis dalam penyediaan solusi terkini</span></span>
+                    </div>
                 </div>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-city"></i> Kota</span>
-                    <span class="value">@Model.Kota</span>
+
+                <div class="detail-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Alamat & Lokasi</h3>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-road"></i> Jalan</span>
+                        <span class="value">@Model.Alamat<span class="value-additional"> Komplek Perkantoran Central Business District</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-city"></i> Kota</span>
+                        <span class="value">@Model.Kota<span class="value-additional"> Kota metropolitan dengan akses transportasi lengkap</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-map"></i> Provinsi</span>
+                        <span class="value">@Model.Provinsi<span class="value-additional"> Provinsi dengan pertumbuhan ekonomi tertinggi</span></span>
+                    </div>
                 </div>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-map"></i> Provinsi</span>
-                    <span class="value">@Model.Provinsi</span>
+
+                <div class="detail-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Informasi Lainnya</h3>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-rocket"></i> Tanggal Berdiri</span>
+                        <span class="value">@Model.TanggalBerdiri.ToString("dd MMMM yyyy")<span class="value-additional"> Sudah beroperasi selama @((DateTime.Now.Year - Model.TanggalBerdiri.Year)) tahun</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-user-tag"></i> Role</span>
+                        <span class="value">@Model.Role<span class="value-additional"> Akses penuh ke semua fitur platform</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label"><i class="fas fa-globe"></i> Bahasa</span>
+                        <span class="value">Indonesia & Inggris<span class="value-additional"> Melayani klien domestik dan internasional</span></span>
+                    </div>
                 </div>
             </div>
 
-            <div class="detail-card">
-                <h3><i class="fas fa-calendar-alt"></i> Informasi Lainnya</h3>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-rocket"></i> Tanggal Berdiri</span>
-                    <span class="value">@Model.TanggalBerdiri.ToString("yyyy-MM-dd")</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label"><i class="fas fa-user-tag"></i> Role</span>
-                    <span class="value">@Model.Role</span>
-                </div>
+            <div class="action-buttons">
+                <a href="/DashboardPerusahaan/CompanyProfileSetting" class="btn btn-primary" id="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profil</a>
+                <a href="/DashboardPerusahaan/Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-download"></i> Unduh Profil</a>
             </div>
-        </div>
-
-        <div class="action-buttons">
-            <a href="/DashboardPerusahaan/CompanyProfileSetting" class="btn btn-primary" id="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profil</a>
-            <a href="/DashboardPerusahaan/Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
         </div>
     </div>
-</div>
+</body>
+
+

@@ -24,7 +24,7 @@ namespace BbibbJobStreetJwtToken.Helpers
 
                 email.Body = new TextPart("plain")
                 {
-                    Text = $"Halo,\n\nKode OTP kamu: {otpCode}\nBerlaku selama 10 menit.\n\nSalam,\nTim Luxora Store"
+                    Text = $"Halo,\n\nKode OTP kamu: {otpCode}\nBerlaku selama 10 menit.\n\nSalam,\nCareer Connect"
                 };
 
                 using var smtp = new SmtpClient();

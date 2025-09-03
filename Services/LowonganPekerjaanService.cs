@@ -181,7 +181,7 @@ namespace BbibbJobStreetJwtToken.Services
             data.Posisi = lowonganPekerjaanAddUpdateDTO.Posisi;
             data.Alamat = lowonganPekerjaanAddUpdateDTO.Alamat;
             data.Deskripsi = lowonganPekerjaanAddUpdateDTO.Deskripsi;
-            data.TanggalDibuat = lowonganPekerjaanAddUpdateDTO.TanggalDibuat;
+            data.TanggalDibuat = DateTime.Now;
             data.status = lowonganPekerjaanAddUpdateDTO.status;
             data.KategoriId = lowonganPekerjaanAddUpdateDTO.KategoriId;
 

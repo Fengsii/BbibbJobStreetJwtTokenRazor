@@ -9,6 +9,7 @@ using System.Security.Claims;
 
 namespace BbibbJobStreetJwtToken.Controllers
 {
+    [Authorize(Roles = "company")]
     public class DashboardPerusahaanController : Controller
     {
         private readonly IKategoriPekerjaan _kategoriPekerjaan;

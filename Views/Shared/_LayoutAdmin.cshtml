@@ -723,7 +723,7 @@
                 <li><a href="/DashboardAdmin/KategoriPekerjaan" class="nav-link"><i class="fas fa-file-alt"></i> Kategori</a></li>
                 <li><a href="/DashboardAdmin/CompanyList" class="nav-link"><i class="fas fa-building"></i> Perusahaan</a></li>
                 <li><a href="/DashboardAdmin/UserList" class="nav-link"><i class="fas fa-user-graduate"></i> Pelamar</a></li>
-                <form asp-controller="LoginPage" asp-action="Logout" method="post">
+                <form asp-controller="LoginPage" class="delapp-form" asp-action="Logout" method="post">
                     <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; width: 100%; text-align: left;">
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </button>
@@ -746,6 +746,67 @@
             @RenderBody()
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tangkap semua form delete dengan class
+            const deleteForms = document.querySelectorAll('.delapp-form');
+
+            // Loop melalui setiap form
+            deleteForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Simpan referensi form yang diklik
+                    const currentForm = this;
+
+                    // Tampilkan konfirmasi
+                    Swal.fire({
+                        title: 'Hapus Lowongan?',
+                        text: "Apakah Anda yakin ingin menghapus lowongan ini?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit form yang spesifik
+                            currentForm.submit();
+                        }
+                    });
+                });
+            });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                        <text>
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: '@TempData["SuccessMessage"]',
+                            icon: 'success',
+                            confirmButtonColor: '#0a66c2'
+                        });
+                        </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                        <text>
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: '@TempData["ErrorMessage"]',
+                            icon: 'error',
+                            confirmButtonColor: '#d33'
+                        });
+                        </text>
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script>

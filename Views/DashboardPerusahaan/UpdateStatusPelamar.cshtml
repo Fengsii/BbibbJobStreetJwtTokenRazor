@@ -6,7 +6,9 @@
     ViewData["Title"] = "Update Data Pelamar";
 }
 
-<style>
+
+
+@* <style>
     /* Form container styling */
     .form-container {
         max-width: 800px;
@@ -93,71 +95,59 @@
     }
 
     @@keyframes fadeIn {
-        from
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
 
-    {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     /* Responsive design */
     @@media (max-width: 768px) {
-        .form-container
+        .form-container {
+            padding: 15px;
+            margin: 10px;
+        }
 
-    {
-        padding: 15px;
-        margin: 10px;
-    }
+        .form-group input,
+        .form-group select,
+        .form-group input[type="file"] {
+            font-size: 14px;
+        }
 
-    .form-group input,
-    .form-group select,
-    .form-group input[type="file"] {
-        font-size: 14px;
-    }
-
-    .btn {
-        width: 100%;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
     }
 
     @@media (min-width: 769px) and (max-width: 1024px) {
-        .form-container
+        .form-container {
+            max-width: 600px;
+            padding: 15px;
+        }
 
-    {
-        max-width: 600px;
-        padding: 15px;
-    }
+        .form-group label,
+        .form-group input,
+        .form-group select,
+        .form-group input[type="file"] {
+            font-size: 14px;
+        }
 
-    .form-group label,
-    .form-group input,
-    .form-group select,
-    .form-group input[type="file"] {
-        font-size: 14px;
-    }
-
-    .btn {
-        padding: 8px 16px;
-    }
-
+        .btn {
+            padding: 8px 16px;
+        }
     }
 
     @@media (min-width: 1025px) {
-        .form-group label, .form-group input, .form-group select, .form-group input[type="file"]
-
-    {
-        font-size: 16px;
-    }
-
+        .form-group label, .form-group input, .form-group select, .form-group input[type="file"] {
+            font-size: 16px;
+        }
     }
 </style>
 
@@ -240,27 +230,1014 @@
         // Tampilkan popup success jika ada pesan dari controller
         @if (TempData["SuccessMessage"] != null)
         {
-                                <text>
-                                Swal.fire({
-                                    title: 'Berhasil!',
-                                    text: '@TempData["SuccessMessage"]',
-                                    icon: 'success',
-                                    confirmButtonColor: '#0a66c2'
-                                });
-                                </text>
+                                    <text>
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: '@TempData["SuccessMessage"]',
+                                        icon: 'success',
+                                        confirmButtonColor: '#0a66c2'
+                                    });
+                                    </text>
         }
 
         // Tampilkan popup error jika ada pesan dari controller
         @if (TempData["ErrorMessage"] != null)
         {
-                                <text>
-                                Swal.fire({
-                                    title: 'Gagal!',
-                                    text: '@TempData["ErrorMessage"]',
-                                    icon: 'error',
-                                    confirmButtonColor: '#d33'
-                                });
-                                </text>
+                                    <text>
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: '@TempData["ErrorMessage"]',
+                                        icon: 'error',
+                                        confirmButtonColor: '#d33'
+                                    });
+                                    </text>
         }
     });
-</script>
+</script> *@
+
+
+
+
+
+
+@* 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f3f2ef;
+            color: #191919;
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Form container styling - LinkedIn Style */
+        .form-container {
+            max-width: 780px;
+            margin: 30px auto;
+            padding: 0;
+            background: #fff;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Header form */
+        .form-header {
+            background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+            padding: 24px 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .form-header i {
+                font-size: 24px;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 12px;
+                border-radius: 50%;
+            }
+
+            .form-header h3 {
+                font-size: 22px;
+                font-weight: 600;
+                margin: 0;
+            color: white;
+            }
+
+        /* Form body */
+        .form-body {
+            padding: 30px;
+        }
+
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 8px;
+                font-size: 15px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+                .form-group label i {
+                    color: #0a66c2;
+                    width: 18px;
+                }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 14px 16px;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+                font-size: 15px;
+                background-color: #f9f9f9;
+            }
+
+                .form-group input:focus,
+                .form-group select:focus {
+                    outline: none;
+                    border-color: #0a66c2;
+                    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+                    background-color: #fff;
+                }
+
+                .form-group input[readonly],
+                .form-group select[readonly] {
+                    background-color: #f5f5f5;
+                    color: #666;
+                    cursor: not-allowed;
+                }
+
+        /* Button styling */
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 140px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+            .btn i {
+                margin-right: 8px;
+            }
+
+        .btn-submit {
+            background-color: #0a66c2;
+            color: white;
+            border: 1px solid #0a66c2;
+        }
+
+            .btn-submit:hover {
+                background-color: #004182;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+        .btn-cancel {
+            background-color: transparent;
+            color: #666;
+            border: 1px solid #666;
+        }
+
+            .btn-cancel:hover {
+                background-color: #f5f5f5;
+                color: #333;
+                border-color: #333;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Status select styling */
+        select#Status {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230a66c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 45px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Animation */
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .form-group {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+            .form-group:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            .form-group:nth-child(2) {
+                animation-delay: 0.15s;
+            }
+
+            .form-group:nth-child(3) {
+                animation-delay: 0.2s;
+            }
+
+            .form-group:nth-child(4) {
+                animation-delay: 0.25s;
+            }
+
+            .form-group:nth-child(5) {
+                animation-delay: 0.3s;
+            }
+
+        /* Responsive design */
+        @@media (max-width: 768px) {
+            .form-container
+
+        {
+            margin: 15px;
+            border-radius: 8px;
+        }
+
+        .form-header {
+            padding: 20px;
+        }
+
+        .form-body {
+            padding: 20px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .form-header h3 {
+            font-size: 19px;
+        }
+
+        .form-header i {
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .form-header
+
+        {
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+            padding: 18px;
+        }
+
+        .form-body {
+            padding: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+            .form-group input,
+            .form-group select {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+        .btn {
+            padding: 14px 20px;
+        }
+
+        }
+
+        @@media (min-width: 769px) and (max-width: 1024px) {
+            .form-container
+
+        {
+            max-width: 650px;
+        }
+
+        }
+    </style>
+
+<body>
+    <div class="page active" id="update-lamaran">
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-pencil-alt"></i>
+                <h3>Update Data Pelamar</h3>
+            </div>
+
+            <div class="form-body">
+                <form id="status-form" method="post" asp-action="UpdateStatusPelamar" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nama</label>
+                        <input asp-for="Nama" class="form-control" placeholder="Masukkan nama pelamar" readonly />
+                        <span asp-validation-for="Nama" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Masukkan email" readonly />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> No HP</label>
+                        <input asp-for="NoHP" class="form-control" placeholder="Masukkan nomor HP" readonly />
+                        <span asp-validation-for="NoHP" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-graduation-cap"></i> Pendidikan</label>
+                        <input asp-for="Pendidikan" class="form-control" placeholder="Masukkan pendidikan terakhir" readonly />
+                        <span asp-validation-for="Pendidikan" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tasks"></i> Status</label>
+                        <select asp-for="Status" class="form-control" required>
+                            <option value="">Pilih Status</option>
+                            <option value="Diproses">Diproses</option>
+                            <option value="Diterima">Diterima</option>
+                            <option value="Ditolak">Ditolak</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit"><i class="fas fa-save"></i> Simpan</button>
+                        <a href="@Url.Action("PelamarKerja", "DashboardPerusahaan")" class="btn btn-cancel"><i class="fas fa-times"></i> Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('status-form');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Update Status?',
+                    text: "Apakah Anda yakin ingin mengubah status lamaran ini?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0a66c2',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Update',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form
+                        form.submit();
+                    }
+                });
+            });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: '@TempData["SuccessMessage"]',
+                        icon: 'success',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: '@TempData["ErrorMessage"]',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                    </text>
+            }
+        });
+    </script>
+</body> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* Reset dan Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+        background-color: #f3f2ef;
+        color: #191919;
+        line-height: 1.5;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Form container styling - LinkedIn Style */
+    .form-container {
+        max-width: 780px;
+        margin: 30px auto;
+        padding: 0;
+        background: #fff;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        overflow: hidden;
+        animation: slideInUp 0.6s ease-out;
+    }
+
+    /* Header form */
+    .form-header {
+        background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+        padding: 24px 30px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .form-header i {
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .form-header:hover i {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .form-header h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+            color: white;
+        }
+
+    /* Form body */
+    .form-body {
+        padding: 30px;
+    }
+
+    /* Form group styling */
+    .form-group {
+        margin-bottom: 22px;
+        position: relative;
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .form-group label i {
+                color: #0a66c2;
+                width: 18px;
+            }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            background-color: #f9f9f9;
+        }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: #0a66c2;
+                box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+                background-color: #fff;
+                transform: translateY(-2px);
+            }
+
+            .form-group input[readonly],
+            .form-group select[readonly] {
+                background-color: #f5f5f5;
+                color: #666;
+                cursor: not-allowed;
+            }
+
+    /* Button styling */
+    .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eaeaea;
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-radius: 24px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        min-width: 140px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-size: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: #0a66c2;
+        color: white;
+        border: 1px solid #0a66c2;
+    }
+
+        .btn-submit:hover {
+            background-color: #004182;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+    .btn-cancel {
+        background-color: transparent;
+        color: #666;
+        border: 1px solid #666;
+    }
+
+        .btn-cancel:hover {
+            background-color: #f5f5f5;
+            color: #333;
+            border-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Status select styling */
+    select#Status {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230a66c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        background-size: 16px;
+        padding-right: 45px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    /* Validation styles */
+    .text-danger {
+        color: #e03e3e;
+        font-size: 13px;
+        margin-top: 6px;
+        display: block;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .text-danger i {
+            font-size: 14px;
+        }
+
+    /* Animations */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+        }
+
+        50% {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+        }
+
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+        }
+    }
+
+    .form-group {
+        animation: fadeIn 0.4s ease-out;
+    }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .form-group:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(4) {
+            animation-delay: 0.25s;
+        }
+
+        .form-group:nth-child(5) {
+            animation-delay: 0.3s;
+        }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .form-container {
+            margin: 15px;
+            border-radius: 8px;
+        }
+
+        .form-header {
+            padding: 20px;
+        }
+
+        .form-body {
+            padding: 20px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .form-header h3 {
+            font-size: 19px;
+        }
+
+        .form-header i {
+            font-size: 20px;
+            padding: 10px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .form-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+            padding: 18px;
+        }
+
+        .form-body {
+            padding: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+            .form-group input,
+            .form-group select {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+        .btn {
+            padding: 14px 20px;
+        }
+    }
+
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .form-container {
+            max-width: 650px;
+        }
+    }
+
+    /* Loading state */
+    .btn-loading {
+        position: relative;
+        color: transparent;
+    }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<body>
+    <div class="page active" id="update-lamaran">
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-user-edit"></i>
+                <h3 style="color: white;">Update Data Pelamar</h3>
+            </div>
+
+            <div class="form-body">
+                <form id="status-form" method="post" asp-action="UpdateStatusPelamar" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nama</label>
+                        <input asp-for="Nama" class="form-control" placeholder="Masukkan nama pelamar" readonly />
+                        <span asp-validation-for="Nama" class="text-danger"><</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Masukkan email" readonly />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> No HP</label>
+                        <input asp-for="NoHP" class="form-control" placeholder="Masukkan nomor HP" readonly />
+                        <span asp-validation-for="NoHP" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-graduation-cap"></i> Pendidikan</label>
+                        <input asp-for="Pendidikan" class="form-control" placeholder="Masukkan pendidikan terakhir" readonly />
+                        <span asp-validation-for="Pendidikan" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tasks"></i> Status</label>
+                        <select asp-for="Status" class="form-control" required>
+                            <option value="">Pilih Status</option>
+                            <option value="Diproses">Diproses</option>
+                            <option value="Diterima">Diterima</option>
+                            <option value="Ditolak">Ditolak</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit" id="submit-btn">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                        <a href="@Url.Action("PelamarKerja", "DashboardPerusahaan")" class="btn btn-cancel">
+                            <i class="fas fa-times"></i> Batal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('status-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            // Real-time validation
+            const statusSelect = document.getElementById('Status');
+
+            statusSelect.addEventListener('change', function() {
+                validateField(this);
+            });
+
+            function validateField(field) {
+                const errorElement = field.nextElementSibling;
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    field.classList.add('error');
+                    if (errorElement && errorElement.classList.contains('text-danger')) {
+                        errorElement.textContent = 'Field ini wajib diisi';
+                    }
+                } else {
+                    field.classList.remove('error');
+                    if (errorElement && errorElement.classList.contains('text-danger')) {
+                        errorElement.textContent = '';
+                    }
+                }
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Validate status field
+                let isValid = true;
+                if (!statusSelect.value.trim()) {
+                    statusSelect.classList.add('error');
+                    const errorElement = statusSelect.nextElementSibling;
+                    if (errorElement && errorElement.classList.contains('text-danger')) {
+                        errorElement.textContent = 'Field ini wajib diisi';
+                    }
+                    isValid = false;
+
+                    // Add pulse animation to error field
+                    statusSelect.style.animation = 'pulse 0.5s ease';
+                    setTimeout(() => {
+                        statusSelect.style.animation = '';
+                    }, 500);
+                }
+
+                if (!isValid) {
+                    // Scroll to error field
+                    statusSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    Swal.fire({
+                        title: 'Perhatian!',
+                        text: 'Harap pilih status pelamar',
+                        icon: 'warning',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    return;
+                }
+
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Update Status?',
+                    text: "Apakah Anda yakin ingin mengubah status lamaran ini?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0a66c2',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Update',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show loading state
+                        submitBtn.classList.add('btn-loading');
+                        submitBtn.disabled = true;
+
+                        // Submit form
+                        setTimeout(() => {
+                            form.submit();
+                        }, 800);
+                    }
+                });
+            });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                        <text>
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: '@TempData["SuccessMessage"]',
+                            icon: 'success',
+                            confirmButtonColor: '#0a66c2',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = '@Url.Action("PelamarKerja", "DashboardPerusahaan")';
+                        });
+                        </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                        <text>
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: '@TempData["ErrorMessage"]',
+                            icon: 'error',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'Mengerti'
+                        });
+                        </text>
+            }
+        });
+    </script>
+</body>
+

@@ -5,149 +5,479 @@
     Layout = "_LayoutPerusahaan";
 }
 
-<div class="page active" id="profile-edit">
-    <div class="form-container">
-        <h3><i class="fas fa-edit"></i> Edit Profil Perusahaan</h3>
-        <form id="profile-form" method="post" asp-action="CompanyProfileSetting" enctype="multipart/form-data">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
 
-            <!-- penting! hidden ID -->
-            <input type="hidden" asp-for="PerusahaanId" />
+        body {
+            background-color: #f3f2ef;
+            color: #191919;
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+        }
 
-            <div class="form-grid">
-                <div class="form-group">
-                    <label asp-for="NamaPerusahaan"></label>
-                    <input asp-for="NamaPerusahaan" class="form-control" required />
-                </div>
+        /* Form container styling - LinkedIn Style */
+        .form-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0;
+            background: #fff;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" type="email" class="form-control" required />
-                </div>
+        /* Header form */
+        .form-header {
+            background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+            padding: 24px 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-                <div class="form-group">
-                    <label asp-for="Password">Password (opsional)</label>
-                    <input asp-for="Password" type="password" class="form-control" placeholder="Kosongkan jika tidak ingin ubah" />
-                </div>
+            .form-header i {
+                font-size: 24px;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 12px;
+                border-radius: 50%;
+            }
 
-                <div class="form-group">
-                    <label asp-for="Telepon"></label>
-                    <input asp-for="Telepon" class="form-control" />
-                </div>
+            .form-header h3 {
+                font-size: 22px;
+                font-weight: 600;
+                margin: 0;
+            }
 
-                <div class="form-group">
-                    <label asp-for="BidangUsaha"></label>
-                    <input asp-for="BidangUsaha" class="form-control" />
-                </div>
+        /* Form body */
+        .form-body {
+            padding: 30px;
+        }
 
-                <div class="form-group">
-                    <label asp-for="Alamat"></label>
-                    <input asp-for="Alamat" class="form-control" />
-                </div>
+        /* Form grid styling */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-                <div class="form-group">
-                    <label asp-for="Kota"></label>
-                    <input asp-for="Kota" class="form-control" />
-                </div>
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 0;
+            position: relative;
+        }
 
-                <div class="form-group">
-                    <label asp-for="Provinsi"></label>
-                    <select asp-for="Provinsi" class="form-control">
-                        <option value="">-- Pilih Provinsi --</option>
-                        <option>DKI Jakarta</option>
-                        <option>Jawa Barat</option>
-                        <option>Riau</option>
-                        <option>Jawa Tengah</option>
-                        <option>Jawa Timur</option>
-                        <option>Banten</option>
-                        <option>Bali</option>
-                    </select>
-                </div>
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 8px;
+                font-size: 15px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
 
-                <div class="form-group">
-                    <label asp-for="TanggalBerdiri"></label>
-                    <input asp-for="TanggalBerdiri" type="date" class="form-control" />
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="LogoPath">Logo Perusahaan</label>
-                    <input asp-for="LogoPath" type="file" class="form-control" accept="image/*" />
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <a href="@Url.Action("CompanyProfile", "DashboardPerusahaan")" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> Batal
-                </a>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Perubahan</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById('profile-form');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Tampilkan konfirmasi
-            Swal.fire({
-                title: 'Update Company?',
-                text: "Apakah Anda yakin ingin update company?",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#0a66c2',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, Update',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Submit form
-                    form.submit();
+                .form-group label i {
+                    color: #0a66c2;
+                    width: 18px;
                 }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 14px 16px;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+                font-size: 15px;
+                background-color: #f9f9f9;
+            }
+
+                .form-group input:focus,
+                .form-group select:focus {
+                    outline: none;
+                    border-color: #0a66c2;
+                    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+                    background-color: #fff;
+                }
+
+                .form-group input[type="file"] {
+                    padding: 11px 16px;
+                    background-color: #fff;
+                }
+
+        /* Password input container */
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+            .toggle-password:hover {
+                color: #0a66c2;
+            }
+
+        /* Button styling */
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #eaeaea;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 160px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+            .btn i {
+                margin-right: 8px;
+            }
+
+        .btn-primary {
+            background-color: #0a66c2;
+            color: white;
+            border: 1px solid #0a66c2;
+        }
+
+            .btn-primary:hover {
+                background-color: #004182;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #666;
+            border: 1px solid #666;
+        }
+
+            .btn-secondary:hover {
+                background-color: #f5f5f5;
+                color: #333;
+                border-color: #333;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Select styling */
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230a66c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 45px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Animation */
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .form-group {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Responsive design */
+        @@media (max-width: 768px) {
+            .form-container
+
+        {
+            margin: 15px;
+            border-radius: 8px;
+        }
+
+        .form-header {
+            padding: 20px;
+        }
+
+        .form-body {
+            padding: 20px;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .form-header h3 {
+            font-size: 19px;
+        }
+
+        .form-header i {
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .form-header
+
+        {
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+            padding: 18px;
+        }
+
+        .form-body {
+            padding: 18px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 14px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            min-width: auto;
+        }
+
+        }
+
+        @@media (min-width: 769px) and (max-width: 1024px) {
+            .form-container
+
+        {
+            max-width: 700px;
+        }
+
+        .form-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        }
+
+        /* File input styling */
+        input[type="file"]::file-selector-button {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+            input[type="file"]::file-selector-button:hover {
+                background: #e0e0e0;
+            }
+    </style>
+
+<body>
+    <div class="page active" id="profile-edit">
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-edit"></i>
+                <h3 style="color: white;">Edit Profil Perusahaan</h3>
+            </div>
+
+            <div class="form-body">
+                <form id="profile-form" method="post" asp-action="CompanyProfileSetting" enctype="multipart/form-data">
+                    <!-- penting! hidden ID -->
+                    <input type="hidden" asp-for="PerusahaanId" />
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-building"></i> Nama Perusahaan</label>
+                            <input asp-for="NamaPerusahaan" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Email</label>
+                            <input asp-for="Email" type="email" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Password</label>
+                            <div class="password-container">
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Kosongkan jika tidak ingin ubah" id="passwordInput" />
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Telepon</label>
+                            <input asp-for="Telepon" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-briefcase"></i> Bidang Usaha</label>
+                            <input asp-for="BidangUsaha" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-road"></i> Alamat</label>
+                            <input asp-for="Alamat" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-city"></i> Kota</label>
+                            <input asp-for="Kota" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marked-alt"></i> Provinsi</label>
+                            <select asp-for="Provinsi" class="form-control">
+                                <option value="">-- Pilih Provinsi --</option>
+                                <option>DKI Jakarta</option>
+                                <option>Jawa Barat</option>
+                                <option>Riau</option>
+                                <option>Jawa Tengah</option>
+                                <option>Jawa Timur</option>
+                                <option>Banten</option>
+                                <option>Bali</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Tanggal Berdiri</label>
+                            <input asp-for="TanggalBerdiri" type="date" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-image"></i> Logo Perusahaan</label>
+                            <input asp-for="LogoPath" type="file" class="form-control" accept="image/*" />
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="@Url.Action("CompanyProfile", "DashboardPerusahaan")" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Batal
+                        </a>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('profile-form');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Update Profil Perusahaan?',
+                    text: "Apakah Anda yakin ingin memperbarui profil perusahaan?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0a66c2',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Update',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form
+                        form.submit();
+                    }
+                });
             });
+
+            // Toggle password visibility
+            document.getElementById('togglePassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('passwordInput');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle icon
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+
+            // Tampilkan popup success jika ada pesan dari controller
+            @if (TempData["SuccessMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: '@TempData["SuccessMessage"]',
+                        icon: 'success',
+                        confirmButtonColor: '#0a66c2'
+                    });
+                    </text>
+            }
+
+            // Tampilkan popup error jika ada pesan dari controller
+            @if (TempData["ErrorMessage"] != null)
+            {
+                    <text>
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: '@TempData["ErrorMessage"]',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                    </text>
+            }
         });
-
-        // Tampilkan popup success jika ada pesan dari controller
-        @if (TempData["SuccessMessage"] != null)
-        {
-                        <text>
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: '@TempData["SuccessMessage"]',
-                            icon: 'success',
-                            confirmButtonColor: '#0a66c2'
-                        });
-                        </text>
-        }
-
-        // Tampilkan popup error jika ada pesan dari controller
-        @if (TempData["ErrorMessage"] != null)
-        {
-                        <text>
-                        Swal.fire({
-                            title: 'Gagal!',
-                            text: '@TempData["ErrorMessage"]',
-                            icon: 'error',
-                            confirmButtonColor: '#d33'
-                        });
-                        </text>
-        }
-    });
-</script>
-
-<script>
-
-    // Toggle password visibility
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const passwordInput = document.getElementById('passwordInput');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-
-        // Toggle icon
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-    });
-</script>
+    </script>
+</body>
