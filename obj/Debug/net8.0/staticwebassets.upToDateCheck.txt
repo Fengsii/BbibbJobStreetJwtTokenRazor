@@ -683,6 +683,7 @@ wwwroot\upload\7df7bbcd-a914-46a9-8256-f7ab1f011465.png
 wwwroot\upload\86a79c0b-3493-4402-b58b-39d5da2e466c.png
 wwwroot\upload\8823cc68-0db1-490d-b8a9-26931ebe9beb.png
 wwwroot\upload\88a4d147-42a6-439c-8a52-7f8d85162e4e.jpg
+wwwroot\upload\939e39e3-0092-46ef-b743-6daa4ed6ca2f.png
 wwwroot\upload\95de44a6-3bbf-448f-be7d-f582db7f613c.png
 wwwroot\upload\96abacd0-8e9b-4ee5-9397-a28f5b230cea.jpg
 wwwroot\upload\99710f69-9c90-4639-a48a-b4922c90a24d.jpg

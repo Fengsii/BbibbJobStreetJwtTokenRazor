@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BbibbJobStreetJwtToken")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4ca60111238ee9a19f78c13111417254361ffb1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30e95800b122260e8dd87fb1fb6f2be9d82e7001")]
 [assembly: System.Reflection.AssemblyProductAttribute("BbibbJobStreetJwtToken")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BbibbJobStreetJwtToken")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
