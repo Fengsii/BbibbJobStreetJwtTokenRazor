@@ -322,56 +322,65 @@
             }
         }
 
-         document.addEventListener("DOMContentLoaded", function () {
-             const form = document.getElementById('loginForm');
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('loginForm');
 
-             form.addEventListener('submit', function (e) {
-                 e.preventDefault();
+            // Simpan nilai TempData ke variabel JavaScript sebelum digunakan
+            const successMessage = '@Html.Raw(TempData["SuccessMessage"]?.ToString().Replace("'", "\\'"))';
+            const errorMessage = '@Html.Raw(TempData["ErrorMessage"]?.ToString().Replace("'", "\\'"))';
 
-                 // Tampilkan konfirmasi
-                 Swal.fire({
-                     title: 'Login?',
-                     text: "Apakah Anda yakin ingin login?",
-                     icon: 'question',
-                     showCancelButton: true,
-                     confirmButtonColor: '#0a66c2',
-                     cancelButtonColor: '#6c757d',
-                     confirmButtonText: 'Ya, login',
-                     cancelButtonText: 'Batal'
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                         // Submit form
-                         form.submit();
-                     }
-                 });
-             });
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-             // Tampilkan popup success jika ada pesan dari controller
-             @if (TempData["SuccessMessage"] != null)
-             {
-                                     <text>
-                                     Swal.fire({
-                                         title: 'Berhasil!',
-                                         text: '@TempData["SuccessMessage"]',
-                                         icon: 'success',
-                                         confirmButtonColor: '#0a66c2'
-                                     });
-                                     </text>
-             }
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Login?',
+                    text: "Apakah Anda yakin ingin login?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#7c3aed',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, login',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Tampilkan loading
+                        Swal.fire({
+                            title: 'Sedang login',
+                            text: 'Mohon tunggu sebentar...',
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            }
+                        });
 
-             // Tampilkan popup error jika ada pesan dari controller
-             @if (TempData["ErrorMessage"] != null)
-             {
-                                     <text>
-                                     Swal.fire({
-                                         title: 'Gagal!',
-                                         text: '@TempData["ErrorMessage"]',
-                                         icon: 'error',
-                                         confirmButtonColor: '#d33'
-                                     });
-                                     </text>
-             }
-         });
+                        // Submit form
+                        form.submit();
+                    }
+                });
+            });
+
+            // Tampilkan popup berdasarkan nilai yang disimpan
+            if (successMessage && successMessage !== '') {
+                Swal.fire({
+                    title: 'Berhasil Login!',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonColor: '#7c3aed'
+                });
+            }
+
+            if (errorMessage && errorMessage !== '') {
+                Swal.fire({
+                    title: 'Login Gagal!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+            }
+        });
     </script>
 </body>
 </html>

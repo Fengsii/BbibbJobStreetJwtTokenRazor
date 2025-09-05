@@ -102,7 +102,7 @@ namespace BbibbJobStreetJwtToken.Services
 
         public List<LowonganPekerjaanViewDTO> GetListLowonganPekerjaanForUser()
         {
-            var data = _context.LowonganPekerjaans.Include(y => y.Kategori).Include(y => y.Perusahaan).Where(x => x.status != StatusLowongan.StatusLowonganPekerjaan.Delete).Select(x => new LowonganPekerjaanViewDTO
+            var data = _context.LowonganPekerjaans.Include(y => y.Kategori).Include(y => y.Perusahaan).Where(x => x.status != StatusLowongan.StatusLowonganPekerjaan.Delete && x.status != StatusLowongan.StatusLowonganPekerjaan.Closed).Select(x => new LowonganPekerjaanViewDTO
             {
                 Id = x.Id,
                 Logo = !string.IsNullOrEmpty(x.Perusahaan.LogoPath) ? "/" + x.Perusahaan.LogoPath : null,

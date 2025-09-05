@@ -1,5 +1,7 @@
 ﻿@using BbibbJobStreetJwtToken.Models.DB
-@model KategoriPekerjaan
+@using BbibbJobStreetJwtToken.Models.DTO
+@* @model KategoriPekerjaan *@
+@model KategoriPekerjaanDTO
 
 @{
     Layout = "_LayoutAdmin";
@@ -20,13 +22,13 @@
                 <label for="NamaKategori">Nama Kategori</label>
                 <input type="text" class="form-control" id="NamaKategori" asp-for="NamaKategori"
                        placeholder="Masukkan nama kategori (contoh: IT, Marketing, Desain)">
-                <span asp-validation-for="NamaKategori" class="text-danger"></span>
+                <span style="color:red" asp-validation-for="NamaKategori" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Deskripsi">Deskripsi</label>
                 <textarea class="form-control" id="Deskripsi" asp-for="Deskripsi"
                           placeholder="Masukkan deskripsi kategori" rows="4"></textarea>
-                <span asp-validation-for="Deskripsi" class="text-danger"></span>
+                <span style="color:red" asp-validation-for="Deskripsi" class="text-danger"></span>
             </div>
             <div class="form-actions">
                 <a href="@Url.Action("KategoriPekerjaan", "DashboardAdmin")" class="action-btn secondary">

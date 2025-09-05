@@ -318,6 +318,7 @@
             </div>
 
             <form asp-controller="LoginAndRegisterPage" id="regisForm" asp-action="RegisterUser" method="post">
+
                 <div class="form-group">
                     <label for="Username">Username</label>
                     <div class="input-with-icon">
@@ -370,6 +371,10 @@
             </div>
         </div>
     </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" /> <!-- untuk client-side validation -->
+    }
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

@@ -127,7 +127,7 @@
                     </button>
                     
                    
-                    <form id="deleteForm" method="post" action="@Url.Action("DeleteLowonganTersimpan", "DashboardUser")">
+                    <form class="deleteForm" method="post" action="@Url.Action("DeleteLowonganTersimpan", "DashboardUser")">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@data.Id" />
                         <button class="saved-job-action-btn" title="Remove">
@@ -143,7 +143,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll("#deleteForm").forEach(function (form) {
+        document.querySelectorAll(".deleteForm").forEach(function (form) {
             form.addEventListener("submit", function (e) {
                 e.preventDefault(); // cegah submit langsung
 

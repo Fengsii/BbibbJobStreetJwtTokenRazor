@@ -371,7 +371,7 @@
             <form asp-controller="LoginAndRegisterPage" id="regisForm" asp-action="RegisterPerusahaan" method="post" enctype="multipart/form-data">
                 <!-- Informasi Dasar Perusahaan -->
                 <h3 class="section-title"><i class="fas fa-info-circle"></i> Informasi Perusahaan</h3>
-
+                
                 <div class="form-row">
                     <div class="form-group">
                         <label for="NamaPerusahaan">Nama Perusahaan*</label>
@@ -500,7 +500,9 @@
         </div>
     </div>
 
-
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" /> <!-- untuk client-side validation -->
+    }
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Fungsi toggle password

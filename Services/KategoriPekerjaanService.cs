@@ -41,16 +41,34 @@ namespace BbibbJobStreetJwtToken.Services
                         .ToPagedList(page, pageSize);
         }
 
-        public KategoriPekerjaan GetListKategoriPekerjaanById(int id)
+        //public KategoriPekerjaan GetListKategoriPekerjaanById(int id)
+        //{
+        //    var data = _context.KategoriPekerjaans.FirstOrDefault(x => x.Id == id);
+        //    if(data == null)
+        //    {
+        //        return new KategoriPekerjaan();
+        //    }
+
+        //    return data;
+        //}
+
+        public KategoriPekerjaanDTO GetListKategoriPekerjaanById(int id)
         {
             var data = _context.KategoriPekerjaans.FirstOrDefault(x => x.Id == id);
-            if(data == null)
+            if (data == null)
             {
-                return new KategoriPekerjaan();
+                return new KategoriPekerjaanDTO();
             }
 
-            return data;
+            return new KategoriPekerjaanDTO
+            {
+                Id = data.Id,
+                NamaKategori = data.NamaKategori,
+                Deskripsi = data.Deskripsi
+            };
         }
+
+
 
         public bool UpdateKategoriPekerjaan(KategoriPekerjaanDTO kategoriPekerjaanDTO)
         {

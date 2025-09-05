@@ -2,6 +2,8 @@
 using BbibbJobStreetJwtToken.Models;
 using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Models.DTO;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +21,13 @@ namespace BbibbJobStreetJwtToken.Controllers
         private readonly ICompanyDashboard _companyDashboard;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationContext _context;
+        private readonly IValidator<LowonganPekerjaanAddUpdateDTO> _jobValidator;
+        private readonly IValidator<RegisterPerusahaanDTO> _registerCompanyValidator;
         public DashboardPerusahaanController(IKategoriPekerjaan kategoriPekerjaan, 
-            ILowonganPekerjaan lowonganPekerjaan, 
-            IPerusahaan perusahaan, 
+            ILowonganPekerjaan lowonganPekerjaan, IPerusahaan perusahaan, 
             IHttpContextAccessor contextAccessor, ApplicationContext context, 
-            ILamaran lamaran, ICompanyDashboard companyDashboard)
+            ILamaran lamaran, ICompanyDashboard companyDashboard, IValidator<RegisterPerusahaanDTO> registerCompanyValidator,
+            IValidator<LowonganPekerjaanAddUpdateDTO> jobValidator) 
         {
             _kategoriPekerjaan = kategoriPekerjaan;
             _lowonganPekerjaan = lowonganPekerjaan;
@@ -32,6 +36,8 @@ namespace BbibbJobStreetJwtToken.Controllers
             _context = context;
             _lamaran = lamaran;
             _companyDashboard = companyDashboard;
+            _jobValidator = jobValidator;
+            _registerCompanyValidator = registerCompanyValidator;
         }
 
         ///=============== UNTUK COMPANY PROFILE ==================\\\
@@ -67,8 +73,20 @@ namespace BbibbJobStreetJwtToken.Controllers
         }
 
         [HttpPost]
-        public IActionResult CompanyProfileSetting(RegisterPerusahaanDTO dto)
+        public async Task<IActionResult> CompanyProfileSetting(RegisterPerusahaanDTO dto)
         {
+            // Manual validasi pakai FluentValidation
+            ValidationResult validationResult = await _registerCompanyValidator.ValidateAsync(dto);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    // masukkan error ke ModelState supaya muncul di View
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return View(dto);
+            }
+
             var data = _perusahaan.UpdateCompany(dto);
             if (data)
             {
@@ -108,7 +126,7 @@ namespace BbibbJobStreetJwtToken.Controllers
 
 
         [HttpPost]
-        public IActionResult LowonganPekerjaanAddUpdate(LowonganPekerjaan lowonganPekerjaan)
+        public async Task<IActionResult> LowonganPekerjaanAddUpdate(LowonganPekerjaan lowonganPekerjaan)
         {
 
             var lowonganDTO = new LowonganPekerjaanAddUpdateDTO
@@ -123,8 +141,23 @@ namespace BbibbJobStreetJwtToken.Controllers
                 KategoriId = lowonganPekerjaan.KategoriId,
             };
 
+            //ValidationResult validationResult = await _jobValidator.ValidateAsync(lowonganDTO);
+            //if (!validationResult.IsValid)
+            //{
+            //    foreach (var error in validationResult.Errors)
+            //    {
+            //        // masukkan error ke ModelState supaya muncul di View
+            //        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            //    }
+            //    // Pastikan ViewBag.Kategori diisi kembali karena return view
+            //    ViewBag.Kategori = _kategoriPekerjaan.KategoriPekerjaan();
+            //    return View(lowonganPekerjaan);
+            //}
+
+
             if (lowonganPekerjaan.Id == 0)
             {
+
                 var data = _lowonganPekerjaan.AddLowonganPekerjaan(lowonganDTO);
                 if (data)
                 {
@@ -139,8 +172,15 @@ namespace BbibbJobStreetJwtToken.Controllers
                     return RedirectToAction("LowonganPekerjaan");
                 }
             }
-            return View();
+            // Jika gagal tanpa alasan yang jelas
+            TempData["ErrorMessage"] = "Terjadi kesalahan saat menyimpan lowongan";
+            ViewBag.Kategori = _kategoriPekerjaan.KategoriPekerjaan();
+            return View(lowonganPekerjaan);
         }
+
+
+
+
 
         [HttpPost]
         public IActionResult DeleteLowonganPekerjaan(int id)

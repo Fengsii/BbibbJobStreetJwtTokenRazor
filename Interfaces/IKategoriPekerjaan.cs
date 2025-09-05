@@ -8,10 +8,11 @@ namespace BbibbJobStreetJwtToken.Interfaces
     public interface IKategoriPekerjaan
     {
         public IPagedList<KategoriPekerjaanDTO> GetListKategoriPekerjaan(int page, int pageSize, string searchTerm = "");
-        public KategoriPekerjaan GetListKategoriPekerjaanById(int id);
+        //public KategoriPekerjaan GetListKategoriPekerjaanById(int id);
         public bool UpdateKategoriPekerjaan(KategoriPekerjaanDTO kategoriPekerjaanDTO);
         public bool AddKategoriPekerjaaan(KategoriPekerjaanDTO kategoriPekerjaanDTO);
         public bool DeleteKategoriPekerjaan(int id);
         public List<SelectListItem> KategoriPekerjaan();
+        public KategoriPekerjaanDTO GetListKategoriPekerjaanById(int id);
     }
 }

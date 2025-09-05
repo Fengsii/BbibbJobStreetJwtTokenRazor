@@ -4,415 +4,6 @@
 @{
     Layout = null;
 }
-@* 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Pelamar - Portal Karir</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --light: #ffffff;
-            --dark: #1f2937;
-            --gray: #6b7280;
-            --light-gray: #f3f4f6;
-        }
-
-        *::-webkit-scrollbar {
-            display: none;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            display: flex;
-            min-height: 100vh;
-            background-color: var(--light);
-        }
-
-        .login-container {
-            display: flex;
-            width: 100%;
-        }
-
-        .left-section {
-            flex: 1;
-            background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            display: none;
-        }
-
-            .left-section::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(37, 99, 235, 0.1);
-            }
-
-        .left-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            padding: 40px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-            .left-content h2 {
-                font-size: 2.2rem;
-                margin-bottom: 20px;
-                font-weight: 700;
-            }
-
-            .left-content p {
-                font-size: 1.1rem;
-                line-height: 1.6;
-                max-width: 500px;
-            }
-
-        .right-section {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-color: var(--light);
-        }
-
-        .login-form-container {
-            width: 100%;
-            max-width: 440px;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            background: var(--light);
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-            .logo h1 {
-                font-size: 2.2rem;
-                color: var(--primary);
-                font-weight: 700;
-                margin-bottom: 10px;
-            }
-
-            .logo p {
-                color: var(--gray);
-                font-size: 1rem;
-            }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-            .input-with-icon input {
-                width: 100%;
-                padding: 14px 14px 14px 45px;
-                border: 1px solid #d1d5db;
-                border-radius: 8px;
-                font-size: 1rem;
-                transition: all 0.3s;
-            }
-
-                .input-with-icon input:focus {
-                    outline: none;
-                    border-color: var(--primary);
-                    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-                }
-
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
-
-        .show-password-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            cursor: pointer;
-        }
-
-        .error-message {
-            color: #ef4444;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-            .btn-login:hover {
-                background-color: var(--primary-dark);
-            }
-
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.95rem;
-            color: var(--gray);
-        }
-
-            .register-link a {
-                color: var(--primary);
-                text-decoration: none;
-                font-weight: 600;
-            }
-
-                .register-link a:hover {
-                    text-decoration: underline;
-                }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-        }
-
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background-color: #e5e7eb;
-        }
-
-        .divider-text {
-            padding: 0 15px;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .social-login {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light-gray);
-            border: 1px solid #e5e7eb;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-            .social-btn:hover {
-                background: #e5e7eb;
-            }
-
-        @@media (min-width: 992px) {
-            .left-section
-
-        {
-            display: block;
-        }
-
-        }
-
-        @@media (max-width: 576px) {
-            .right-section
-
-        {
-            padding: 15px;
-        }
-
-        .login-form-container {
-            padding: 30px 20px;
-            box-shadow: none;
-        }
-
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="left-section">
-            <div class="left-content">
-                <h2>Temukan Pekerjaan Impian Anda</h2>
-                <p>Bergabung dengan ribuan profesional yang telah menemukan kesempatan karier terbaik melalui portal kami. Mulai perjalanan karier Anda sekarang!</p>
-            </div>
-        </div>
-
-        <div class="right-section">
-            <div class="login-form-container">
-                <div class="logo">
-                    <h1>CareerConnect</h1>
-                    <p>Masuk ke akun pelamar Anda</p>
-                </div>
-
-                <form asp-controller="LoginAndRegisterPage" asp-action="LoginUser" method="post">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-with-icon">
-                            <span class="input-icon"><i class="fas fa-user"></i></span>
-                            <input type="text" asp-for="Username" id="username" placeholder="Masukkan username" required />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-with-icon">
-                            <span class="input-icon"><i class="fas fa-lock"></i></span>
-                            <input type="password" asp-for="Password" id="password" placeholder="Masukkan password" required />
-                            <span class="show-password-icon" onclick="togglePassword()">
-                                <i class="fas fa-eye"></i>
-                            </span>
-                        </div>
-                        <span class="error-message" asp-validation-for="Password"></span>
-                    </div>
-
-                    <button type="submit" class="btn-login">Masuk</button>
-                </form>
-
-                <div class="register-link">
-                    Belum punya akun? <a href="/LoginAndRegisterPage/RegisterUser">Daftar di sini</a>
-                </div>
-
-                <div class="divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-text">Atau</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="social-login">
-                    <div class="social-btn">
-                        <i class="fab fa-google"></i>
-                    </div>
-                    <div class="social-btn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </div>
-                    <div class="social-btn">
-                        <i class="fab fa-facebook-f"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const icon = document.querySelector('.show-password-icon i');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const errorMessage = '@TempData["ErrorMessage"]';
-            if (errorMessage) {
-                // Create error message element
-                const errorDiv = document.createElement('div');
-                errorDiv.innerHTML = `
-                    <div style="position: fixed; top: 20px; right: 20px; padding: 15px 20px; background: #fef2f2; border: 1px solid #fecaca; color: #ef4444; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; display: flex; align-items: center; max-width: 400px;">
-                        <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>
-                        <span>${errorMessage}</span>
-                    </div>
-                `;
-                document.body.appendChild(errorDiv);
-
-                // Remove after 5 seconds
-                setTimeout(() => {
-                    errorDiv.remove();
-                }, 5000);
-            }
-
-            const successMessage = '@TempData["SuccessMessage"]';
-            if (successMessage) {
-                // Create success message element
-                const successDiv = document.createElement('div');
-                successDiv.innerHTML = `
-                    <div style="position: fixed; top: 20px; right: 20px; padding: 15px 20px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #22c55e; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; display: flex; align-items: center; max-width: 400px;">
-                        <i class="fas fa-check-circle" style="margin-right: 10px;"></i>
-                        <span>${successMessage}</span>
-                    </div>
-                `;
-                document.body.appendChild(successDiv);
-
-                // Remove after 5 seconds
-                setTimeout(() => {
-                    successDiv.remove();
-                }, 5000);
-            }
-        });
-    </script>
-</body>
-</html> *@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -422,6 +13,7 @@
     <title>Login Pelamar - CareerConnect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        /* CSS tetap sama seperti sebelumnya */
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
@@ -429,7 +21,7 @@
             --dark: #1f2937;
             --gray: #6b7280;
             --light-gray: #f3f4f6;
-            --applicant-accent: #7c3aed; /* Warna ungu yang cocok untuk pelamar */
+            --applicant-accent: #7c3aed;
         }
 
         *::-webkit-scrollbar {
@@ -706,25 +298,22 @@
             }
 
         @@media (max-width: 576px) {
-            body
+            body {
+                padding: 15px;
+                background-image: none;
+            }
 
-        {
-            padding: 15px;
-            background-image: none;
-        }
+            .applicant-login-container {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
 
-        .applicant-login-container {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
+            .applicant-header {
+                padding: 20px;
+            }
 
-        .applicant-header {
-            padding: 20px;
-        }
-
-        .applicant-form-container {
-            padding: 25px 20px;
-        }
-
+            .applicant-form-container {
+                padding: 25px 20px;
+            }
         }
     </style>
 </head>
@@ -744,10 +333,10 @@
 
             <form asp-controller="LoginAndRegisterPage" id="loginForm" asp-action="LoginUser" method="post">
                 <div class="form-group">
-                    <label for="email">Username</label>
+                    <label for="username">Username</label>
                     <div class="input-with-icon">
                         <span class="input-icon"><i class="fas fa-user-shield"></i></span>
-                        <input type="text" " asp-for="Username" id="username" name="Username" placeholder="Masukkan Username Anda" required />
+                        <input type="text" asp-for="Username" id="username" name="Username" placeholder="Masukkan Username Anda" required />
                     </div>
                 </div>
 
@@ -780,6 +369,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Fungsi toggle password
@@ -797,55 +387,64 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-             const form = document.getElementById('loginForm');
+            const form = document.getElementById('loginForm');
 
-             form.addEventListener('submit', function (e) {
-                 e.preventDefault();
+            // Simpan nilai TempData ke variabel JavaScript sebelum digunakan
+            const successMessage = '@Html.Raw(TempData["SuccessMessage"]?.ToString().Replace("'", "\\'"))';
+            const errorMessage = '@Html.Raw(TempData["ErrorMessage"]?.ToString().Replace("'", "\\'"))';
 
-                 // Tampilkan konfirmasi
-                 Swal.fire({
-                     title: 'Login?',
-                     text: "Apakah Anda yakin ingin login?",
-                     icon: 'question',
-                     showCancelButton: true,
-                     confirmButtonColor: '#0a66c2',
-                     cancelButtonColor: '#6c757d',
-                     confirmButtonText: 'Ya, login',
-                     cancelButtonText: 'Batal'
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                         // Submit form
-                         form.submit();
-                     }
-                 });
-             });
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-             // Tampilkan popup success jika ada pesan dari controller
-             @if (TempData["SuccessMessage"] != null)
-             {
-                             <text>
-                             Swal.fire({
-                                 title: 'Berhasil!',
-                                 text: '@TempData["SuccessMessage"]',
-                                 icon: 'success',
-                                 confirmButtonColor: '#0a66c2'
-                             });
-                             </text>
-             }
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: 'Login?',
+                    text: "Apakah Anda yakin ingin login?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#7c3aed',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, login',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Tampilkan loading
+                        Swal.fire({
+                            title: 'Sedang login',
+                            text: 'Mohon tunggu sebentar...',
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            }
+                        });
 
-             // Tampilkan popup error jika ada pesan dari controller
-             @if (TempData["ErrorMessage"] != null)
-             {
-                             <text>
-                             Swal.fire({
-                                 title: 'Gagal!',
-                                 text: '@TempData["ErrorMessage"]',
-                                 icon: 'error',
-                                 confirmButtonColor: '#d33'
-                             });
-                             </text>
-             }
-         });
+                        // Submit form
+                        form.submit();
+                    }
+                });
+            });
+
+            // Tampilkan popup berdasarkan nilai yang disimpan
+            if (successMessage && successMessage !== '') {
+                Swal.fire({
+                    title: 'Berhasil Login!',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonColor: '#7c3aed'
+                });
+            }
+
+            if (errorMessage && errorMessage !== '') {
+                Swal.fire({
+                    title: 'Login Gagal!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+            }
+        });
     </script>
 </body>
 </html>

@@ -1,8 +1,10 @@
-using BbibbJobStreetJwtToken.Helpers;
+﻿using BbibbJobStreetJwtToken.Helpers;
 using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models;
 using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Services;
+using BbibbJobStreetJwtToken.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -90,9 +92,15 @@ builder.Services.AddScoped<IEnkripsiPassword, EnkripsiPasswordHelper>();
 builder.Services.AddScoped<ILoginLayout, LoginLayoutService>();
 builder.Services.AddHttpContextAccessor(); // Untuk mengakses HttpContext
 
-
-// Add services to the container.
+// Registrasi validator
 builder.Services.AddControllersWithViews();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterCompanyRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CategoryJobRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<JobRequestValidator>();
+
+
 
 var app = builder.Build();
 

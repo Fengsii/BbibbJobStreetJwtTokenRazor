@@ -2,6 +2,8 @@
 using BbibbJobStreetJwtToken.Models.DB;
 using BbibbJobStreetJwtToken.Models.DTO;
 using BbibbJobStreetJwtToken.Services;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +18,19 @@ namespace BbibbJobStreetJwtToken.Controllers
         private readonly ILowonganTersimpan _lowonganTersimpan;
         private readonly IHistoryLamaran _historyLamaran;
         private readonly IUser _user;
+        private readonly IValidator<UserUpdateDTO> _updateUserRequestValidator;
 
-        public DashboardUserController(ILowonganPekerjaan lowonganPekerjaan, ILamaran lamaran, ILowonganTersimpan lowonganTersimpan, IHistoryLamaran historyLamaran, IUser user)
+        public DashboardUserController(ILowonganPekerjaan lowonganPekerjaan, 
+            ILamaran lamaran, ILowonganTersimpan lowonganTersimpan, 
+            IHistoryLamaran historyLamaran, IUser user,
+            IValidator<UserUpdateDTO> updateUserRequestValidator)
         {
             _lowonganPekerjaan = lowonganPekerjaan;
             _lamaran = lamaran;
             _lowonganTersimpan = lowonganTersimpan;
             _historyLamaran = historyLamaran;
             _user = user;
+            _updateUserRequestValidator = updateUserRequestValidator;
         }
 
 
@@ -55,10 +62,20 @@ namespace BbibbJobStreetJwtToken.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserProfileSetting(UserProfileUpdateDTO dto)
+        public async Task<IActionResult> UserProfileSetting(UserProfileUpdateDTO dto)
         {
             try
             {
+                ValidationResult validationResult = await _updateUserRequestValidator.ValidateAsync(dto);
+                if (!validationResult.IsValid)
+                {
+                    foreach (var error in validationResult.Errors)
+                    {
+                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    }
+                    return View(dto);
+                }
+
                 var data = _user.UpdateUserProfile(dto);
                 if (data)
                 {

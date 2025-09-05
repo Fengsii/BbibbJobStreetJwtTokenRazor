@@ -1,6 +1,8 @@
 ﻿using BbibbJobStreetJwtToken.Interfaces;
 using BbibbJobStreetJwtToken.Models.DTO;
 using BbibbJobStreetJwtToken.Services;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +16,19 @@ namespace BbibbJobStreetJwtToken.Controllers
         private readonly IPerusahaan _perusahaan;
         private readonly IUser _user;
         private readonly IDashboardAdminService _dashboardAdminService;
-        public DashboardAdminController(IKategoriPekerjaan kategoriPekerjaan, ILowonganPekerjaan lowonganPekerjaan, IPerusahaan perusahaan, IUser user, IDashboardAdminService dashboardAdminService)
+        private readonly IValidator<KategoriPekerjaanDTO> _categoryJobValidator;
+        public DashboardAdminController(IKategoriPekerjaan kategoriPekerjaan, 
+            ILowonganPekerjaan lowonganPekerjaan,
+            IPerusahaan perusahaan, IUser user, 
+            IDashboardAdminService dashboardAdminService,
+            IValidator<KategoriPekerjaanDTO> categoryJobValidator)
         {
             _kategoriPekerjaan = kategoriPekerjaan;
             _lowonganPekerjaan = lowonganPekerjaan;
             _perusahaan = perusahaan;
             _user = user;
             _dashboardAdminService = dashboardAdminService;
+            _categoryJobValidator = categoryJobValidator;
         }
 
 
@@ -48,15 +56,31 @@ namespace BbibbJobStreetJwtToken.Controllers
             return View(kategoriList);
         }
 
+        //public IActionResult KategoriPekerjaanAddUpdate(int id)
+        //{
+        //    var data = _kategoriPekerjaan.GetListKategoriPekerjaanById(id);
+        //    return View(data);
+        //}
+
         public IActionResult KategoriPekerjaanAddUpdate(int id)
         {
             var data = _kategoriPekerjaan.GetListKategoriPekerjaanById(id);
-            return View(data);
+            return View(data); // sekarang DTO, cocok dengan view
         }
 
+
         [HttpPost]
-        public IActionResult KategoriPekerjaanAddUpdate(KategoriPekerjaanDTO kategoriPekerjaanDTO)
+        public async Task<IActionResult> KategoriPekerjaanAddUpdate(KategoriPekerjaanDTO kategoriPekerjaanDTO)
         {
+            ValidationResult validationResult = await _categoryJobValidator.ValidateAsync(kategoriPekerjaanDTO);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return View(kategoriPekerjaanDTO);
+            }
             if (kategoriPekerjaanDTO.Id == 0)
             {
                 var data = _kategoriPekerjaan.AddKategoriPekerjaaan(kategoriPekerjaanDTO);

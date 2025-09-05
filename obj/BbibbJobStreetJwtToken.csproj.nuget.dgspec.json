@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[8.2.2, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.13.0, )"
