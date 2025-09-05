@@ -18,12 +18,14 @@ namespace BbibbJobStreetJwtToken.Controllers
         private readonly ILowonganTersimpan _lowonganTersimpan;
         private readonly IHistoryLamaran _historyLamaran;
         private readonly IUser _user;
-        private readonly IValidator<UserUpdateDTO> _updateUserRequestValidator;
+        private readonly IValidator<UserProfileUpdateDTO> _updateUserRequestValidator;
+        private readonly IValidator<LamaranAddUpdateDTO> _applicationRequestValidator;
 
         public DashboardUserController(ILowonganPekerjaan lowonganPekerjaan, 
             ILamaran lamaran, ILowonganTersimpan lowonganTersimpan, 
             IHistoryLamaran historyLamaran, IUser user,
-            IValidator<UserUpdateDTO> updateUserRequestValidator)
+            IValidator<UserProfileUpdateDTO> updateUserRequestValidator,
+            IValidator<LamaranAddUpdateDTO> applicationRequestValidator)
         {
             _lowonganPekerjaan = lowonganPekerjaan;
             _lamaran = lamaran;
@@ -31,6 +33,7 @@ namespace BbibbJobStreetJwtToken.Controllers
             _historyLamaran = historyLamaran;
             _user = user;
             _updateUserRequestValidator = updateUserRequestValidator;
+            _applicationRequestValidator = applicationRequestValidator;
         }
 
 
@@ -132,6 +135,7 @@ namespace BbibbJobStreetJwtToken.Controllers
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
 
+
             if (string.IsNullOrEmpty(userIdClaim))
             {
                 // Kalau token tidak valid atau tidak ada ID, kembalikan Unauthorized
@@ -139,6 +143,17 @@ namespace BbibbJobStreetJwtToken.Controllers
             }
 
             lamaranAddUpdateDTO.UserId = int.Parse(userIdClaim); // isi UserId di DTO
+
+
+            ValidationResult validationResult = await _applicationRequestValidator.ValidateAsync(lamaranAddUpdateDTO);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return View(lamaranAddUpdateDTO);
+            }
 
             if (lamaranAddUpdateDTO.Id == 0)
             {

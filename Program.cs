@@ -98,6 +98,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserRequestValidato
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterCompanyRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CategoryJobRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<ApplicationRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<JobRequestValidator>();
 
 

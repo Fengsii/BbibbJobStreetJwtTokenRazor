@@ -30,9 +30,7 @@ namespace BbibbJobStreetJwtToken.Validators
                 .NotEmpty().WithMessage("Posisi pekerjaan wajib diisi.")
                 .MaximumLength(100).WithMessage("Posisi maksimal 100 karakter.");
 
-            RuleFor(x => x.TanggalDibuat)
-                .NotEmpty().WithMessage("Tanggal dibuat wajib diisi.")
-                .LessThanOrEqualTo(DateTime.Now).WithMessage("Tanggal dibuat tidak boleh di masa depan.");
+            
         }
     }
 }

@@ -708,3 +708,5 @@ wwwroot\upload\f4b079a4-7f1b-412b-8931-b3fbd6649da1.png
 wwwroot\upload\f6029d79-bd84-4553-b3a7-8896ee4f1edd.jpeg
 wwwroot\upload\f8eff289-f799-4687-8981-78df57cba9cd.png
 wwwroot\upload\fb6470b7-ac5d-4fd1-b809-8e4098cf5b4f.jpg
+wwwroot\uploads\pdf\4db97339-cf73-491c-a6bd-a799f325a51f.pdf
+wwwroot\uploads\pdf\922771f4-5a97-45eb-8f56-0e52e6410a90.pdf

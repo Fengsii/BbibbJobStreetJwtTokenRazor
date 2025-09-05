@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BbibbJobStreetJwtToken.Validators
 {
-    public class UpdateUserRequestValidator : AbstractValidator<UserUpdateDTO>
+    public class UpdateUserRequestValidator : AbstractValidator<UserProfileUpdateDTO>
     {
         private readonly ApplicationContext _context;
         public UpdateUserRequestValidator(ApplicationContext context)
@@ -32,10 +32,10 @@ namespace BbibbJobStreetJwtToken.Validators
                     return !await _context.Users.AnyAsync(u => u.Email == email && u.Id != user.Id, cancellation);
                 }).WithMessage("Email sudah terdaftar.");
 
-            RuleFor(x => x.Password)
+            RuleFor(x => x.NewPassword)
                 .MinimumLength(6).WithMessage("Password minimal 6 karakter.")
                 .MaximumLength(100).WithMessage("Password maksimal 100 karakter.")
-                .When(x => !string.IsNullOrEmpty(x.Password));
+                .When(x => !string.IsNullOrEmpty(x.NewPassword));
 
             RuleFor(x => x.Posisi)
                 .MinimumLength(6).WithMessage("Posisi minimal 6 karakter.")

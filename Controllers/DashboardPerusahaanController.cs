@@ -136,23 +136,23 @@ namespace BbibbJobStreetJwtToken.Controllers
                 Posisi = lowonganPekerjaan.Posisi,
                 Alamat = lowonganPekerjaan.Alamat,
                 Deskripsi = lowonganPekerjaan.Deskripsi,
-                TanggalDibuat = lowonganPekerjaan.TanggalDibuat,
+                TanggalDibuat = DateTime.Now,
                 status = lowonganPekerjaan.status,
                 KategoriId = lowonganPekerjaan.KategoriId,
             };
 
-            //ValidationResult validationResult = await _jobValidator.ValidateAsync(lowonganDTO);
-            //if (!validationResult.IsValid)
-            //{
-            //    foreach (var error in validationResult.Errors)
-            //    {
-            //        // masukkan error ke ModelState supaya muncul di View
-            //        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-            //    }
-            //    // Pastikan ViewBag.Kategori diisi kembali karena return view
-            //    ViewBag.Kategori = _kategoriPekerjaan.KategoriPekerjaan();
-            //    return View(lowonganPekerjaan);
-            //}
+            ValidationResult validationResult = await _jobValidator.ValidateAsync(lowonganDTO);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    // masukkan error ke ModelState supaya muncul di View
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                // Pastikan ViewBag.Kategori diisi kembali karena return view
+                ViewBag.Kategori = _kategoriPekerjaan.KategoriPekerjaan();
+                return View(lowonganPekerjaan);
+            }
 
 
             if (lowonganPekerjaan.Id == 0)
